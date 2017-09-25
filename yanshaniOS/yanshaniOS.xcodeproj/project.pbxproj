@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		093B4EAC3B63CBD90178D434 /* libPods-yanshaniOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24DD40C399B4DB897A1EDCB7 /* libPods-yanshaniOS.a */; };
+		248136A9D81593223847FF8C /* libPods-yanshaniOSUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 539411C2E90F15C206A3615D /* libPods-yanshaniOSUITests.a */; };
 		643D259A1F77FE640034131C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25991F77FE640034131C /* main.m */; };
 		643D259D1F77FE640034131C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D259C1F77FE640034131C /* AppDelegate.m */; };
 		643D25A01F77FE640034131C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D259F1F77FE640034131C /* ViewController.m */; };
@@ -15,6 +17,7 @@
 		643D25A81F77FE640034131C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643D25A61F77FE640034131C /* LaunchScreen.storyboard */; };
 		643D25B31F77FE640034131C /* yanshaniOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25B21F77FE640034131C /* yanshaniOSTests.m */; };
 		643D25BE1F77FE640034131C /* yanshaniOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25BD1F77FE640034131C /* yanshaniOSUITests.m */; };
+		FB2182010559D581BDB41379 /* libPods-yanshaniOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B54B61852312368B84DE26EE /* libPods-yanshaniOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		24DD40C399B4DB897A1EDCB7 /* libPods-yanshaniOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-yanshaniOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E8A9A68D17669E0E9873C98 /* Pods-yanshaniOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOSUITests/Pods-yanshaniOSUITests.release.xcconfig"; sourceTree = "<group>"; };
+		539411C2E90F15C206A3615D /* libPods-yanshaniOSUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-yanshaniOSUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		643D25951F77FE630034131C /* yanshaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yanshaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		643D25991F77FE640034131C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		643D259B1F77FE640034131C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +57,12 @@
 		643D25B91F77FE640034131C /* yanshaniOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yanshaniOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		643D25BD1F77FE640034131C /* yanshaniOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = yanshaniOSUITests.m; sourceTree = "<group>"; };
 		643D25BF1F77FE640034131C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79D74883B565E8E20D168652 /* Pods-yanshaniOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOSTests/Pods-yanshaniOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		B54B61852312368B84DE26EE /* libPods-yanshaniOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-yanshaniOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C621339A46FED1F152EFC8CB /* Pods-yanshaniOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOSTests/Pods-yanshaniOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DBCE5C714E859E4256A7DDF6 /* Pods-yanshaniOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOSUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOSUITests/Pods-yanshaniOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F37D78C9F7746F55FA38638B /* Pods-yanshaniOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOS/Pods-yanshaniOS.debug.xcconfig"; sourceTree = "<group>"; };
+		FE772C784DB5C9FB0F3E3D3E /* Pods-yanshaniOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOS/Pods-yanshaniOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				093B4EAC3B63CBD90178D434 /* libPods-yanshaniOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB2182010559D581BDB41379 /* libPods-yanshaniOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				248136A9D81593223847FF8C /* libPods-yanshaniOSUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +100,8 @@
 				643D25B11F77FE640034131C /* yanshaniOSTests */,
 				643D25BC1F77FE640034131C /* yanshaniOSUITests */,
 				643D25961F77FE630034131C /* Products */,
+				6DE35E2133E2605A3233C530 /* Pods */,
+				F289F35A669F7C13F523B152 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +157,29 @@
 			path = yanshaniOSUITests;
 			sourceTree = "<group>";
 		};
+		6DE35E2133E2605A3233C530 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F37D78C9F7746F55FA38638B /* Pods-yanshaniOS.debug.xcconfig */,
+				FE772C784DB5C9FB0F3E3D3E /* Pods-yanshaniOS.release.xcconfig */,
+				C621339A46FED1F152EFC8CB /* Pods-yanshaniOSTests.debug.xcconfig */,
+				79D74883B565E8E20D168652 /* Pods-yanshaniOSTests.release.xcconfig */,
+				DBCE5C714E859E4256A7DDF6 /* Pods-yanshaniOSUITests.debug.xcconfig */,
+				3E8A9A68D17669E0E9873C98 /* Pods-yanshaniOSUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F289F35A669F7C13F523B152 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				24DD40C399B4DB897A1EDCB7 /* libPods-yanshaniOS.a */,
+				B54B61852312368B84DE26EE /* libPods-yanshaniOSTests.a */,
+				539411C2E90F15C206A3615D /* libPods-yanshaniOSUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +187,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 643D25C21F77FE640034131C /* Build configuration list for PBXNativeTarget "yanshaniOS" */;
 			buildPhases = (
+				33D4F8D00185D3CC5CB070C2 /* [CP] Check Pods Manifest.lock */,
 				643D25911F77FE630034131C /* Sources */,
 				643D25921F77FE630034131C /* Frameworks */,
 				643D25931F77FE630034131C /* Resources */,
+				E39C9E8FAB52F8ACE40CC282 /* [CP] Embed Pods Frameworks */,
+				0011C72E5FD18D403FEA1B78 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -164,9 +207,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 643D25C51F77FE640034131C /* Build configuration list for PBXNativeTarget "yanshaniOSTests" */;
 			buildPhases = (
+				4F111A603DCFD44265998112 /* [CP] Check Pods Manifest.lock */,
 				643D25AA1F77FE640034131C /* Sources */,
 				643D25AB1F77FE640034131C /* Frameworks */,
 				643D25AC1F77FE640034131C /* Resources */,
+				967FFFCB247A4972FB1F5A8F /* [CP] Embed Pods Frameworks */,
+				55767325E4883055FCE67CD3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,9 +228,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 643D25C81F77FE640034131C /* Build configuration list for PBXNativeTarget "yanshaniOSUITests" */;
 			buildPhases = (
+				B4BA243AA4955FACD8D9FC1B /* [CP] Check Pods Manifest.lock */,
 				643D25B51F77FE640034131C /* Sources */,
 				643D25B61F77FE640034131C /* Frameworks */,
 				643D25B71F77FE640034131C /* Resources */,
+				8D0682462F5E179F2A687D35 /* [CP] Embed Pods Frameworks */,
+				AC3AE6E41BA889801481D589 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -270,6 +319,144 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0011C72E5FD18D403FEA1B78 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-yanshaniOS/Pods-yanshaniOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		33D4F8D00185D3CC5CB070C2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4F111A603DCFD44265998112 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		55767325E4883055FCE67CD3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-yanshaniOSTests/Pods-yanshaniOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D0682462F5E179F2A687D35 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-yanshaniOSUITests/Pods-yanshaniOSUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		967FFFCB247A4972FB1F5A8F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-yanshaniOSTests/Pods-yanshaniOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC3AE6E41BA889801481D589 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-yanshaniOSUITests/Pods-yanshaniOSUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4BA243AA4955FACD8D9FC1B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E39C9E8FAB52F8ACE40CC282 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-yanshaniOS/Pods-yanshaniOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		643D25911F77FE630034131C /* Sources */ = {
@@ -427,6 +614,7 @@
 		};
 		643D25C31F77FE640034131C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F37D78C9F7746F55FA38638B /* Pods-yanshaniOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = W2DLPX35T5;
@@ -440,6 +628,7 @@
 		};
 		643D25C41F77FE640034131C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE772C784DB5C9FB0F3E3D3E /* Pods-yanshaniOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = W2DLPX35T5;
@@ -453,6 +642,7 @@
 		};
 		643D25C61F77FE640034131C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C621339A46FED1F152EFC8CB /* Pods-yanshaniOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = W2DLPX35T5;
@@ -466,6 +656,7 @@
 		};
 		643D25C71F77FE640034131C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79D74883B565E8E20D168652 /* Pods-yanshaniOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = W2DLPX35T5;
@@ -479,6 +670,7 @@
 		};
 		643D25C91F77FE640034131C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBCE5C714E859E4256A7DDF6 /* Pods-yanshaniOSUITests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = W2DLPX35T5;
 				INFOPLIST_FILE = yanshaniOSUITests/Info.plist;
@@ -491,6 +683,7 @@
 		};
 		643D25CA1F77FE640034131C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E8A9A68D17669E0E9873C98 /* Pods-yanshaniOSUITests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = W2DLPX35T5;
 				INFOPLIST_FILE = yanshaniOSUITests/Info.plist;
