@@ -1,0 +1,6 @@
+framework module Pods_yanshaniOSTests {
+  umbrella header "Pods-yanshaniOSTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
