@@ -10,8 +10,8 @@
 
 @implementation YSClassViewCell
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
         _coverImgView = [[UIImageView alloc] init];
         _coverImgView.userInteractionEnabled = YES;
@@ -22,7 +22,6 @@
         _inforLabel.numberOfLines = 0;
         _inforLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_inforLabel];
-        
     }
     return self;
 }

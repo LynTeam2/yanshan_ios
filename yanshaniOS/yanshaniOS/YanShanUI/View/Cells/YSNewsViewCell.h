@@ -13,6 +13,7 @@
     UIImageView *_coverImgView;
     UILabel *_titleLable;
     UILabel *_subTitleLabel;
+    UIView *_seperateLine;
     
 }
 

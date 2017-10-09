@@ -24,6 +24,7 @@
 		641B40961F8A3B0500BF029E /* FSPagerViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B408F1F8A3B0500BF029E /* FSPagerViewLayoutAttributes.swift */; };
 		641B40971F8A3B0500BF029E /* FSPageViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B40901F8A3B0500BF029E /* FSPageViewLayout.swift */; };
 		641B40981F8A3B0500BF029E /* FSPageViewTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B40911F8A3B0500BF029E /* FSPageViewTransformer.swift */; };
+		641B409C1F8BA93500BF029E /* YSHomeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B409B1F8BA93500BF029E /* YSHomeReusableView.m */; };
 		643D259A1F77FE640034131C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25991F77FE640034131C /* main.m */; };
 		643D259D1F77FE640034131C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D259C1F77FE640034131C /* AppDelegate.m */; };
 		643D25A31F77FE640034131C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643D25A11F77FE640034131C /* Main.storyboard */; };
@@ -79,6 +80,8 @@
 		641B408F1F8A3B0500BF029E /* FSPagerViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSPagerViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		641B40901F8A3B0500BF029E /* FSPageViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSPageViewLayout.swift; sourceTree = "<group>"; };
 		641B40911F8A3B0500BF029E /* FSPageViewTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSPageViewTransformer.swift; sourceTree = "<group>"; };
+		641B409A1F8BA93500BF029E /* YSHomeReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSHomeReusableView.h; sourceTree = "<group>"; };
+		641B409B1F8BA93500BF029E /* YSHomeReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSHomeReusableView.m; sourceTree = "<group>"; };
 		643D25951F77FE630034131C /* yanshaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yanshaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		643D25991F77FE640034131C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		643D259B1F77FE640034131C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -156,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				641B3FFF1F89C60800BF029E /* Cells */,
+				641B40991F8BA80A00BF029E /* HomeViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -242,6 +246,15 @@
 				641B40911F8A3B0500BF029E /* FSPageViewTransformer.swift */,
 			);
 			path = FSPagerView;
+			sourceTree = "<group>";
+		};
+		641B40991F8BA80A00BF029E /* HomeViews */ = {
+			isa = PBXGroup;
+			children = (
+				641B409A1F8BA93500BF029E /* YSHomeReusableView.h */,
+				641B409B1F8BA93500BF029E /* YSHomeReusableView.m */,
+			);
+			path = HomeViews;
 			sourceTree = "<group>";
 		};
 		643D258C1F77FE630034131C = {
@@ -629,6 +642,7 @@
 				641B3FF81F85119E00BF029E /* YSRecordViewController.m in Sources */,
 				641B40961F8A3B0500BF029E /* FSPagerViewLayoutAttributes.swift in Sources */,
 				641B3FE91F850EE600BF029E /* YSBaseViewController.m in Sources */,
+				641B409C1F8BA93500BF029E /* YSHomeReusableView.m in Sources */,
 				641B40051F89C69000BF029E /* YSNewsViewCell.m in Sources */,
 				641B40021F89C68100BF029E /* YSClassViewCell.m in Sources */,
 				641B3FFB1F8511AC00BF029E /* YSMeViewController.m in Sources */,

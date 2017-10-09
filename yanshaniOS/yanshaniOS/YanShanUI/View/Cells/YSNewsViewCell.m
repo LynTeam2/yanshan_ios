@@ -10,8 +10,8 @@
 
 @implementation YSNewsViewCell
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
         _coverImgView = [[UIImageView alloc] init];
         _coverImgView.userInteractionEnabled = YES;
@@ -27,6 +27,9 @@
         _subTitleLabel.userInteractionEnabled = YES;
         [self addSubview:_subTitleLabel];
         
+        _seperateLine = [[UIView alloc] init];
+        _seperateLine.backgroundColor = [UIColor grayColor];
+        [self addSubview:_seperateLine];
     }
     return self;
 }
@@ -34,7 +37,7 @@
 - (void)layoutSubviews {
     
     CGFloat leftSpace = 20;
-    CGFloat topSpace = 40;
+    CGFloat topSpace = 20;
     
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
@@ -45,6 +48,8 @@
         width-_coverImgView.frame.size.width-3*leftSpace,
             _coverImgView.frame.size.height/2);
     _subTitleLabel.frame = CGRectMake(CGRectGetMinX(_titleLable.frame), CGRectGetMaxY(_titleLable.frame), CGRectGetWidth(_titleLable.frame), CGRectGetHeight(_titleLable.frame));
+    
+    _seperateLine.frame = CGRectMake(leftSpace, height-1, width-40, 0.5);
     
     _coverImgView.backgroundColor = kRandomColor;
     _titleLable.backgroundColor =  kRandomColor;
