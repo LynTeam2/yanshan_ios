@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol YSHomeReusableViewDelegate <NSObject>
+
+@optional
+
+- (void)clickMenuButton:(UIButton *)button;
+
+- (void)clickBannerAtIndex:(NSInteger)index with:(id)model;
+
+@end
+
 @interface YSHomeReusableView : UICollectionReusableView
+
+@property (nonatomic, weak) id<YSHomeReusableViewDelegate>delegate;
 
 @end

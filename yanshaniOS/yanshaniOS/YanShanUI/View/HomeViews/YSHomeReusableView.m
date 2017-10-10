@@ -49,6 +49,7 @@
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             btn.titleLabel.font = [UIFont systemFontOfSize:14];
             menuBtns[i] = btn;
+            [btn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btn];
         }
     }
@@ -69,7 +70,15 @@
 }
 
 - (void)pagerView:(FSPagerView *)pagerView didSelectItemAtIndex:(NSInteger)index {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickBannerAtIndex:with:)]) {
+        [self.delegate clickBannerAtIndex:index with:nil];
+    }
+}
+
+- (void)clickButton:(UIButton *)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickMenuButton:)]) {
+        [self.delegate clickMenuButton:sender];
+    }
 }
 
 @end

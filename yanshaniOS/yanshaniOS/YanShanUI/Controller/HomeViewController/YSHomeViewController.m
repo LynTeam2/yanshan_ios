@@ -12,7 +12,7 @@
 #import "YSNewsViewCell.h"
 #import "YSHomeReusableView.h"
 
-@interface YSHomeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface YSHomeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,YSHomeReusableViewDelegate>
 {
     UICollectionView *_collectionView;
 }
@@ -121,6 +121,7 @@
         switch (indexPath.section) {
             case 0: {
                 YSHomeReusableView *reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"homeHeader" forIndexPath:indexPath];
+                reusableView.delegate = self;
                 return reusableView;
             }
             case 1:
@@ -243,5 +244,16 @@
 
 
 #pragma mark - DZNEmptyDataSetSource
+
+
+#pragma mark - YSHomeReusableView delegate
+
+- (void)clickMenuButton:(UIButton *)button {
+    
+}
+
+- (void)clickBannerAtIndex:(NSInteger)index with:(id)model {
+    
+}
 
 @end
