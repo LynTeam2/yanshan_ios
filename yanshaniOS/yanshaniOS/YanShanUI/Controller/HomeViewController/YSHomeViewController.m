@@ -12,6 +12,8 @@
 #import "YSNewsViewCell.h"
 #import "YSHomeReusableView.h"
 
+#import "YSClassViewController.h"
+
 @interface YSHomeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,YSHomeReusableViewDelegate>
 {
     UICollectionView *_collectionView;
@@ -249,7 +251,10 @@
 #pragma mark - YSHomeReusableView delegate
 
 - (void)clickMenuButton:(UIButton *)button {
-    
+    YSClassViewController *classVC = [[YSClassViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:classVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 - (void)clickBannerAtIndex:(NSInteger)index with:(id)model {

@@ -26,6 +26,7 @@
 		641B40981F8A3B0500BF029E /* FSPageViewTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B40911F8A3B0500BF029E /* FSPageViewTransformer.swift */; };
 		641B409C1F8BA93500BF029E /* YSHomeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B409B1F8BA93500BF029E /* YSHomeReusableView.m */; };
 		641B409F1F8D0EB000BF029E /* YSClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B409E1F8D0EB000BF029E /* YSClassViewController.m */; };
+		641B40A21F8D0F8700BF029E /* YSClassDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B40A11F8D0F8700BF029E /* YSClassDetailViewController.m */; };
 		643D259A1F77FE640034131C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25991F77FE640034131C /* main.m */; };
 		643D259D1F77FE640034131C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D259C1F77FE640034131C /* AppDelegate.m */; };
 		643D25A31F77FE640034131C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643D25A11F77FE640034131C /* Main.storyboard */; };
@@ -85,6 +86,8 @@
 		641B409B1F8BA93500BF029E /* YSHomeReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSHomeReusableView.m; sourceTree = "<group>"; };
 		641B409D1F8D0EB000BF029E /* YSClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSClassViewController.h; sourceTree = "<group>"; };
 		641B409E1F8D0EB000BF029E /* YSClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSClassViewController.m; sourceTree = "<group>"; };
+		641B40A01F8D0F8700BF029E /* YSClassDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSClassDetailViewController.h; sourceTree = "<group>"; };
+		641B40A11F8D0F8700BF029E /* YSClassDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSClassDetailViewController.m; sourceTree = "<group>"; };
 		643D25951F77FE630034131C /* yanshaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yanshaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		643D25991F77FE640034131C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		643D259B1F77FE640034131C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				641B3FEC1F850F8A00BF029E /* YSHomeViewController.m */,
 				641B409D1F8D0EB000BF029E /* YSClassViewController.h */,
 				641B409E1F8D0EB000BF029E /* YSClassViewController.m */,
+				641B40A01F8D0F8700BF029E /* YSClassDetailViewController.h */,
+				641B40A11F8D0F8700BF029E /* YSClassDetailViewController.m */,
 			);
 			name = HomeViewControllers;
 			path = HomeViewController;
@@ -653,6 +658,7 @@
 				641B40021F89C68100BF029E /* YSClassViewCell.m in Sources */,
 				641B3FFB1F8511AC00BF029E /* YSMeViewController.m in Sources */,
 				641B40951F8A3B0500BF029E /* FSPagerViewCell.swift in Sources */,
+				641B40A21F8D0F8700BF029E /* YSClassDetailViewController.m in Sources */,
 				641B3FF51F85119300BF029E /* YSShopViewController.m in Sources */,
 				641B40981F8A3B0500BF029E /* FSPageViewTransformer.swift in Sources */,
 				641B3FFE1F88BEEE00BF029E /* YSCommonViewController.m in Sources */,

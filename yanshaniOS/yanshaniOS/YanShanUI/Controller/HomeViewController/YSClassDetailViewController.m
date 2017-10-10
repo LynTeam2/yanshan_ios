@@ -1,28 +1,24 @@
 //
-//  YSClassViewController.m
+//  YSClassDetailViewController.m
 //  yanshaniOS
 //
 //  Created by 代健 on 2017/10/10.
 //  Copyright © 2017年 jiandai. All rights reserved.
 //
 
-#import "YSClassViewController.h"
-#import "YSNewsViewCell.h"
-
 #import "YSClassDetailViewController.h"
-
-@interface YSClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+#import "YSClassViewCell.h"
+@interface YSClassDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_collectionView;
 }
 @end
 
-@implementation YSClassViewController
+@implementation YSClassDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"课程";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,38 +37,41 @@
     _collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_collectionView];
     
-    [_collectionView registerClass:[YSNewsViewCell class] forCellWithReuseIdentifier:@"classCell"];
+    [_collectionView registerClass:[YSClassViewCell class] forCellWithReuseIdentifier:@"classCell"];
 }
 
 #pragma mark - UICollectionView delegate
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 6;
+    return 16;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    YSNewsViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"classCell" forIndexPath:indexPath];
+    YSClassViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"classCell" forIndexPath:indexPath];
+    cell.backgroundColor = kRandomColor;
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    YSClassDetailViewController *detailVC = [[YSClassDetailViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detailVC animated:YES];
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
+#pragma mark - UICollectionViewFlowLayout delegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(collectionView.frame.size.width, 100);
+    CGSize size = collectionView.bounds.size;
+    CGFloat width = (size.width-40)/2;
+    CGFloat height = width*0.7;
+    return CGSizeMake(width, height);;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
+    return 10;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
+
 
 @end

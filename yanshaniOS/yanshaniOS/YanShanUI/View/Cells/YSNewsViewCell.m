@@ -30,6 +30,11 @@
         _seperateLine = [[UIView alloc] init];
         _seperateLine.backgroundColor = [UIColor grayColor];
         [self addSubview:_seperateLine];
+        
+        _rightIndicator = [[UIImageView alloc] init];
+        _rightIndicator.image = [UIImage imageNamed:@"rightgoicon"];
+        _rightIndicator.userInteractionEnabled = YES;
+        [self addSubview:_rightIndicator];
     }
     return self;
 }
@@ -45,11 +50,13 @@
     _coverImgView.frame = CGRectMake(leftSpace, topSpace, height-2*topSpace, height-2*topSpace);
     
     _titleLable.frame = CGRectMake(CGRectGetMaxX(_coverImgView.frame)+leftSpace, topSpace,
-        width-_coverImgView.frame.size.width-3*leftSpace,
+        width-_coverImgView.frame.size.width-5*leftSpace,
             _coverImgView.frame.size.height/2);
     _subTitleLabel.frame = CGRectMake(CGRectGetMinX(_titleLable.frame), CGRectGetMaxY(_titleLable.frame), CGRectGetWidth(_titleLable.frame), CGRectGetHeight(_titleLable.frame));
     
     _seperateLine.frame = CGRectMake(leftSpace, height-1, width-40, 0.5);
+    
+    _rightIndicator.frame = CGRectMake(width-leftSpace-16, height/2-15/2, 8, 15);
     
     _coverImgView.backgroundColor = kRandomColor;
     _titleLable.backgroundColor =  kRandomColor;
