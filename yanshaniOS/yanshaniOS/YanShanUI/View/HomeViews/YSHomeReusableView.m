@@ -62,7 +62,7 @@
 
 - (FSPagerViewCell *)pagerView:(FSPagerView *)pagerView cellForItemAtIndex:(NSInteger)index {
     FSPagerViewCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"pageCell" atIndex:index];
-    //    cell.imageView.image = nil;
+        cell.imageView.image = [UIImage imageNamed:@"bannerplaceholder"];
     //    cell.textLabel.text = nil;
     cell.backgroundColor = kRandomColor;
     return cell;

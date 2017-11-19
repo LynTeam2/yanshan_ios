@@ -18,6 +18,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
+    [self configViewControllerParameter];
     [self configContainer];
     [self configView];
     [self addNavigationItems];
@@ -29,6 +30,10 @@
 }
 
 #pragma mark - config view controller
+
+- (void)configViewControllerParameter {
+    // 子类重写实现
+}
 
 - (void)configView {
     // 子类重写实现
@@ -43,6 +48,10 @@
 
 - (void)addNavigationItems {
     
+}
+
+- (void)backViewController:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

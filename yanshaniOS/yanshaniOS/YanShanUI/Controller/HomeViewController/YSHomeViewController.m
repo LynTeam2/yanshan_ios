@@ -16,7 +16,7 @@
 
 @interface YSHomeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,YSHomeReusableViewDelegate>
 {
-    UICollectionView *_collectionView;
+    YSBaseCollectionView *_collectionView;
 }
 @end
 
@@ -38,7 +38,7 @@
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     CGRect frame = self.view.bounds;
     frame.size.height -= 49+64;
-    _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:flowLayout];
+    _collectionView = [[YSBaseCollectionView alloc] initWithFrame:frame collectionViewLayout:flowLayout];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.emptyDataSetDelegate = self;
