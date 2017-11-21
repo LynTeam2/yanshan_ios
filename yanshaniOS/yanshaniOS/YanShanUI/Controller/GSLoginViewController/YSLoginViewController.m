@@ -27,7 +27,9 @@
 #pragma mark - Button Action
 
 - (IBAction)loginAction:(UIButton *)sender {
-    _userLoginResultBlock(YES);
+//    _userLoginResultBlock(YES);
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];
 }
 
 @end

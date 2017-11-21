@@ -12,7 +12,7 @@ typedef void(^userLoginSuccessBlock)(BOOL success);
 
 @interface YSLoginViewController : YSBaseViewController
 
-@property (nonatomic, strong) userLoginSuccessBlock userLoginResultBlock;
+@property (nonatomic, weak) userLoginSuccessBlock userLoginResultBlock;
 
 
 @end

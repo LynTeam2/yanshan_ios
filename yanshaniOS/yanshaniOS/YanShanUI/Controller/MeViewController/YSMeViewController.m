@@ -57,6 +57,10 @@
     return titles.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 54;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (nil == cell) {
@@ -103,6 +107,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] init];
     headerView.frame = CGRectMake(0, 0, 0, 0);
+    headerView.backgroundColor = [UIColor whiteColor];
     
     UIImageView *headerIcon = [[UIImageView alloc] init];
     headerIcon.image = [UIImage imageNamed:@"headericon"];
@@ -151,6 +156,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.hidesBottomBarWhenPushed = YES;
     switch (indexPath.row) {
         case 0:{
             YSUserSettingViewController *userSettingVC = [[YSUserSettingViewController alloc] init];
@@ -168,6 +174,7 @@
         default:
             break;
     }
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 @end

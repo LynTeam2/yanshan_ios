@@ -48,6 +48,17 @@
         make.width.equalTo(self.view);
         make.bottom.equalTo(self.mas_bottomLayoutGuide).offset(-220);
     }];
+    
+    UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [logoutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
+    [logoutBtn setBackgroundColor:[UIColor blueColor]];
+    [self.view addSubview:logoutBtn];
+    [logoutBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(30);
+        make.right.equalTo(self.view).offset(-30);
+        make.bottom.equalTo(self.view).offset(-160);
+        make.height.mas_equalTo(50);
+    }];
 }
 
 - (void)addNavigationItems {

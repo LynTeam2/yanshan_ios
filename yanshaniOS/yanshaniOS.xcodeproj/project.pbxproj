@@ -59,14 +59,12 @@
 		64BDEAD41FC19EBF0036CD8E /* rightgraybackicon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAD11FC19EBF0036CD8E /* rightgraybackicon@3x.png */; };
 		64BDEADB1FC1A3FB0036CD8E /* YSTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BDEAD91FC1A3FB0036CD8E /* YSTableViewController.m */; };
 		64BDEAE51FC1A5EC0036CD8E /* YSUserSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BDEAE31FC1A5EC0036CD8E /* YSUserSettingViewController.m */; };
-		64BDEAE61FC1A5EC0036CD8E /* YSUserSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAE41FC1A5EC0036CD8E /* YSUserSettingViewController.xib */; };
 		64BDEAEA1FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BDEAE91FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m */; };
 		64BDEAED1FC1BBE80036CD8E /* UIViewController+YSCustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BDEAEC1FC1BBE80036CD8E /* UIViewController+YSCustomNavigationBar.m */; };
 		64BDEAF11FC1BDAB0036CD8E /* navbackicon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAEE1FC1BDAA0036CD8E /* navbackicon@3x.png */; };
 		64BDEAF21FC1BDAB0036CD8E /* navbackicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAEF1FC1BDAA0036CD8E /* navbackicon.png */; };
 		64BDEAF31FC1BDAB0036CD8E /* navbackicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAF01FC1BDAA0036CD8E /* navbackicon@2x.png */; };
 		64BDEAF71FC1BFF20036CD8E /* YSQianDaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BDEAF51FC1BFF20036CD8E /* YSQianDaoViewController.m */; };
-		64BDEAF81FC1BFF20036CD8E /* YSQianDaoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAF61FC1BFF20036CD8E /* YSQianDaoViewController.xib */; };
 		64BDEAFC1FC1C0800036CD8E /* qiandaobgicon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAF91FC1C0800036CD8E /* qiandaobgicon@3x.png */; };
 		64BDEAFD1FC1C0800036CD8E /* qiandaobgicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAFA1FC1C0800036CD8E /* qiandaobgicon@2x.png */; };
 		64BDEAFE1FC1C0800036CD8E /* qiandaobgicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAFB1FC1C0800036CD8E /* qiandaobgicon.png */; };
@@ -175,7 +173,6 @@
 		64BDEAD91FC1A3FB0036CD8E /* YSTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSTableViewController.m; sourceTree = "<group>"; };
 		64BDEAE21FC1A5EC0036CD8E /* YSUserSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSUserSettingViewController.h; sourceTree = "<group>"; };
 		64BDEAE31FC1A5EC0036CD8E /* YSUserSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSUserSettingViewController.m; sourceTree = "<group>"; };
-		64BDEAE41FC1A5EC0036CD8E /* YSUserSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YSUserSettingViewController.xib; sourceTree = "<group>"; };
 		64BDEAE81FC1BA510036CD8E /* UITableViewCell+YSCustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+YSCustomCell.h"; sourceTree = "<group>"; };
 		64BDEAE91FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+YSCustomCell.m"; sourceTree = "<group>"; };
 		64BDEAEB1FC1BBE80036CD8E /* UIViewController+YSCustomNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YSCustomNavigationBar.h"; sourceTree = "<group>"; };
@@ -185,7 +182,6 @@
 		64BDEAF01FC1BDAA0036CD8E /* navbackicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbackicon@2x.png"; sourceTree = "<group>"; };
 		64BDEAF41FC1BFF20036CD8E /* YSQianDaoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSQianDaoViewController.h; sourceTree = "<group>"; };
 		64BDEAF51FC1BFF20036CD8E /* YSQianDaoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSQianDaoViewController.m; sourceTree = "<group>"; };
-		64BDEAF61FC1BFF20036CD8E /* YSQianDaoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YSQianDaoViewController.xib; sourceTree = "<group>"; };
 		64BDEAF91FC1C0800036CD8E /* qiandaobgicon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qiandaobgicon@3x.png"; sourceTree = "<group>"; };
 		64BDEAFA1FC1C0800036CD8E /* qiandaobgicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qiandaobgicon@2x.png"; sourceTree = "<group>"; };
 		64BDEAFB1FC1C0800036CD8E /* qiandaobgicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiandaobgicon.png; sourceTree = "<group>"; };
@@ -296,10 +292,8 @@
 				641B3FFA1F8511AC00BF029E /* YSMeViewController.m */,
 				64BDEAE21FC1A5EC0036CD8E /* YSUserSettingViewController.h */,
 				64BDEAE31FC1A5EC0036CD8E /* YSUserSettingViewController.m */,
-				64BDEAE41FC1A5EC0036CD8E /* YSUserSettingViewController.xib */,
 				64BDEAF41FC1BFF20036CD8E /* YSQianDaoViewController.h */,
 				64BDEAF51FC1BFF20036CD8E /* YSQianDaoViewController.m */,
-				64BDEAF61FC1BFF20036CD8E /* YSQianDaoViewController.xib */,
 			);
 			name = UserInformationViewControllers;
 			path = MeViewController;
@@ -682,11 +676,9 @@
 				64BDEAAB1FC10DF70036CD8E /* bannerplaceholder@3x.png in Resources */,
 				64BDEACE1FC19D350036CD8E /* headericon@2x.png in Resources */,
 				643D25A51F77FE640034131C /* Assets.xcassets in Resources */,
-				64BDEAF81FC1BFF20036CD8E /* YSQianDaoViewController.xib in Resources */,
 				64BDEAFD1FC1C0800036CD8E /* qiandaobgicon@2x.png in Resources */,
 				64BDEAC31FC156800036CD8E /* setting@3x.png in Resources */,
 				64BDEAC01FC156800036CD8E /* message@2x.png in Resources */,
-				64BDEAE61FC1A5EC0036CD8E /* YSUserSettingViewController.xib in Resources */,
 				64BDEAD31FC19EBF0036CD8E /* rightgraybackicon@2x.png in Resources */,
 				64BDEAC61FC156800036CD8E /* setting@2x.png in Resources */,
 				64BDEAF31FC1BDAB0036CD8E /* navbackicon@2x.png in Resources */,
@@ -1064,6 +1056,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/daijian/Desktop/燕山app/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1086,6 +1079,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/daijian/Desktop/燕山app/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
