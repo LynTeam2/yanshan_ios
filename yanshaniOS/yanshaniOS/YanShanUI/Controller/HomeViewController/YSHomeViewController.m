@@ -13,10 +13,15 @@
 #import "YSHomeReusableView.h"
 
 #import "YSClassViewController.h"
+#import "YSExaminationViewController.h"
+#import "YSNewsViewController.h"
+#import "YSCourseDetailViewController.h"
+#import "YSCourseModel.h"
 
 @interface YSHomeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,YSHomeReusableViewDelegate>
 {
     YSBaseCollectionView *_collectionView;
+    NSArray *lastestCourses;
 }
 @end
 
@@ -70,10 +75,36 @@
     self.navigationItem.leftBarButtonItem = item;
 }
 
+- (void)configViewControllerParameter {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unzipFileSuccess:) name:@"unzipFileSuccess" object:nil];
+    NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"latest.json" atDocumentName:@"course"];
+    if ([jsonDic objectForKey:@"courses"]) {
+        NSArray *courses = [jsonDic objectForKey:@"courses"];
+        lastestCourses = [NSArray arrayWithArray:[YSCourseModel arrayOfModelsFromDictionaries:courses error:nil]];
+    }
+}
+
+- (void)unzipFileSuccess:(NSNotification *)noti {
+    NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"category.json" atDocumentName:@"course"];
+    NSLog(@"%@",jsonDic);
+}
+
 #pragma mark - delegate(UICollectionView)
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (indexPath.section == 1) {
+        YSCourseDetailViewController *classVC = [[YSCourseDetailViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:classVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+        return;
+    }
+    if (indexPath.section == 2) {
+        YSNewsViewController *newsVC = [[YSNewsViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:newsVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }
 }
 
 #pragma mark - dataSource(UICollectionView)
@@ -82,10 +113,9 @@
     NSInteger items = 0;
     switch (section) {
         case 0:
-            
             break;
         case 1:
-            items = 4;
+            items = lastestCourses.count > 4 ? 4 : lastestCourses.count;
             break;
         case 2:
             items = 5;
@@ -100,11 +130,12 @@
     switch (indexPath.section) {
         case 1: {
             YSClassViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"classCell" forIndexPath:indexPath];
-            [cell updateClassCellWith:nil];
+            [cell updateClassCellWith:lastestCourses[indexPath.row]];
             return cell;
         }
         case 2: {
             YSNewsViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"newsCell" forIndexPath:indexPath];
+            [cell updateClassInformation:nil];
             return cell;
         }
         default:
@@ -251,7 +282,18 @@
 #pragma mark - YSHomeReusableView delegate
 
 - (void)clickMenuButton:(UIButton *)button {
+    if ([[button currentTitle] isEqualToString:@"生活助手"]) {
+        return;
+    }
+    if ([[button currentTitle] isEqualToString:@"测评考试"]) {
+        YSExaminationViewController *examinationVC = [[YSExaminationViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:examinationVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+        return;
+    }
     YSClassViewController *classVC = [[YSClassViewController alloc] init];
+    classVC.title = [button currentTitle];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:classVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;

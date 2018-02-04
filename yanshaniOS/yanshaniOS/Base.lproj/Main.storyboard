@@ -149,7 +149,7 @@
         <!--Login View Controller-->
         <scene sceneID="kz7-Hb-Kro">
             <objects>
-                <viewController id="C7A-Ej-Xgc" customClass="YSLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginViewController" id="C7A-Ej-Xgc" customClass="YSLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3iL-WZ-L42"/>
                         <viewControllerLayoutGuide type="bottom" id="BYc-sQ-1Gq"/>

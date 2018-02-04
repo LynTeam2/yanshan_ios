@@ -17,4 +17,6 @@
     UIView *_seperateLine;
 }
 
+- (void)updateClassInformation:(id)model;
+
 @end

@@ -11,5 +11,8 @@
 
 #define kRandomColor     [UIColor colorWithRed:arc4random()%256/255.0 green:arc4random()%256/255.0 blue:arc4random()%256/255.0 alpha:1]
 
+#define kRGBColor(R,G,B,a)     [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:a]
+#define kDefaultFont          [UIFont systemFontOfSize:15.f]
+
 
 #endif /* CommonMacro_h */

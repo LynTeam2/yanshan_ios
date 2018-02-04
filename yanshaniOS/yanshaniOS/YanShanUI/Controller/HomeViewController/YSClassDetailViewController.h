@@ -10,4 +10,7 @@
 
 @interface YSClassDetailViewController : YSBaseViewController
 
+@property (nonatomic, strong) NSString *jsonFileName;
+
+
 @end

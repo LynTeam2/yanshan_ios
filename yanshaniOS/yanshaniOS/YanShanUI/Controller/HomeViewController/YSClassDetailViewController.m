@@ -7,10 +7,16 @@
 //
 
 #import "YSClassDetailViewController.h"
+
+#import "YSCourseDetailViewController.h"
 #import "YSClassViewCell.h"
+#import "YSCourseModel.h"
+#import "YSCourseItemModel.h"
+
 @interface YSClassDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_collectionView;
+    NSArray *classesArray;
 }
 @end
 
@@ -24,6 +30,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)configViewControllerParameter {
+    [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
+    if (_jsonFileName) {
+        NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:_jsonFileName atDocumentName:@"course"];
+        if ([dic objectForKey:@"courses"]) {
+            classesArray = [YSCourseModel arrayOfModelsFromDictionaries:dic[@"courses"] error:nil];
+        }
+    }
 }
 
 - (void)configView {
@@ -43,13 +59,28 @@
 #pragma mark - UICollectionView delegate
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 16;
+    return classesArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YSClassViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"classCell" forIndexPath:indexPath];
-    cell.backgroundColor = kRandomColor;
+    [cell updateClassCellWith:classesArray[indexPath.row]];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    YSCourseDetailViewController *classVC = [[YSCourseDetailViewController alloc] init];
+    YSCourseModel *model = classesArray[indexPath.row];
+    NSArray *smArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:model.scList error:nil]];
+    NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:model.mcList error:nil]];
+    NSArray *tfArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:model.tfList error:nil]];
+    NSMutableArray *itemsList = [NSMutableArray arrayWithArray:smArrary];
+    [itemsList addObjectsFromArray:mcArrary];
+    [itemsList addObjectsFromArray:tfArrary];
+    [classVC setCoursesData:itemsList];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:classVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 #pragma mark - UICollectionViewFlowLayout delegate

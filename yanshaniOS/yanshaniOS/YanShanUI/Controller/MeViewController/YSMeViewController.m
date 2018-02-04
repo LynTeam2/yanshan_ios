@@ -9,6 +9,7 @@
 #import "YSMeViewController.h"
 #import "YSUserSettingViewController.h"
 #import "YSQianDaoViewController.h"
+#import "YSMessageViewController.h"
 #import "UITableViewCell+YSCustomCell.h"
 
 @interface YSMeViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -168,8 +169,10 @@
             [self.navigationController pushViewController:qiandaoVC animated:YES];
         }
             break;
-        case 2:
-            
+        case 2:{
+            YSMessageViewController *messageVC = [[YSMessageViewController alloc] init];
+            [self.navigationController pushViewController:messageVC animated:YES];
+        }
             break;
         default:
             break;

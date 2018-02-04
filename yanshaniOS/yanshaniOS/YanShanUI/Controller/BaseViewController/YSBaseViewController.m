@@ -44,6 +44,7 @@
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.navigationController.navigationBar.translucent = NO;
     self.tabBarController.tabBar.translucent = NO;
+    
 }
 
 - (void)addNavigationItems {

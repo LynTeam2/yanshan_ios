@@ -52,6 +52,7 @@
     UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logoutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [logoutBtn setBackgroundColor:[UIColor blueColor]];
+    [logoutBtn addTarget:self action:@selector(userLogout:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logoutBtn];
     [logoutBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(30);
@@ -63,7 +64,7 @@
 
 - (void)addNavigationItems {
     self.title = @"个人设置";
-    [self addPopViewControllerButtonWithTarget:self Action:@selector(backViewController:)];
+    [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
 
 
@@ -129,6 +130,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
+#pragma mark - Button action
+
+- (void)userLogout:(UIButton *)sender {
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+   [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"loginViewController"];
     
 }
 

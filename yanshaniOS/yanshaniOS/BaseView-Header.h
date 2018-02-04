@@ -13,5 +13,7 @@
 #import "YSBaseTableView.h"
 #import "YSBaseCollectionView.h"
 #import "YSBaseScrollView.h"
+#import "YSFileManager.h"
+#import "NSString+YSStringOperation.h"
 
 #endif /* BaseView_Header_h */

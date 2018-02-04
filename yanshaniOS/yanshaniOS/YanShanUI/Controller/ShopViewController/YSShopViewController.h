@@ -11,3 +11,16 @@
 @interface YSShopViewController : YSBaseViewController
 
 @end
+
+@interface YSGoodsInfromationCell : UICollectionViewCell
+{
+    UIImageView *goodCover;
+    UILabel *goodsNameLabel;
+    UILabel *goodsPriceLabel;
+    UILabel *goodsMarketPriceLabel;
+    UIView *line;
+}
+
+- (void)updateGoodsContent:(id)model;
+
+@end

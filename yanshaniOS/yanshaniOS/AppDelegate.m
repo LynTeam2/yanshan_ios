@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:@"http://39.104.118.75/api/upgrade" toFilePath:@"zip"];
     return YES;
 }
 
@@ -47,5 +48,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)userLogout {
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    self.window.rootViewController = [sb instantiateViewControllerWithIdentifier:@"loginViewController"];
+}
 
 @end

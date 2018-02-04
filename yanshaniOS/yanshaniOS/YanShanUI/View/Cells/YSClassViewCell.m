@@ -8,6 +8,8 @@
 
 #import "YSClassViewCell.h"
 
+#import "YSCourseModel.h"
+
 @implementation YSClassViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -20,6 +22,7 @@
         _inforLabel = [[UILabel alloc] init];
         _inforLabel.userInteractionEnabled = YES;
         _inforLabel.numberOfLines = 0;
+        _inforLabel.font = [UIFont systemFontOfSize:13];
         _inforLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_inforLabel];
     }
@@ -34,8 +37,17 @@
 }
 
 - (void)updateClassCellWith:(id)model {
-    _coverImgView.backgroundColor = kRandomColor;
-    _inforLabel.backgroundColor = kRandomColor;
+    NSArray *images = @[@"classplaceholder",@"bannerplaceholder"];
+    NSInteger index = arc4random()%images.count;
+    if ([model isMemberOfClass:[YSCourseModel class]]) {
+        YSCourseModel *obj = (YSCourseModel *)model;
+        _inforLabel.text = obj.courseName;
+        _coverImgView.image = [UIImage imageNamed:images[index]];
+        return;
+    }
+    NSArray *titles = @[@"安全生产教育培训",@"工业企业标准知识讲座"];
+    _inforLabel.text = titles[index];
+    _coverImgView.image = [UIImage imageNamed:images[index]];
 }
 
 @end

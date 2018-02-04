@@ -8,6 +8,8 @@
 
 #import "YSNewsViewCell.h"
 
+#import "YSCourseCategoryModel.h"
+
 @implementation YSNewsViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -15,6 +17,7 @@
     if (self) {
         _coverImgView = [[UIImageView alloc] init];
         _coverImgView.userInteractionEnabled = YES;
+        _coverImgView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:_coverImgView];
         
         _titleLable = [[UILabel alloc] init];
@@ -24,6 +27,7 @@
         
         _subTitleLabel = [[UILabel alloc] init];
         _subTitleLabel.numberOfLines = 2;
+        _subTitleLabel.font = [UIFont systemFontOfSize:13];
         _subTitleLabel.userInteractionEnabled = YES;
         [self addSubview:_subTitleLabel];
         
@@ -57,10 +61,22 @@
     _seperateLine.frame = CGRectMake(leftSpace, height-1, width-40, 0.5);
     
     _rightIndicator.frame = CGRectMake(width-leftSpace-16, height/2-15/2, 8, 15);
-    
-    _coverImgView.backgroundColor = kRandomColor;
-    _titleLable.backgroundColor =  kRandomColor;
-    _subTitleLabel.backgroundColor = kRandomColor;
+}
+
+- (void)updateClassInformation:(id)model {
+    if([model isMemberOfClass:[YSCourseCategoryModel class]]) {
+        YSCourseCategoryModel *obj = (YSCourseCategoryModel *)model;
+        _coverImgView.image = [[YSFileManager sharedFileManager] getUnzipFileImageWithImageName:obj.iconName];
+        _titleLable.text = obj.categoryName;
+        _subTitleLabel.text = obj.introduction;
+        return;
+    }
+    NSArray *images = @[@"dianyuan",@"gongyepin",@"jiaotongyunshu",@"renyuanmiji",@"shigongjihua"];
+    NSArray *titles = @[@"化学品教学",@"为新品教学",@"工业夹雪",@"人员密集场所教学",@"交通教学"];
+    NSInteger index = arc4random() % images.count;
+    _coverImgView.image = [UIImage imageNamed:images[index]];
+    _titleLable.text = titles[index];
+    _subTitleLabel.text = @"课程主要学习相关知识内容，在实际生活中遇到的实际情况等等。";
     
 }
 

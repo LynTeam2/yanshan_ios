@@ -66,10 +66,45 @@
         UIView *tmpView = [self instanceDateViewWithFrame:CGRectMake(15+(width+5)*i, 210+20, width, height)];
         [self.view addSubview:tmpView];
     }
+    
+    UIView *line = [UIView instanceSeperateLineWithoutFrame];
+    [self.view addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.top.equalTo(self.view).offset(height+250);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"商品兑换";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:titleLabel];
+    
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.top.equalTo(line.mas_bottom).offset(20);
+    }];
+    UIView *goodsView1 = [self instanceGoodsView:CGRectMake(0, 0, frame.size.width-80, 50)];
+    [self.view addSubview:goodsView1];
+    [goodsView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(titleLabel.mas_bottom).offset(5);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(frame.size.width-80);
+    }];
+    UIView *goodsView2 = [self instanceGoodsView:CGRectMake(0, 0, frame.size.width-80, 50)];
+    [self.view addSubview:goodsView2];
+    [goodsView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(goodsView1.mas_bottom).offset(10);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(frame.size.width-80);
+    }];
 }
 
 - (void)addNavigationItems {
-    [self addPopViewControllerButtonWithTarget:self Action:@selector(backViewController:)];
+    [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
 
 #pragma mark - UIButton action
@@ -107,14 +142,41 @@
     [dateBGV addSubview:dayLabel];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.titleLabel.font = [UIFont systemFontOfSize:14.f];
     [button setTitle:@"已结束" forState:UIControlStateNormal];
-    button.frame = CGRectMake(15, CGRectGetMaxY(dayLabel.frame)+15, frame.size.width-30, 20);
-    button.layer.cornerRadius = 10;
+    [button addTarget:self action:@selector(userQiandao:) forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(15, CGRectGetMaxY(dayLabel.frame)+15, frame.size.width-30, 25);
+    button.layer.cornerRadius = button.frame.size.height/2;
     button.layer.masksToBounds = YES;
     [button setBackgroundColor:[UIColor blueColor]];
     [dateBGV addSubview:button];
     
     return dateBGV;
+}
+
+- (UIView *)instanceGoodsView:(CGRect)frame {
+    
+    UIView *bgView = [[UIView alloc] initWithFrame:frame];
+    bgView.backgroundColor = [UIColor blueColor];
+    bgView.layer.cornerRadius = frame.size.height/2;
+    bgView.layer.masksToBounds = YES;
+    
+    UILabel *goodsNameLabel = [[UILabel alloc] init];
+    goodsNameLabel.text = @"安全类电子书一本";
+    goodsNameLabel.textColor = [UIColor whiteColor];
+    goodsNameLabel.frame = CGRectMake(frame.size.height/2+10, 10, frame.size.width*0.6, frame.size.height-20);
+    [bgView addSubview:goodsNameLabel];
+    
+    UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [buyBtn setBackgroundColor:[UIColor whiteColor]];
+    [buyBtn setTitle:@"兑换" forState:UIControlStateNormal];
+    [buyBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    buyBtn.frame = CGRectMake(frame.size.width-frame.size.height, 5, frame.size.height-10, frame.size.height-10);
+    buyBtn.layer.cornerRadius = frame.size.height/2-5;
+    buyBtn.layer.masksToBounds = YES;
+    [bgView addSubview:buyBtn];
+    
+    return bgView;
 }
 
 @end

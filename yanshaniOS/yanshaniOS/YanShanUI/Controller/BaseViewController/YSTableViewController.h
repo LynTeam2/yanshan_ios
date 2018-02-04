@@ -9,5 +9,11 @@
 #import "YSBaseViewController.h"
 
 @interface YSTableViewController : YSBaseViewController
+{
+    UITableView *_mainTableView;
+    NSMutableArray *_datas;
+}
+
+- (void)reloadViewData;
 
 @end

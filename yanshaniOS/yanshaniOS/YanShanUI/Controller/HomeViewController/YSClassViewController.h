@@ -11,3 +11,29 @@
 @interface YSClassViewController : YSBaseViewController
 
 @end
+
+@interface YSClassCollectionReusableView : UICollectionReusableView
+
+@property (nonatomic, assign) NSInteger section;
+
+- (void)setReusableViewTiltle:(NSString *)title;
+
+- (void)reusableAddTarget:(id)target withAction:(SEL)action;
+
+@end
+
+@interface YSClassMenuCell : UICollectionViewCell
+
+- (void)updateCellImage:(NSString *)imageName andTitle:(NSString *)title;
+
+@end
+
+@interface YSWrongItemCell : UICollectionViewCell
+
+@property (nonatomic, strong) NSString *reusableTitle;
+
+
+- (void)updateContent:(NSString *)content;
+
+@end
+

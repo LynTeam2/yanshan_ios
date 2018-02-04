@@ -10,6 +10,8 @@
 
 @interface UIViewController (YSCustomNavigationBar)
 
-- (void)addPopViewControllerButtonWithTarget:(id)target Action:(SEL)selector;
+- (void)addPopViewControllerButtonWithTarget:(id)target action:(SEL)selector;
+
+- (UIButton *)customNavgationBarItem:(UIBarButtonItem *)barItem withTitle:(NSString *)title;
 
 @end
