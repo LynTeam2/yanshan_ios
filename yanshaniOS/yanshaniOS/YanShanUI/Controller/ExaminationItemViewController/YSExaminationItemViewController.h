@@ -28,6 +28,7 @@ typedef NS_ENUM(NSUInteger, RightItemType) {
 @property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign) NSInteger selectChoice;
 
+@property (nonatomic, assign) BOOL realExam;
 @property (nonatomic, assign) BOOL isRight;
 @property (nonatomic, assign) RightItemType itemType;
 @property (nonatomic, strong) YSCourseItemModel *itemModel;
@@ -39,6 +40,8 @@ typedef NS_ENUM(NSUInteger, RightItemType) {
 
 - (void)selectChoice:(NSInteger)selectIndex isRight:(BOOL)right;
 
+- (void)selectChoice:(NSArray *)selectIndexs;
+
 @end
 
 @interface YSExaminationChoiceCell : UITableViewCell
@@ -46,7 +49,7 @@ typedef NS_ENUM(NSUInteger, RightItemType) {
 @property (nonatomic, assign) NSInteger rightIndex;
 @property (nonatomic, strong) NSArray *rightChoices;
 @property (nonatomic, assign) BOOL mcChoice;
-
+@property (nonatomic, strong) NSMutableArray *selectChoices;
 
 @property (nonatomic, assign) id<YSExaminationChoiceCellDelegate> delegate;
 
@@ -56,10 +59,14 @@ typedef NS_ENUM(NSUInteger, RightItemType) {
 
 @interface YSExaminationItemReslutsCell : UITableViewCell
 
+- (void)showMCConfirmButton:(BOOL)show;
+
 - (void)updateAwsChoice:(NSString *)awsChoice;
 
 - (void)updateAwsAnalysis:(NSString *)analysis;
 
 - (void)showResults:(BOOL)awsbool;
+
+- (void)addTarget:(id)target confirmChoice:(SEL)choiceSEL;
 
 @end

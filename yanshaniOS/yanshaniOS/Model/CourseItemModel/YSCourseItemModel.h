@@ -30,4 +30,8 @@
 
 - (NSInteger)getSMAnswerOrTFAnswer;
 
+- (NSString *)getQuestionTypeString;
+
+- (BOOL)mcChoiceType;
+
 @end

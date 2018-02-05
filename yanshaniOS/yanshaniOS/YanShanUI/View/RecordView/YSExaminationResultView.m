@@ -9,7 +9,10 @@
 #import "YSExaminationResultView.h"
 
 @implementation YSExaminationResultView
-
+{
+    UILabel *titlesLabel[3];
+    UIButton *btn;
+}
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -34,7 +37,8 @@
             make.size.mas_equalTo(CGSizeMake(160, 20));
         }];
         
-        NSArray *titles = @[@{@"title1":@"成绩",@"title2":@"90分"},
+        NSArray *titles = @[@{@"title1":@"答对题目",@"title2":@"90分"},
+                            @{@"title1":@"是否合格",@"title2":@"合格"},
                             @{@"title1":@"考试时间",@"title2":@"90分钟"}];
         
         for (int i = 0; i < titles.count; i++) {
@@ -47,7 +51,7 @@
             UILabel *label2 = [[UILabel alloc] init];
             label2.text = dic[@"title2"];
             [self addSubview:label2];
-            
+            titlesLabel[i] = label2;
             [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self.mas_centerX).offset(-20);
                 make.top.equalTo(self).offset(140 + (40)*i);
@@ -60,12 +64,10 @@
             }];
         }
         
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setTitle:@"考试分析" forState:UIControlStateNormal];
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setTitle:@"完成考试" forState:UIControlStateNormal];
         [btn setBackgroundColor:[UIColor blueColor]];
         [self addSubview:btn];
-        
-        [btn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
         
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self).offset(-70);
@@ -75,6 +77,20 @@
         }];
     }
     return self;
+}
+
+- (void)updateScoreValue:(NSString *)score costTime:(NSString *)costTime {
+    titlesLabel[0].text = score;
+    titlesLabel[2].text = costTime;
+}
+
+- (void)userPassTheExam:(BOOL)pass {
+    titlesLabel[1].text = pass ? @"合格" : @"不合格";
+    titlesLabel[1].textColor = pass ? [UIColor blackColor] : [UIColor redColor];
+}
+
+- (void)addTarget:(id)target andSEL:(SEL)action {
+    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

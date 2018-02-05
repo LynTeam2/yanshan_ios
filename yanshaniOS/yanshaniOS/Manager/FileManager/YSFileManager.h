@@ -24,4 +24,6 @@
 
 - (UIImage *)getUnzipFileImageWithImageName:(NSString *)imageName;
 
+- (BOOL)documentPathIsExecutableFile:(NSString *)fileName;
+
 @end

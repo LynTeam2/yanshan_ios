@@ -25,11 +25,14 @@
     UIButton *currentItemBtn;
 }
 
+@property (nonatomic, assign) NSInteger itemsCount;
+
+
 - (void)updateWrongChoiceCount:(NSInteger)count;
 
 - (void)updateRightChoiceCount:(NSInteger)count;
 
-- (void)updateCurrentItemIndex:(NSInteger)index;
+- (void)updateCurrentItemIndex:(NSString *)index;
 
 - (void)updateitemCountWith:(NSInteger)count isRight:(BOOL)right;
 

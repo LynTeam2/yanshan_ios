@@ -10,4 +10,10 @@
 
 @interface YSExaminationResultView : YSBaseView
 
+- (void)updateScoreValue:(NSString *)score costTime:(NSString *)costTime;
+
+- (void)userPassTheExam:(BOOL)pass;
+
+- (void)addTarget:(id)target andSEL:(SEL)action;
+
 @end

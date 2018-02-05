@@ -50,10 +50,14 @@ static YSFileManager *fileManager = nil;
 }
 
 - (NSString *)getUnzipFilePathWithFileName:(NSString *)fileName andDocumentName:(NSString *)documentName {
-    if ([fileName isEmptyString] || [documentName isEmptyString]) {
+    if ([fileName isEmptyString]) {
         return nil;
     }
     NSString *documentPath = [self getDocumentDirectoryPath];
+    if ([documentName isEmptyString]) {
+        NSString *fullPath = [documentPath stringByAppendingPathComponent:fileName];
+        return fullPath;
+    }
     NSString *fullPath = [[NSString stringWithFormat:@"%@/upgrade/%@",documentPath,documentName] stringByAppendingPathComponent:fileName];
     return fullPath;
 }
@@ -72,6 +76,14 @@ static YSFileManager *fileManager = nil;
     NSString *imagePath = [self getUnzipFilePathWithFileName:imageName andDocumentName:@"resource"];
     UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
     return image;
+}
+
+- (BOOL)documentPathIsExecutableFile:(NSString *)fileName {
+    NSString *fullFilePath = [[self getDocumentDirectoryPath] stringByAppendingPathComponent:fileName];
+    if(![[NSFileManager defaultManager] isExecutableFileAtPath:fullFilePath]){
+        return NO;
+    }
+    return YES;
 }
 
 @end

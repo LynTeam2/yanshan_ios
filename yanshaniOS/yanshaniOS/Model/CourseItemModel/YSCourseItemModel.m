@@ -80,5 +80,22 @@
     }
 }
 
+- (NSString *)getQuestionTypeString {
+    if ([_questionType isEqualToString:@"mc"]) {
+        return @"【多选】";
+    }else if ([_questionType isEqualToString:@"sc"]){
+        return @"【单选】";
+    }else{
+        return @"【判断】";
+    }
+}
+
+- (BOOL)mcChoiceType {
+    if ([_questionType isEqualToString:@"mc"]) {
+        return YES;
+    }else {
+        return NO;
+    }
+}
 
 @end

@@ -15,5 +15,5 @@
 #import "YSBaseScrollView.h"
 #import "YSFileManager.h"
 #import "NSString+YSStringOperation.h"
-
+#import "YSCourseManager.h"
 #endif /* BaseView_Header_h */

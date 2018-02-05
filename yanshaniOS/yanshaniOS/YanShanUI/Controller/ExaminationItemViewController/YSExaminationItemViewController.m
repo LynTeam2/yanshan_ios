@@ -13,6 +13,7 @@
     UITableView *mainView;
     NSIndexPath *selectIndexPath;
     BOOL showAWS;
+    NSMutableArray *mcChoices;
 }
 @end
 
@@ -31,7 +32,7 @@
 #pragma mark - config view controller
 
 - (void)configViewControllerParameter {
-    
+    mcChoices = [NSMutableArray arrayWithCapacity:0];
 }
 
 - (void)configView {
@@ -73,11 +74,14 @@
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-                cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-                cell.textLabel.numberOfLines = 0;
             }
+            UITextView *textView = [[UITextView alloc] init];
+            textView.font = [UIFont systemFontOfSize:16.f];
+            textView.frame = CGRectMake(10, 10, self.view.frame.size.width-20, 150);
+            textView.editable = NO;
+            textView.text = [NSString stringWithFormat:@"%@%@",[_itemModel getQuestionTypeString],_itemModel.question];
+            [cell addSubview:textView];
             cell.userInteractionEnabled = NO;
-            cell.textLabel.text = _itemModel.question;
             return cell;
         }
             break;
@@ -107,6 +111,12 @@
             [cell updateAwsChoice:_itemModel.answer];
             [cell updateAwsAnalysis:_itemModel.analysis];
             [cell showResults:showAWS];
+            if (showAWS) {
+                [cell showMCConfirmButton:NO];
+            }else{
+                [cell showMCConfirmButton:[_itemModel mcChoiceType]];
+            }
+            [cell addTarget:self confirmChoice:@selector(confirmChoice:)];
             return cell;
         }
             break;
@@ -116,19 +126,38 @@
     return nil;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    if (selectIndexPath.row != indexPath.row) {
-//        return;
-//    }
-    selectIndexPath = indexPath;
-//    UITableViewCell *selectCell = [tableView cellForRowAtIndexPath:indexPath];
-//    selectCell.selected = YES;
-//    _itemModel.selectItems = @[[NSNumber numberWithInteger:indexPath.row]];
-    
+- (void)confirmChoice:(UIButton *)sender {
+    sender.hidden = YES;
+    showAWS = YES;
+    [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
+    if (mcChoices.count != [_itemModel getMCAnswer].count) {
+        self.isRight = NO;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
+            [self.delegate selectAnwser:self];
+        }
+        return;
+    }
+    for (int i = 0; i < mcChoices.count; i++) {
+        UIButton *btn = mcChoices[i];
+        for (int j = 0; j < [_itemModel getMCAnswer].count; j++) {
+            NSString *answers = [_itemModel getMCAnswer][j];
+            if (![[btn currentTitle] containsString:answers]) {
+                self.isRight = NO;
+                if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
+                    [self.delegate selectAnwser:self];
+                }
+                return;
+            }
+        }
+    }
+    self.isRight = YES;
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
         [self.delegate selectAnwser:self];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)selectChoice:(NSInteger)selectIndex isRight:(BOOL)right {
@@ -137,11 +166,19 @@
     if (right == NO) {
         showAWS = YES;
         [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
+            [self.delegate selectAnwser:self];
+        }
         return;
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
         [self.delegate selectAnwser:self];
     }
+}
+
+- (void)selectChoice:(NSArray *)selectIndexs {
+    [mcChoices removeAllObjects];
+    [mcChoices addObjectsFromArray:selectIndexs];
 }
 
 @end
@@ -156,6 +193,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         choiceButtons = [NSMutableArray arrayWithCapacity:0];
+        _selectChoices = [NSMutableArray arrayWithCapacity:0];
     }
     return self;
 }
@@ -203,8 +241,11 @@
                     NSString *imageName = [str2 containsString:str1] ? @"rchoice" : @"wchoice";
                     [iconButtons[i] setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
                     [iconButtons[i] setTitle:@" " forState:UIControlStateNormal];
+                    [_selectChoices addObject:choiceButtons[i]];
+                    if ([self.delegate respondsToSelector:@selector(selectChoice:)]&& self.delegate) {
+                        [self.delegate selectChoice:_selectChoices];
+                    }
                 }
-                
             }else{
                 NSString *imageName = _rightIndex == i ? @"rchoice" : @"wchoice";
                 [iconButtons[i] setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
@@ -229,6 +270,7 @@
     UILabel *anwserLabel;
     UILabel *nanduLabel;
     UILabel *contentLabel;
+    UIButton *mcButton;
 }
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -258,6 +300,12 @@
     contentLabel.text = @"标签为页面上的所有链接规定默认地址或默认目标。通常情况下，浏览器会从当前文档的 URL 中提取相应的元素来填写相对 URL 中的空白。";
     contentLabel.numberOfLines = 0;
     [self.contentView addSubview:contentLabel];
+    
+    mcButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mcButton setTitle:@"确认答案" forState:UIControlStateNormal];
+    [mcButton setBackgroundColor:[UIColor blueColor]];
+    [self.contentView addSubview:mcButton];
+    mcButton.hidden = YES;
 }
 
 - (void)layoutSubviews {
@@ -285,6 +333,12 @@
         make.right.equalTo(self.contentView).offset(-20);
         make.bottom.equalTo(self.contentView).offset(-20);
     }];
+    [mcButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).offset(40);
+        make.left.equalTo(self.contentView).offset(20);
+        make.right.equalTo(self.contentView).offset(-20);
+        make.height.mas_equalTo(60);
+    }];
 }
 
 - (void)updateAwsChoice:(NSString *)awsChoice {
@@ -300,6 +354,14 @@
     anwserLabel.hidden = !awsbool;
     nanduLabel.hidden = !awsbool;
     contentLabel.hidden = !awsbool;
+}
+
+- (void)showMCConfirmButton:(BOOL)show {
+    mcButton.hidden = !show;
+}
+
+- (void)addTarget:(id)target confirmChoice:(SEL)choiceSEL {
+    [mcButton addTarget:target action:choiceSEL forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

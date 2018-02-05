@@ -25,6 +25,7 @@
     NSInteger timeCount;
     NSTimer *examTimer;
     NSDictionary *examDic;
+    BOOL beginExam;
 }
 @end
 
@@ -48,6 +49,14 @@
     self.title = @"模拟考试";
     self.view.backgroundColor = [UIColor whiteColor];
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
+}
+
+- (void)backViewController:(UIButton *)sender {
+    if (resultView || !beginExam) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self jiaojuan:nil];
+    }
 }
 
 - (void)configView {
@@ -82,7 +91,7 @@
     NSArray *titles = @[
   @{@"title1":@"考试类型",@"title2":examDic[@"examType"]},
   @{@"title1":@"考试时间",@"title2":examDuration},
-  @{@"title1":@"合格标准",@"title2":@"90分"},
+  @{@"title1":@"合格标准",@"title2":standard},
   @{@"title1":@"出题标准",@"title2":standard}];
     
     for (int i = 0; i < titles.count; i++) {
@@ -157,30 +166,23 @@
 }
 
 - (void)beginTest:(UIButton *)sender {
-    
+
     self.title = [NSString stringWithFormat:@"倒计时 %@:00",examDic[@"examDuration"]];
+    beginExam = YES;
+    [examTimer invalidate];
     timeCount = [examDic[@"examDuration"] integerValue]*60;
     examTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countTime:) userInfo:nil repeats:YES];
     
     testItems = [NSMutableArray arrayWithCapacity:0];
     vcs = [NSMutableArray arrayWithCapacity:0];
     
-    if ([examDic objectForKey:@"scList"]) {
-        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:[examDic objectForKey:@"scList"] error:nil]];
+    NSArray *jsonArray = @[@"simplechoice.json",@"multiplechoice.json",@"truefalse.json"];
+    
+    for (int i = 0; i < jsonArray.count; i++) {
+        NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:jsonArray[i] atDocumentName:@"question"];
+        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:[jsonDic objectForKey:@"questions"] error:nil]];
         if (mcArrary.count) {
-            [testItems addObject:mcArrary];
-        }
-    }
-    if ([examDic objectForKey:@"mcList"]) {
-        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:[examDic objectForKey:@"mcList"] error:nil]];
-        if (mcArrary.count) {
-            [testItems addObject:mcArrary];
-        }
-    }
-    if ([examDic objectForKey:@"tfList"]) {
-        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:[examDic objectForKey:@"tfList"] error:nil]];
-        if (mcArrary.count) {
-            [testItems addObject:mcArrary];
+            [testItems addObjectsFromArray:mcArrary];
         }
     }
     if (testItems.count == 0) {
@@ -219,6 +221,8 @@
     toolView = [[YSExaminationToolView alloc] initWithFrame:toolFrame];
     [toolView addtarget:self method:@selector(jiaojuan:)];
     [self.view addSubview:toolView];
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,testItems.count]];
+    toolView.itemsCount = testItems.count;
 }
 
 - (void)cancel:(UITapGestureRecognizer *)tap {
@@ -269,16 +273,35 @@
     if (nil == resultView) {
         resultView = [[YSExaminationResultView alloc] initWithFrame:self.view.bounds];
     }
+    [resultView addTarget:self andSEL:@selector(showExamResult:)];
     [self.view addSubview:resultView];
+    [examTimer invalidate];
+    examTimer = nil;
+    NSString *examDuration = [NSString stringWithFormat:@"%@分钟",examDic[@"examDuration"]];
+    [resultView updateScoreValue:[NSString stringWithFormat:@"%ld",rightCount] costTime:examDuration];
+    if (rightCount >= [examDic[@"standard"] integerValue]) {
+        [resultView userPassTheExam:YES];
+    }else{
+        [resultView userPassTheExam:NO];
+    }
+}
+
+- (void)showExamResult:(UIButton *)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+//    UITabBarController *tab = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+//    tab.tabBar.hidden = NO;
+//    tab.selectedIndex = 1;
 }
 
 -(UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSUInteger index = ((YSExaminationItemViewController *)viewController).index;
     if ((index == 0) || (index == NSNotFound)) {
+        [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,testItems.count]];
         return nil;
     }
     index -= 1;
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,testItems.count]];
     return [vcs objectAtIndex:index];
 }
 
@@ -292,6 +315,7 @@
     if (index == [vcs count]) {
         return nil;
     }
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,testItems.count]];
     return [vcs objectAtIndex:index];
 }
 
@@ -364,7 +388,7 @@
     [headerView addSubview:wrongItemBtn];
     
     currentItemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [currentItemBtn setTitle:@"0/20" forState:UIControlStateNormal];
+    [currentItemBtn setTitle:@"0/0" forState:UIControlStateNormal];
     [headerView addSubview:currentItemBtn];
     
     icon1Btn.tag = kJiaoJuanTag;
@@ -467,21 +491,33 @@
     [rightItemBtn setTitle:[NSString stringWithFormat:@"%ld",count] forState:UIControlStateNormal];
 }
 
-- (void)updateCurrentItemIndex:(NSInteger)index {
-    
+- (void)updateCurrentItemIndex:(NSString *)index {
+    [currentItemBtn setTitle:index forState:UIControlStateNormal];
+}
+
+- (void)setItemsCount:(NSInteger)itemsCount {
+    _itemsCount = itemsCount;
+    [examView reloadData];
 }
 
 #pragma mark - delegate - datasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 55;
+    return _itemsCount;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.layer.cornerRadius = 15;
+    cell.layer.borderWidth = 0.5;
+    cell.layer.borderColor = [UIColor grayColor].CGColor;
     cell.layer.masksToBounds = YES;
-    cell.backgroundColor = kRandomColor;
+    [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    UILabel *label = [[UILabel alloc] init];
+    label.text = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.frame = CGRectMake(0, 0, 30, 30);
+    [cell addSubview:label];
     return cell;
 }
 
