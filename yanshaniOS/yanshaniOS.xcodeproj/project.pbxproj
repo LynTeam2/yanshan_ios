@@ -98,6 +98,7 @@
 		64BDEB021FC1C8A70036CD8E /* whitecircle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEAFF1FC1C8A60036CD8E /* whitecircle@3x.png */; };
 		64BDEB031FC1C8A70036CD8E /* whitecircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEB001FC1C8A60036CD8E /* whitecircle@2x.png */; };
 		64BDEB041FC1C8A70036CD8E /* whitecircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEB011FC1C8A60036CD8E /* whitecircle.png */; };
+		64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C7F16C202C8C6E0017272A /* YSExamManager.m */; };
 		64F41F321FD285F800FC636D /* UIView+YSCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F311FD285F800FC636D /* UIView+YSCustomView.m */; };
 		64F41F351FD28F1E00FC636D /* YSMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F341FD28F1E00FC636D /* YSMessageViewController.m */; };
 		64F41F3A1FD3BA2800FC636D /* YSMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F391FD3BA2800FC636D /* YSMessageModel.m */; };
@@ -275,6 +276,8 @@
 		64BDEAFF1FC1C8A60036CD8E /* whitecircle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitecircle@3x.png"; sourceTree = "<group>"; };
 		64BDEB001FC1C8A60036CD8E /* whitecircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitecircle@2x.png"; sourceTree = "<group>"; };
 		64BDEB011FC1C8A60036CD8E /* whitecircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whitecircle.png; sourceTree = "<group>"; };
+		64C7F16B202C8C6E0017272A /* YSExamManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExamManager.h; sourceTree = "<group>"; };
+		64C7F16C202C8C6E0017272A /* YSExamManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamManager.m; sourceTree = "<group>"; };
 		64F41F301FD285F800FC636D /* UIView+YSCustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+YSCustomView.h"; sourceTree = "<group>"; };
 		64F41F311FD285F800FC636D /* UIView+YSCustomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+YSCustomView.m"; sourceTree = "<group>"; };
 		64F41F331FD28F1E00FC636D /* YSMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSMessageViewController.h; sourceTree = "<group>"; };
@@ -445,6 +448,8 @@
 		6406D48C2028A5E10075D089 /* ExamManager */ = {
 			isa = PBXGroup;
 			children = (
+				64C7F16B202C8C6E0017272A /* YSExamManager.h */,
+				64C7F16C202C8C6E0017272A /* YSExamManager.m */,
 			);
 			path = ExamManager;
 			sourceTree = "<group>";
@@ -1219,6 +1224,7 @@
 				64583CFE2025BB64002099D4 /* YSNetWorkEngine.m in Sources */,
 				64583CE6201E0DA7002099D4 /* YSTestViewController.m in Sources */,
 				6406D47A202729B00075D089 /* NSString+YSStringOperation.m in Sources */,
+				64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */,
 				6403AEB51FF8822E00E06D71 /* YSExaminationResultView.m in Sources */,
 				64F41F3A1FD3BA2800FC636D /* YSMessageModel.m in Sources */,
 				641B40941F8A3B0500BF029E /* FSPagerView.swift in Sources */,

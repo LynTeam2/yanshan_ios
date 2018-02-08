@@ -7,6 +7,7 @@
 //
 
 #import "YSExaminationItemViewController.h"
+#import "YSCourseManager.h"
 
 @interface YSExaminationItemViewController ()<UITableViewDelegate,UITableViewDataSource,YSExaminationChoiceCellDelegate>
 {
@@ -132,6 +133,7 @@
     [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
     if (mcChoices.count != [_itemModel getMCAnswer].count) {
         self.isRight = NO;
+        [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
         if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
             [self.delegate selectAnwser:self];
         }
@@ -143,6 +145,7 @@
             NSString *answers = [_itemModel getMCAnswer][j];
             if (![[btn currentTitle] containsString:answers]) {
                 self.isRight = NO;
+                [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
                 if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
                     [self.delegate selectAnwser:self];
                 }
@@ -165,6 +168,7 @@
     self.isRight = right;
     if (right == NO) {
         showAWS = YES;
+        [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
         [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
         if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
             [self.delegate selectAnwser:self];

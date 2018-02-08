@@ -18,7 +18,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:@"http://39.104.118.75/api/upgrade" toFilePath:@"zip"];
-    [[YSCourseManager sharedCourseManager] saveCourseItem:nil];
     return YES;
 }
 

@@ -54,7 +54,7 @@ static YSFileManager *fileManager = nil;
         return nil;
     }
     NSString *documentPath = [self getDocumentDirectoryPath];
-    if ([documentName isEmptyString]) {
+    if ([documentName isEmptyString] || !documentName) {
         NSString *fullPath = [documentPath stringByAppendingPathComponent:fileName];
         return fullPath;
     }

@@ -9,6 +9,8 @@
 #import "YSExaminationViewController.h"
 #import "YSExaminationItemViewController.h"
 #import "YSExaminationResultView.h"
+#import "YSExamManager.h"
+#import "YSExaminationItemModel.h"
 
 #define kJiaoJuanTag     2000
 #define kTiMuTag         2001
@@ -26,6 +28,7 @@
     NSTimer *examTimer;
     NSDictionary *examDic;
     BOOL beginExam;
+    YSExaminationItemModel *examModel;
 }
 @end
 
@@ -166,9 +169,9 @@
 }
 
 - (void)beginTest:(UIButton *)sender {
-
     self.title = [NSString stringWithFormat:@"倒计时 %@:00",examDic[@"examDuration"]];
     beginExam = YES;
+    examModel = [[YSExaminationItemModel alloc] init];
     [examTimer invalidate];
     timeCount = [examDic[@"examDuration"] integerValue]*60;
     examTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countTime:) userInfo:nil repeats:YES];
@@ -281,9 +284,20 @@
     [resultView updateScoreValue:[NSString stringWithFormat:@"%ld",rightCount] costTime:examDuration];
     if (rightCount >= [examDic[@"standard"] integerValue]) {
         [resultView userPassTheExam:YES];
+        examModel.examJudgement = @"成绩合格";
     }else{
         [resultView userPassTheExam:NO];
+        examModel.examJudgement = @"成绩不合格";
     }
+    NSDate *now = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy.MM.dd HH:mm"];
+    NSString *current = [formatter stringFromDate:now];
+    examModel.rightItemCount = rightCount;
+    examModel.rightItemCount = testItems.count - rightCount;
+    examModel.examScore = rightCount;
+    examModel.dateString = current;
+    [[YSExamManager sharedExamManager] saveCurrentExam:examModel];
 }
 
 - (void)showExamResult:(UIButton *)sender {
@@ -323,9 +337,11 @@
     NSLog(@"%ld -- %ld", examinationItemController.index,examinationItemController.isRight);
     if (examinationItemController.isRight) {
         rightCount++;
+        [examModel saveRightItem:examinationItemController.itemModel];
         [toolView updateRightChoiceCount:rightCount];
     }else{
         wrongCount++;
+        [examModel saveWrongItem:examinationItemController.itemModel];
         [toolView updateWrongChoiceCount:wrongCount];
     }
 }

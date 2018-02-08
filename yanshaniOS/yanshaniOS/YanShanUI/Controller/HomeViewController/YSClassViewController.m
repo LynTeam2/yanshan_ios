@@ -18,6 +18,8 @@
 #import "YSCourseDetailViewController.h"
 #import "YSExaminationItemViewController.h"
 
+#import "YSCourseManager.h"
+
 @interface YSClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_collectionView;
@@ -35,6 +37,11 @@
     self.hidesBottomBarWhenPushed = YES;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self wrongItems];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -50,20 +57,17 @@
         coursesArray = [NSArray arrayWithArray:courses];
         specialCoursesArray = [NSArray arrayWithArray:courses];
     }
-    [self wrongItems];
 }
 
 - (void)wrongItems {
-    NSArray *arr = @[@"multiplechoice.json",@"simplechoice.json",@"truefalse.json"];
-    for (int i = 0; i < arr.count; i++) {
-        NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:arr[i] atDocumentName:@"question"];
-        if ([dic objectForKey:@"questions"]) {
-            NSArray *classesArray = [YSCourseItemModel arrayOfModelsFromDictionaries:dic[@"questions"] error:nil];
-            if (classesArray.count) {
-                wrongItemsArray = [NSArray arrayWithArray:classesArray];
-            }
-        }
+    if ([[YSCourseManager sharedCourseManager] getAllWrongCourseItem].count) {
+        wrongItemsArray = [NSArray arrayWithArray:[[YSCourseManager sharedCourseManager] getAllWrongCourseItem]];
+    }else{
+        YSCourseItemModel *model = [[YSCourseItemModel alloc] init];
+        model.question = @"暂无错题";
+        wrongItemsArray = [NSArray arrayWithObject:model];
     }
+    [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:3]];
 }
 
 - (void)configView {
@@ -181,6 +185,12 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:detailVC animated:YES];
     }else if (indexPath.section == 3) {
+        if (wrongItemsArray.count == 1) {
+            YSCourseItemModel *model = wrongItemsArray[0];
+            if ([model.question isEqualToString:@"暂无错题"]) {
+                return;
+            }
+        }
         YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];
         vc.index = indexPath.row;
         vc.itemType = RightItemTypeNone;

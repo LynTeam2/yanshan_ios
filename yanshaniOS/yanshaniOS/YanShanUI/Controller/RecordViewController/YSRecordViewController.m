@@ -8,10 +8,14 @@
 
 #import "YSRecordViewController.h"
 #import "YSHistoryScoreViewController.h"
+#import "YSExamManager.h"
+#import "YSExaminationItemModel.h"
 
 @interface YSRecordViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
-    
+    NSArray *allExams;
+    YSExaminationItemModel *examModel;
+    UITableView *mainView;
 }
 @end
 
@@ -20,6 +24,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if ([[YSExamManager sharedExamManager] getAllExams].count && !examModel) {
+        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
+        examModel = allExams[0];
+        [mainView reloadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,7 +47,7 @@
 
 - (void)configView {
     
-    UITableView *mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     mainView.delegate = self;
     mainView.dataSource = self;
     mainView.showsVerticalScrollIndicator = NO;
@@ -65,14 +77,18 @@
     }];
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = @"90分 答错9题 成绩合格";
+    label.text = @"暂无考试成绩统计";
     label.backgroundColor = [UIColor redColor];
     label.textColor = [UIColor whiteColor];
     label.layer.cornerRadius = 33;
     label.layer.masksToBounds = YES;
     label.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:label];
-    
+    if ([[YSExamManager sharedExamManager] getAllExams].count && !examModel) {
+        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
+        examModel = allExams[0];
+        label.text = [NSString stringWithFormat:@"%ld分 答错%ld题 %@",examModel.examScore,examModel.wrongItemCount,examModel.examJudgement];
+    }
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(iconView.mas_bottom).offset(10);
         make.centerX.equalTo(iconView);
@@ -101,7 +117,7 @@
 #pragma mark - UITableView delegate - datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return examModel ? 3 : 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -113,8 +129,10 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-    NSArray *arr1 = @[@"单选题",@"多选题",@"判断题",@"视频题"];
-    NSArray *arr2 = @[@"错题率10%",@"错题率20%",@"错题率30%",@"错题率10%"];
+    NSArray *arr1 = @[@"单选题",@"多选题",@"判断题"];
+    NSArray *arr2 = @[[NSString stringWithFormat:@"错题%ld道",[examModel getSCItem].count],
+    [NSString stringWithFormat:@"错题%ld道",[examModel getMCItem].count],
+    [NSString stringWithFormat:@"错题%ld道",[examModel getTFItem].count]];
     cell.textLabel.text = arr1[indexPath.row];
     cell.detailTextLabel.text = arr2[indexPath.row];
     return cell;

@@ -13,7 +13,9 @@ static  NSString *recentCourseFile = @"recentcourses.plist";
 static  NSString *allCourseFile = @"allcourses.plist";
 
 @implementation YSCourseManager
-
+{
+    NSMutableArray *recentCourses;
+}
 + (instancetype)sharedCourseManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -31,38 +33,41 @@ static  NSString *allCourseFile = @"allcourses.plist";
         if (![[YSFileManager sharedFileManager] documentPathIsExecutableFile:allCourseFile]) {
             [[YSFileManager sharedFileManager] createFileName:allCourseFile atFilePath:[[YSFileManager sharedFileManager] getDocumentDirectoryPath]];
         }
-        
+        recentCourses = [NSMutableArray arrayWithCapacity:0];
     }
     return self;
 }
 
 - (void)saveCourseItem:(YSCourseItemModel *)model {
-    
-    NSDictionary *dic = [model toDictionary];
-    NSMutableArray *mArr = [NSMutableArray arrayWithCapacity:0];
-    [mArr addObject:dic];
-    NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:recentCourseFile andDocumentName:nil];
-    NSArray *arr = [NSArray arrayWithContentsOfFile:filePath];
-    [mArr addObjectsFromArray:arr];
-    [mArr writeToFile:filePath atomically:YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"question == %@", model.question];
+    NSArray *filteredArray = [recentCourses filteredArrayUsingPredicate:predicate];
+    if (filteredArray.count) {
+        return;
+    }
+    [recentCourses addObject:model];
 }
 
-- (NSArray *)recentWrongItem {
-    return nil;
+- (NSArray *)getRecentWrongCourseItem {
+    return recentCourses;
 }
 
 - (void)mergeCourseItem {
-    
+    NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:allCourseFile andDocumentName:nil];
+    NSArray *olderCourses = [NSArray arrayWithContentsOfFile:filePath];
+    NSMutableArray *allCourses = [NSMutableArray arrayWithArray:recentCourses];
+    [allCourses addObjectsFromArray:olderCourses];
+    NSArray *mArr = [YSCourseItemModel arrayOfDictionariesFromModels:allCourses];
+    [mArr writeToFile:filePath atomically:YES];
 }
 
-- (NSArray *)allWrongItem {
+- (NSArray *)getAllWrongCourseItem {
     NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:allCourseFile andDocumentName:nil];
     NSArray *allArr = [NSArray arrayWithContentsOfFile:filePath];
     if (allArr.count == 0) {
-        
+        return recentCourses;
     }
-    
-    return allArr;
+    NSArray *models = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:allArr error:nil]];
+    return models;
 }
 
 @end

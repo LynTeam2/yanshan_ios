@@ -7,6 +7,7 @@
 //
 
 #import <JSONModel/JSONModel.h>
+#import "YSCourseItemModel.h"
 
 typedef NS_ENUM(NSUInteger, YSExaminationItemType) {
     YSExaminationItemTypeRadio,
@@ -14,19 +15,29 @@ typedef NS_ENUM(NSUInteger, YSExaminationItemType) {
     YSExaminationItemTypeJudgment
 };
 
-@interface YSExaminationItemModel : JSONModel
+@interface YSExaminationItemModel : NSObject
 
-@property (nonatomic, strong) NSString <Optional>*itemContent;
+@property (nonatomic, assign) NSInteger examScore;
 
-@property (nonatomic, strong) NSString <Optional>*itemImageUrl;
+@property (nonatomic, strong) NSString *examJudgement;
 
-@property (nonatomic, assign) YSExaminationItemType itemType;
+@property (nonatomic, strong) NSArray <YSCourseItemModel *>*items;
 
-@property (nonatomic, strong) NSArray <Optional>*itemChoices;
+@property (nonatomic, strong) NSString *dateString;
 
-@property (nonatomic, strong) NSArray <Optional>*selectItems;
+@property (nonatomic, assign) NSInteger rightItemCount;
 
-@property (nonatomic, strong) NSArray <Optional>*rightItems;
+@property (nonatomic, assign) NSInteger wrongItemCount;
+
+- (NSArray *)getSCItem;
+
+- (NSArray *)getMCItem;
+
+- (NSArray *)getTFItem;
+
+- (void)saveWrongItem:(YSCourseItemModel *)model;
+
+- (void)saveRightItem:(YSCourseItemModel *)model;
 
 
 @end

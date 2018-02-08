@@ -7,11 +7,14 @@
 //
 
 #import "YSHistoryScoreViewController.h"
+#import "YSExamManager.h"
+#import "YSExaminationItemModel.h"
 
 @interface YSHistoryScoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 {
     UITableView *mainView;
+    NSArray *allExams;
 }
 
 @end
@@ -52,7 +55,7 @@
     
     UILabel *circleLabel = [[UILabel alloc] init];
     circleLabel.backgroundColor = [UIColor orangeColor];
-    circleLabel.text = @"累计做题\n20次";
+    circleLabel.text = @"累计做题\n0次";
     circleLabel.numberOfLines = 0;
     circleLabel.layer.cornerRadius = 75;
     circleLabel.layer.masksToBounds = YES;
@@ -77,8 +80,15 @@
         make.right.equalTo(headerView);
         make.height.mas_equalTo(0.5);
     }];
-    
-    NSArray *array = @[@"28\n\n及格次数",@"28\n\n累计考试",@"28\n\n最高分"];
+    if ([[YSExamManager sharedExamManager] getAllExams].count) {
+        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
+        circleLabel.text = [NSString stringWithFormat:@"累计做题\n%ld次",allExams.count];
+    }
+    YSExamManager *manager = [YSExamManager sharedExamManager];
+   NSArray *array = @[
+      [NSString stringWithFormat:@"%ld\n\n及格次数",[manager getPassCount]],
+      [NSString stringWithFormat:@"%ld\n\n累计考试",[manager getAllExams].count],
+      [NSString stringWithFormat:@"6\n\n最高分"]];
     for (int i = 0; i < array.count; i++) {
         UILabel *label = [[UILabel  alloc] init];
         label.text = array[i];
@@ -106,7 +116,7 @@
 #pragma mark - UITableView delegate - datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return allExams.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -118,20 +128,28 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    
+    YSExaminationItemModel *model = allExams[indexPath.row];
     UILabel *scoreLabel = [[UILabel alloc] init];
-    scoreLabel.text = @"99分";
+    scoreLabel.text = [NSString stringWithFormat:@"答错%ld题",model.wrongItemCount];
     [cell.contentView addSubview:scoreLabel];
     
     UILabel *timeLabel = [[UILabel alloc] init];
-    timeLabel.text = @"90:00  2017.08.12 12:11";
+    timeLabel.text = [NSString stringWithFormat:@"%@  %@",model.examJudgement,model.dateString];
     timeLabel.textAlignment = NSTextAlignmentRight;
     [cell.contentView addSubview:timeLabel];
     
     [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(cell.contentView).offset(20);
+        make.top.equalTo(cell.contentView);
+        make.height.equalTo(cell.contentView);
+        make.width.mas_offset(100);
     }];
-    
+    [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(scoreLabel.mas_right).offset(20);
+        make.top.equalTo(cell.contentView);
+        make.height.equalTo(cell.contentView);
+        make.right.equalTo(cell.contentView);
+    }];
     return cell;
 }
 

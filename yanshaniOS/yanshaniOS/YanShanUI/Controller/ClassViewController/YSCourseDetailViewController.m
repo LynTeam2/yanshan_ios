@@ -8,7 +8,7 @@
 
 #import "YSCourseDetailViewController.h"
 #import "YSExaminationItemViewController.h"
-
+#import "YSCourseManager.h"
 #import "YSCourseItemModel.h"
 
 @interface YSCourseDetailViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate>
@@ -24,6 +24,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[YSCourseManager sharedCourseManager] mergeCourseItem];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -16,9 +16,9 @@
 
 - (void)saveCourseItem:(YSCourseItemModel *)model;
 
-- (NSArray *)recentWrongCourseItem;
+- (NSArray *)getRecentWrongCourseItem;
 
-- (NSArray *)allWrongCourseItem;
+- (NSArray *)getAllWrongCourseItem;
 
 - (void)mergeCourseItem;
 
