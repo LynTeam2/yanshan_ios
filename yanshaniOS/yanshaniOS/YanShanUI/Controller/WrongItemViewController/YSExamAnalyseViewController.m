@@ -1,18 +1,17 @@
 //
-//  YSRecordViewController.m
+//  YSExamAnalyseViewController.m
 //  yanshaniOS
 //
-//  Created by 代健 on 2017/10/4.
-//  Copyright © 2017年 jiandai. All rights reserved.
+//  Created by 代健 on 2018/2/25.
+//  Copyright © 2018年 jiandai. All rights reserved.
 //
 
-#import "YSRecordViewController.h"
-#import "YSHistoryScoreViewController.h"
+#import "YSExamAnalyseViewController.h"
 #import "YSExamManager.h"
 #import "YSExaminationItemModel.h"
 #import "YSWrongItemsViewController.h"
 
-@interface YSRecordViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface YSExamAnalyseViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *allExams;
     YSExaminationItemModel *examModel;
@@ -21,11 +20,16 @@
 }
 @end
 
-@implementation YSRecordViewController
+@implementation YSExamAnalyseViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -35,11 +39,6 @@
         testResultLabel.text = [NSString stringWithFormat:@"%ld分 答错%ld题 %@",examModel.examScore,examModel.wrongItemCount,examModel.examJudgement];
         [mainView reloadData];
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - config view controller
@@ -104,17 +103,11 @@
 }
 
 - (void)addNavigationItems {
-    UIButton *sender = [self customNavgationBarItem:self.navigationItem.rightBarButtonItem withTitle:@"历史成绩"];
-    [sender addTarget:self action:@selector(historyScore:) forControlEvents:UIControlEventTouchUpInside];
+    [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
 
-- (void)historyScore:(UIButton *)sender {
-    
-    YSHistoryScoreViewController *scoreVC = [[YSHistoryScoreViewController alloc] init];
-    scoreVC.title = @"历史成绩";
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:scoreVC animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
+- (void)setExamAnalyseModel:(YSExaminationItemModel *)model {
+    examModel = model;
 }
 
 #pragma mark - UITableView delegate - datasource
@@ -134,8 +127,8 @@
     }
     NSArray *arr1 = @[@"单选题",@"多选题",@"判断题"];
     NSArray *arr2 = @[[NSString stringWithFormat:@"错题%ld道",[examModel getSCItem].count],
-    [NSString stringWithFormat:@"错题%ld道",[examModel getMCItem].count],
-    [NSString stringWithFormat:@"错题%ld道",[examModel getTFItem].count]];
+                      [NSString stringWithFormat:@"错题%ld道",[examModel getMCItem].count],
+                      [NSString stringWithFormat:@"错题%ld道",[examModel getTFItem].count]];
     cell.textLabel.text = arr1[indexPath.row];
     cell.detailTextLabel.text = arr2[indexPath.row];
     return cell;

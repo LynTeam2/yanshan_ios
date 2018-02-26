@@ -29,7 +29,7 @@ static NSString *examplist = @"exam.plist";
 
 - (void)saveCurrentExam:(YSExaminationItemModel *)model {
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    if (model.examScore) {
+    if (model.examScore >= 0) {
         [dic setObject:@(model.examScore) forKey:@"score"];
     }
     if (model.examJudgement) {
@@ -38,11 +38,11 @@ static NSString *examplist = @"exam.plist";
     if (model.dateString) {
         [dic setObject:model.dateString forKey:@"date"];
     }
-    if (model.rightItemCount) {
+    if (model.rightItemCount >= 0) {
         [dic setObject:@(model.rightItemCount) forKey:@"rightcount"];
     }
-    if (model.wrongItemCount) {
-        [dic setObject:@(model.rightItemCount) forKey:@"wrongcount"];
+    if (model.wrongItemCount >= 0) {
+        [dic setObject:@(model.wrongItemCount) forKey:@"wrongcount"];
     }
     if (model.items.count) {
         NSArray *arr = [YSCourseItemModel arrayOfDictionariesFromModels:model.items];
@@ -81,7 +81,7 @@ static NSString *examplist = @"exam.plist";
                 model.rightItemCount = [dic[@"count"] integerValue];
             }
             if (dic[@"wrongcount"]) {
-                model.rightItemCount = [dic[@"wrongcount"] integerValue];
+                model.wrongItemCount = [dic[@"wrongcount"] integerValue];
             }
             if (dic[@"items"]) {
                 NSArray *arr = [YSCourseItemModel arrayOfModelsFromDictionaries:dic[@"items"] error:nil];

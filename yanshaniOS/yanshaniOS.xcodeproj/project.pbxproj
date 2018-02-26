@@ -55,6 +55,8 @@
 		643D25A81F77FE640034131C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643D25A61F77FE640034131C /* LaunchScreen.storyboard */; };
 		643D25B31F77FE640034131C /* yanshaniOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25B21F77FE640034131C /* yanshaniOSTests.m */; };
 		643D25BE1F77FE640034131C /* yanshaniOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25BD1F77FE640034131C /* yanshaniOSUITests.m */; };
+		64572EEE2042EC81003F3B05 /* YSWrongItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64572EED2042EC81003F3B05 /* YSWrongItemsViewController.m */; };
+		64572EF12042FBC4003F3B05 /* YSExamAnalyseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64572EF02042FBC4003F3B05 /* YSExamAnalyseViewController.m */; };
 		64583CE6201E0DA7002099D4 /* YSTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CE5201E0DA7002099D4 /* YSTestViewController.m */; };
 		64583CF42020A408002099D4 /* YSWrongItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CF32020A408002099D4 /* YSWrongItemViewController.m */; };
 		64583CF72020A709002099D4 /* YSSpecialItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CF62020A709002099D4 /* YSSpecialItemViewController.m */; };
@@ -215,6 +217,10 @@
 		643D25B91F77FE640034131C /* yanshaniOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yanshaniOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		643D25BD1F77FE640034131C /* yanshaniOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = yanshaniOSUITests.m; sourceTree = "<group>"; };
 		643D25BF1F77FE640034131C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64572EEC2042EC81003F3B05 /* YSWrongItemsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSWrongItemsViewController.h; sourceTree = "<group>"; };
+		64572EED2042EC81003F3B05 /* YSWrongItemsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSWrongItemsViewController.m; sourceTree = "<group>"; };
+		64572EEF2042FBC4003F3B05 /* YSExamAnalyseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExamAnalyseViewController.h; sourceTree = "<group>"; };
+		64572EF02042FBC4003F3B05 /* YSExamAnalyseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamAnalyseViewController.m; sourceTree = "<group>"; };
 		64583CE4201E0DA7002099D4 /* YSTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSTestViewController.h; sourceTree = "<group>"; };
 		64583CE5201E0DA7002099D4 /* YSTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSTestViewController.m; sourceTree = "<group>"; };
 		64583CF22020A408002099D4 /* YSWrongItemViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSWrongItemViewController.h; sourceTree = "<group>"; };
@@ -484,16 +490,17 @@
 		641B3FE41F83381900BF029E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				641B3FE61F850ED100BF029E /* BaseViewController */,
 				6403AEBA1FF88A4500E06D71 /* ClassViewController */,
-				6403AEB61FF887D600E06D71 /* NewsViewController */,
 				6403AEA61FF7F25C00E06D71 /* ExaminationItemViewController */,
 				6403AEA21FF76C5700E06D71 /* ExaminationViewController */,
 				64BDEAAD1FC110020036CD8E /* GSLoginViewController */,
-				641B3FF01F8510FA00BF029E /* UserInformationViewControllers */,
+				641B3FEA1F850F5300BF029E /* HomeViewControllers */,
+				6403AEB61FF887D600E06D71 /* NewsViewController */,
 				641B3FF11F8510FA00BF029E /* RecordViewControllers */,
 				641B3FF21F8510FA00BF029E /* ShopViewControllers */,
-				641B3FEA1F850F5300BF029E /* HomeViewControllers */,
-				641B3FE61F850ED100BF029E /* BaseViewController */,
+				641B3FF01F8510FA00BF029E /* UserInformationViewControllers */,
+				64572EEB2042EC5B003F3B05 /* WrongItemViewController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -696,6 +703,17 @@
 				643D25BF1F77FE640034131C /* Info.plist */,
 			);
 			path = yanshaniOSUITests;
+			sourceTree = "<group>";
+		};
+		64572EEB2042EC5B003F3B05 /* WrongItemViewController */ = {
+			isa = PBXGroup;
+			children = (
+				64572EEC2042EC81003F3B05 /* YSWrongItemsViewController.h */,
+				64572EED2042EC81003F3B05 /* YSWrongItemsViewController.m */,
+				64572EEF2042FBC4003F3B05 /* YSExamAnalyseViewController.h */,
+				64572EF02042FBC4003F3B05 /* YSExamAnalyseViewController.m */,
+			);
+			path = WrongItemViewController;
 			sourceTree = "<group>";
 		};
 		64583CFB2025B9D2002099D4 /* NetWorkEngine */ = {
@@ -1223,6 +1241,7 @@
 				643D259D1F77FE640034131C /* AppDelegate.m in Sources */,
 				64583CFE2025BB64002099D4 /* YSNetWorkEngine.m in Sources */,
 				64583CE6201E0DA7002099D4 /* YSTestViewController.m in Sources */,
+				64572EF12042FBC4003F3B05 /* YSExamAnalyseViewController.m in Sources */,
 				6406D47A202729B00075D089 /* NSString+YSStringOperation.m in Sources */,
 				64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */,
 				6403AEB51FF8822E00E06D71 /* YSExaminationResultView.m in Sources */,
@@ -1246,6 +1265,7 @@
 				641B40051F89C69000BF029E /* YSNewsViewCell.m in Sources */,
 				6403AE9D1FF73ECB00E06D71 /* YSExaminationItemModel.m in Sources */,
 				64BDEAED1FC1BBE80036CD8E /* UIViewController+YSCustomNavigationBar.m in Sources */,
+				64572EEE2042EC81003F3B05 /* YSWrongItemsViewController.m in Sources */,
 				641B40021F89C68100BF029E /* YSClassViewCell.m in Sources */,
 				641B3FFB1F8511AC00BF029E /* YSMeViewController.m in Sources */,
 				64F41F321FD285F800FC636D /* UIView+YSCustomView.m in Sources */,

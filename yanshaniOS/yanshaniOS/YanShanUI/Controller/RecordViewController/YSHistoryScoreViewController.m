@@ -9,6 +9,7 @@
 #import "YSHistoryScoreViewController.h"
 #import "YSExamManager.h"
 #import "YSExaminationItemModel.h"
+#import "YSExamAnalyseViewController.h"
 
 @interface YSHistoryScoreViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -85,7 +86,7 @@
         circleLabel.text = [NSString stringWithFormat:@"累计做题\n%ld次",allExams.count];
     }
     YSExamManager *manager = [YSExamManager sharedExamManager];
-   NSArray *array = @[
+    NSArray *array = @[
       [NSString stringWithFormat:@"%ld\n\n及格次数",[manager getPassCount]],
       [NSString stringWithFormat:@"%ld\n\n累计考试",[manager getAllExams].count],
       [NSString stringWithFormat:@"6\n\n最高分"]];
@@ -155,6 +156,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    YSExaminationItemModel *model = allExams[indexPath.row];
+    YSExamAnalyseViewController *analyseVC = [[YSExamAnalyseViewController alloc] init];
+    [analyseVC setExamAnalyseModel:model];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:analyseVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

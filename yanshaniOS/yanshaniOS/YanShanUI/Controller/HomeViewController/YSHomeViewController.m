@@ -89,11 +89,23 @@
     NSLog(@"%@",jsonDic);
 }
 
+- (void)requestNews {
+//    http://39.104.118.75/api/news?page=0&size=5
+}
+
 #pragma mark - delegate(UICollectionView)
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
         YSCourseDetailViewController *classVC = [[YSCourseDetailViewController alloc] init];
+        YSCourseModel *model = lastestCourses[indexPath.row];
+        NSArray *smArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:model.scList error:nil]];
+        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:model.mcList error:nil]];
+        NSArray *tfArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:model.tfList error:nil]];
+        NSMutableArray *itemsList = [NSMutableArray arrayWithArray:smArrary];
+        [itemsList addObjectsFromArray:mcArrary];
+        [itemsList addObjectsFromArray:tfArrary];
+        [classVC setCoursesData:itemsList];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:classVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;

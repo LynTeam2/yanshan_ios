@@ -1,34 +1,28 @@
 //
-//  YSClassViewController.m
+//  YSWrongItemsViewController.m
 //  yanshaniOS
 //
-//  Created by 代健 on 2017/12/31.
-//  Copyright © 2017年 jiandai. All rights reserved.
+//  Created by 代健 on 2018/2/25.
+//  Copyright © 2018年 jiandai. All rights reserved.
 //
 
-#import "YSCourseDetailViewController.h"
+#import "YSWrongItemsViewController.h"
 #import "YSExaminationItemViewController.h"
 #import "YSCourseManager.h"
 #import "YSCourseItemModel.h"
 
-@interface YSCourseDetailViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate>
+@interface YSWrongItemsViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate>
 {
     NSMutableArray *vcs;
-    NSArray *courseItems;
     UIPageViewController *pageVC;
 }
 @end
 
-@implementation YSCourseDetailViewController
+@implementation YSWrongItemsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [[YSCourseManager sharedCourseManager] mergeCourseItem];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,57 +30,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setCoursesData:(NSArray *)datas {
-    courseItems = [NSArray arrayWithArray:datas];
-}
-
-#pragma mark - config view controller
-
 - (void)configViewControllerParameter {
-    vcs = [NSMutableArray arrayWithCapacity:0];
-    self.title = @"课程练习";
+    self.title = @"我的错题";
 }
 
-- (void)configView {
-    CGRect frame = self.view.bounds;
-    frame.size.height = 300;
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.text = @"视频正在加载中...";
-    label.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:label];
-    UIWebView *WebView = [[UIWebView alloc] initWithFrame:frame];
-    WebView.backgroundColor = [UIColor clearColor];
-    [WebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://v.qq.com/iframe/player.html?vid=a0514mkz1vk&tiny=0&auto=0"]]];
-    [self.view addSubview:WebView];
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"开始答题" forState:UIControlStateNormal];
-    [btn setBackgroundColor:[UIColor blueColor]];
-    [self.view addSubview:btn];
-    
-    [btn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(-170);
-        make.left.equalTo(self.view).offset(30);
-        make.right.equalTo(self.view).offset(-30);
-        make.height.mas_equalTo(40);
-    }];
-    
+- (void)addNavigationItems {
+    [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
 
-- (void)beginTest:(UIButton *)sender {
-    
+- (void)setWrongItemsData:(NSArray *)items {
     vcs = [NSMutableArray arrayWithCapacity:0];
-    for (int i = 0; i < courseItems.count; i++) {
+    for (int i = 0; i < items.count; i++) {
         YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];
         vc.index = i;
         vc.delegate = self;
         [vcs addObject:vc];
-        if (i == courseItems.count - 1) {
+        if (i == items.count - 1) {
             vc.itemType = RightItemTypeFinished;
         }
-        YSCourseItemModel *model = courseItems[i];
+        YSCourseItemModel *model = items[i];
         vc.itemModel = model;
     }
     if (vcs.count) {
@@ -96,9 +58,9 @@
         [self.view addSubview:pageVC.view];
         [pageVC didMoveToParentViewController:self];
         pageVC.view.backgroundColor = [UIColor redColor];
-        [pageVC setViewControllers:@[vcs[0]] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:^(BOOL finished) {
-            
-        }];
+        [pageVC setViewControllers:@[vcs[0]]
+                         direction:(UIPageViewControllerNavigationDirectionForward)
+                          animated:YES completion:nil];
     }
 }
 
@@ -125,11 +87,6 @@
     return [vcs objectAtIndex:index];
 }
 
-
-- (void)configContainer {
-    
-}
-
 - (void)selectAnwser:(YSExaminationItemViewController *)examinationItemController {
     if (examinationItemController.itemType == RightItemTypeFinished) {
         return;
@@ -140,10 +97,6 @@
                           animated:YES completion:nil];
     }
     
-}
-
-- (void)addNavigationItems {
-    [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
 
 @end

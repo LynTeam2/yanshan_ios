@@ -273,7 +273,7 @@
     UILabel *titleLabel;
     UILabel *anwserLabel;
     UILabel *nanduLabel;
-    UILabel *contentLabel;
+    UITextView *contentView;
     UIButton *mcButton;
 }
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -292,18 +292,19 @@
     [self.contentView addSubview:titleLabel];
     
     anwserLabel = [[UILabel alloc] init];
-    anwserLabel.text = @"答案 B";
+    anwserLabel.text = @"--";
     [self.contentView addSubview:anwserLabel];
     
     nanduLabel = [[UILabel alloc] init];
     nanduLabel.text = @"难度 🌟🌟🌟🌟🌟🌟";
+    nanduLabel.adjustsFontSizeToFitWidth = YES;
     nanduLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:nanduLabel];
     
-    contentLabel = [[UILabel alloc] init];
-    contentLabel.text = @"标签为页面上的所有链接规定默认地址或默认目标。通常情况下，浏览器会从当前文档的 URL 中提取相应的元素来填写相对 URL 中的空白。";
-    contentLabel.numberOfLines = 0;
-    [self.contentView addSubview:contentLabel];
+    contentView = [[UITextView alloc] init];
+    contentView.text = @"--";
+    contentView.editable = NO;
+    [self.contentView addSubview:contentView];
     
     mcButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [mcButton setTitle:@"确认答案" forState:UIControlStateNormal];
@@ -331,7 +332,7 @@
         make.right.equalTo(self.contentView).offset(-20);
         make.height.mas_equalTo(40);
     }];
-    [contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(nanduLabel.mas_bottom);
         make.left.equalTo(self.contentView).offset(20);
         make.right.equalTo(self.contentView).offset(-20);
@@ -350,14 +351,14 @@
 }
 
 - (void)updateAwsAnalysis:(NSString *)analysis {
-    contentLabel.text = analysis;
+    contentView.text = analysis;
 }
 
 - (void)showResults:(BOOL)awsbool {
     titleLabel.hidden = !awsbool;
     anwserLabel.hidden = !awsbool;
     nanduLabel.hidden = !awsbool;
-    contentLabel.hidden = !awsbool;
+    contentView.hidden = !awsbool;
 }
 
 - (void)showMCConfirmButton:(BOOL)show {

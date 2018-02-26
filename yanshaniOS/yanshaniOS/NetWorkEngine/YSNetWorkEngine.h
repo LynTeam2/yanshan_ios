@@ -14,4 +14,6 @@
 
 - (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath;
 
+- (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters;
+
 @end

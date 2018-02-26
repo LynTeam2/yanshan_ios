@@ -294,7 +294,7 @@
     [formatter setDateFormat:@"yyyy.MM.dd HH:mm"];
     NSString *current = [formatter stringFromDate:now];
     examModel.rightItemCount = rightCount;
-    examModel.rightItemCount = testItems.count - rightCount;
+    examModel.wrongItemCount = testItems.count - rightCount;
     examModel.examScore = rightCount;
     examModel.dateString = current;
     [[YSExamManager sharedExamManager] saveCurrentExam:examModel];

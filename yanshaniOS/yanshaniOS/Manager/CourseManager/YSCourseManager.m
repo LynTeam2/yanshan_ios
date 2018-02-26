@@ -53,11 +53,13 @@ static  NSString *allCourseFile = @"allcourses.plist";
 
 - (void)mergeCourseItem {
     NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:allCourseFile andDocumentName:nil];
-    NSArray *olderCourses = [NSArray arrayWithContentsOfFile:filePath];
+    NSArray *olderCourses = [YSCourseItemModel arrayOfModelsFromDictionaries:[NSArray arrayWithContentsOfFile:filePath] error:nil];
     NSMutableArray *allCourses = [NSMutableArray arrayWithArray:recentCourses];
     [allCourses addObjectsFromArray:olderCourses];
-    NSArray *mArr = [YSCourseItemModel arrayOfDictionariesFromModels:allCourses];
-    [mArr writeToFile:filePath atomically:YES];
+    if (allCourses.count) {
+        NSArray *mArr = [YSCourseItemModel arrayOfDictionariesFromModels:allCourses];
+        [mArr writeToFile:filePath atomically:YES];
+    }
 }
 
 - (NSArray *)getAllWrongCourseItem {
