@@ -55,7 +55,7 @@
     mainView.tableHeaderView = headerView;
     
     UILabel *circleLabel = [[UILabel alloc] init];
-    circleLabel.backgroundColor = [UIColor orangeColor];
+    circleLabel.backgroundColor = [UIColor whiteColor];
     circleLabel.text = @"累计做题\n0次";
     circleLabel.numberOfLines = 0;
     circleLabel.layer.cornerRadius = 75;
@@ -66,7 +66,7 @@
     [headerView addSubview:circleLabel];
     
     UIView *line = [[UILabel alloc] init];
-    line.backgroundColor = [UIColor blueColor];
+    line.backgroundColor = [UIColor grayColor];
     [headerView addSubview:line];
     
     [circleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -89,14 +89,14 @@
     NSArray *array = @[
       [NSString stringWithFormat:@"%ld\n\n及格次数",[manager getPassCount]],
       [NSString stringWithFormat:@"%ld\n\n累计考试",[manager getAllExams].count],
-      [NSString stringWithFormat:@"6\n\n最高分"]];
+      [NSString stringWithFormat:@"%ld\n\n最高分",[manager getMaxScroce]]];
     for (int i = 0; i < array.count; i++) {
         UILabel *label = [[UILabel  alloc] init];
         label.text = array[i];
         label.numberOfLines = 0;
         label.textAlignment = NSTextAlignmentCenter;
         [headerView addSubview:label];
-        label.backgroundColor = kRandomColor;
+        label.backgroundColor = [UIColor whiteColor];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(line.mas_bottom);
             make.left.equalTo(headerView).offset(frame.size.width/3*i);
@@ -170,7 +170,7 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.frame = CGRectMake(-0.5, 0, self.view.frame.size.width+0.5, 44);
     label.layer.borderWidth = 0.5;
-    label.layer.borderColor = kRandomColor.CGColor;
+    label.layer.borderColor = [UIColor grayColor].CGColor;
     return label;
 }
 

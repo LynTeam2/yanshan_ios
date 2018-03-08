@@ -15,6 +15,7 @@ static NSString *examplist = @"exam.plist";
 @implementation YSExamManager
 {
     NSInteger passCount;
+    NSInteger maxValue;
 }
 + (instancetype)sharedExamManager {
     static dispatch_once_t onceToken;
@@ -67,6 +68,7 @@ static NSString *examplist = @"exam.plist";
             YSExaminationItemModel *model = [[YSExaminationItemModel alloc] init];
             if (dic[@"score"]) {
                 model.examScore = [dic[@"score"] integerValue];
+                maxValue = maxValue > model.examScore ? maxValue : model.examScore;
             }
             if (dic[@"judgement"]) {
                 model.examJudgement = dic[@"judgement"];
@@ -99,4 +101,11 @@ static NSString *examplist = @"exam.plist";
     }
     return 0;
 }
+- (NSInteger)getMaxScroce {
+    if (maxValue) {
+        return maxValue;
+    }
+    return 0;
+}
+
 @end

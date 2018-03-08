@@ -34,4 +34,10 @@
 
 - (BOOL)mcChoiceType;
 
+- (CGFloat)getQuestionCellHeight;
+
+- (CGFloat)getAllChoiceHeight;
+
+- (CGFloat)getChoiceCellHeight:(NSString *)choice;
+
 @end

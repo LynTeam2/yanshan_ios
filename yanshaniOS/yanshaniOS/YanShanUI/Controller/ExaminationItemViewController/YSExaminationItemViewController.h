@@ -50,6 +50,8 @@ typedef NS_ENUM(NSUInteger, RightItemType) {
 @property (nonatomic, strong) NSArray *rightChoices;
 @property (nonatomic, assign) BOOL mcChoice;
 @property (nonatomic, strong) NSMutableArray *selectChoices;
+@property (nonatomic, strong) YSCourseItemModel *model;
+
 
 @property (nonatomic, assign) id<YSExaminationChoiceCellDelegate> delegate;
 

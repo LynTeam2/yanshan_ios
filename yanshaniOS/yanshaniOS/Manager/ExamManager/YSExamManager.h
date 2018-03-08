@@ -19,4 +19,6 @@
 
 - (NSInteger)getPassCount;
 
+- (NSInteger)getMaxScroce;
+
 @end
