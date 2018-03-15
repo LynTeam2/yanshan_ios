@@ -188,6 +188,44 @@
             [testItems addObjectsFromArray:mcArrary];
         }
     }
+    NSString *Str = examDic[@"role"];
+    Str = [Str stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
+    NSData *Data = [Str dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *roleDic = [NSJSONSerialization JSONObjectWithData:Data options:NSJSONReadingMutableContainers error:&err];
+    NSMutableDictionary *ajTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"ajType"]];
+    NSMutableDictionary *questionTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"questionType"]];
+    NSMutableDictionary *difficultyDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"difficulty"]];
+    NSArray *arr = [self randomArray:testItems withCount:testItems.count];
+    for (int i = 0; i < arr.count; i++) {
+        YSCourseItemModel *model = arr[i];
+        NSString *aj = model.ajType;
+        NSString *di = model.difficulty;
+        NSString *qu = model.questionType;
+        
+        if (ajTypeDic.allKeys.count == 0 || difficultyDic.allKeys.count == 0 || questionTypeDic.allKeys.count == 0) {
+            break;
+        }
+        if ([ajTypeDic objectForKey:aj] && [difficultyDic objectForKey:di] && [questionTypeDic objectForKey:qu]) {
+            
+            [testItems addObject:model];
+            if ([[ajTypeDic objectForKey:aj] intValue] == 1) {
+                [ajTypeDic removeObjectForKey:aj];
+            }else{
+                [ajTypeDic setObject:[NSString stringWithFormat:@"%d",[[ajTypeDic objectForKey:aj] intValue]-1] forKey:aj];
+            }
+            if ([[difficultyDic objectForKey:di] intValue] == 1) {
+                [difficultyDic removeObjectForKey:di];
+            }else{
+                [difficultyDic setObject:[NSString stringWithFormat:@"%d",[[difficultyDic objectForKey:di] intValue]-1] forKey:di];
+            }
+            if ([[questionTypeDic objectForKey:qu] intValue] == 1) {
+                [questionTypeDic removeObjectForKey:qu];
+            }else{
+                [questionTypeDic setObject:[NSString stringWithFormat:@"%d",[[questionTypeDic objectForKey:qu] intValue]-1] forKey:qu];
+            }
+        }
+    }
     if (testItems.count == 0) {
         return;
     }
@@ -227,6 +265,23 @@
     [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,testItems.count]];
     toolView.itemsCount = testItems.count;
 }
+
+- (NSArray *)randomArray:(NSMutableArray *)items withCount:(NSInteger)count {
+    if (items.count < count) {
+        count = items.count;
+    }
+    //随机数产生结果
+    NSMutableArray *resultArray=[[NSMutableArray alloc] initWithCapacity:0];
+    //随机数个数
+    for (int i=0; i < count; i++) {
+        int t = arc4random()%items.count;
+        resultArray[i]=items[t];
+        items[t]=[items lastObject]; //为更好的乱序，故交换下位置
+        [items removeLastObject];
+    }
+    return resultArray;
+}
+
 
 - (void)cancel:(UITapGestureRecognizer *)tap {
     backgroundView.hidden = YES;

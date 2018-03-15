@@ -9,6 +9,8 @@
 #import "YSLoginViewController.h"
 
 @interface YSLoginViewController ()
+@property (strong, nonatomic) IBOutlet UITextField *username;
+@property (strong, nonatomic) IBOutlet UITextField *password;
 
 @end
 
@@ -27,9 +29,23 @@
 #pragma mark - Button Action
 
 - (IBAction)loginAction:(UIButton *)sender {
-//    _userLoginResultBlock(YES);
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];
+    if (_username.text.length == 0 || _password.text.length == 0) {
+        [self.view makeToast:@"请输入用户名或密码" duration:2.0 position:@"center"];
+        return;
+    }
+    NSDictionary *parameters = @{@"username":_username.text,
+                                 @"password":_password.text};
+    [[YSNetWorkEngine sharedInstance] getRequestWithURLString:@"" parameters:parameters responseHandler:^(NSError *error, NSDictionary *data) {
+        if (error || ![[data objectForKey:@"code"] boolValue]) {
+            [self.view makeToast:@"用户名或密码错误" duration:2.0 position:@"center"];
+            return ;
+        }
+        if ([[data objectForKey:@"code"] boolValue]) {
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+            [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];
+        }
+    }];
+    
 }
 
 @end

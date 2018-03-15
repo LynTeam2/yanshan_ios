@@ -210,11 +210,13 @@
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     NSArray *titles = @[@"A",@"B",@"C",@"D"];
     for (int i = 0; i < choices.count; i++) {
-        CGFloat height = i == 0 ? 0 :  [_model getChoiceCellHeight:choices[i-1]]+(5*i);
+        CGFloat height = i == 0 ? 0 :  [_model getChoiceCellHeight:choices[i-1]];
+        height += (i == 0 ? 0 : 5);
         UIButton *sender = [UIButton buttonWithType:UIButtonTypeCustom];
         [sender setTitle:choices[i] forState:UIControlStateNormal];
         [sender setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         sender.frame = CGRectMake(20, (height+5)*i, width-40, [_model getChoiceCellHeight:choices[i]]);
+        sender.titleLabel.font = [UIFont systemFontOfSize:16.f];
         sender.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         sender.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         [sender addTarget:self action:@selector(selectChoice:) forControlEvents:UIControlEventTouchUpInside];
@@ -230,11 +232,18 @@
         iconButton.layer.masksToBounds = YES;
         [sender addSubview:iconButton];
         
+        [iconButton addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
+        
         iconButtons[i] = iconButton;
         [sender setTitleEdgeInsets:UIEdgeInsetsMake(0, 35, 0, 0)];
         [self.contentView addSubview:sender];
         [choiceButtons addObject:sender];
     }
+}
+
+- (void)select:(UIButton *)sender {
+    UIButton *BTN = (UIButton *)sender.superview;
+    [self selectChoice:BTN];
 }
 
 - (void)selectChoice:(UIButton *)sender {

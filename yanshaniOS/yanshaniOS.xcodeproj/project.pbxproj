@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B16D7CAAB7C224060EDB57A /* Pods_yanshaniOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06E4A9CF0331DE8D47AE1A8 /* Pods_yanshaniOSTests.framework */; };
+		45A9F72E205A0EAD00476DBD /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F72D205A0EAD00476DBD /* Toast+UIView.m */; };
 		5135D98B58F79BA0D21BFEB2 /* Pods_yanshaniOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E631F904FD22CCE043526828 /* Pods_yanshaniOSUITests.framework */; };
 		6403AE9D1FF73ECB00E06D71 /* YSExaminationItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6403AE9C1FF73ECB00E06D71 /* YSExaminationItemModel.m */; };
 		6403AEA11FF756A500E06D71 /* YSRecordStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6403AEA01FF756A500E06D71 /* YSRecordStatisticView.m */; };
@@ -137,6 +138,8 @@
 
 /* Begin PBXFileReference section */
 		3E8A9A68D17669E0E9873C98 /* Pods-yanshaniOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOSUITests/Pods-yanshaniOSUITests.release.xcconfig"; sourceTree = "<group>"; };
+		45A9F72C205A0EAD00476DBD /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
+		45A9F72D205A0EAD00476DBD /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
 		6403AE9B1FF73ECB00E06D71 /* YSExaminationItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExaminationItemModel.h; sourceTree = "<group>"; };
 		6403AE9C1FF73ECB00E06D71 /* YSExaminationItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExaminationItemModel.m; sourceTree = "<group>"; };
 		6403AE9F1FF756A500E06D71 /* YSRecordStatisticView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSRecordStatisticView.h; sourceTree = "<group>"; };
@@ -341,6 +344,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45A9F72B205A0EAD00476DBD /* UIView+Toast */ = {
+			isa = PBXGroup;
+			children = (
+				45A9F72C205A0EAD00476DBD /* Toast+UIView.h */,
+				45A9F72D205A0EAD00476DBD /* Toast+UIView.m */,
+			);
+			path = "UIView+Toast";
+			sourceTree = "<group>";
+		};
 		6403AE9A1FF73E9C00E06D71 /* ExaminationItemModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,6 +834,7 @@
 		64BDEAE71FC1BA280036CD8E /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				45A9F72B205A0EAD00476DBD /* UIView+Toast */,
 				64BDEAE81FC1BA510036CD8E /* UITableViewCell+YSCustomCell.h */,
 				64BDEAE91FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m */,
 				64BDEAEB1FC1BBE80036CD8E /* UIViewController+YSCustomNavigationBar.h */,
@@ -1231,6 +1244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A9F72E205A0EAD00476DBD /* Toast+UIView.m in Sources */,
 				64BDEAF71FC1BFF20036CD8E /* YSQianDaoViewController.m in Sources */,
 				641B40971F8A3B0500BF029E /* FSPageViewLayout.swift in Sources */,
 				641B40921F8A3B0500BF029E /* FSPageControl.swift in Sources */,
@@ -1454,7 +1468,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c9ccef53-faae-40f2-81d2-09d04422fe97";
 				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/daijian/Desktop/燕山app/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jianjiandai/Desktop/anjian/yanshan_ios/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1481,7 +1495,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c9ccef53-faae-40f2-81d2-09d04422fe97";
 				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/daijian/Desktop/燕山app/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jianjiandai/Desktop/anjian/yanshan_ios/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

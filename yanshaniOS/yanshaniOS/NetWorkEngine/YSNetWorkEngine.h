@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^NetWorkResponse)(NSError *error, NSDictionary *data);
+
 @interface YSNetWorkEngine : NSObject
 
 + (instancetype)sharedInstance;
 
 - (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath;
 
-- (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters;
+- (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)hadler;
 
 @end
