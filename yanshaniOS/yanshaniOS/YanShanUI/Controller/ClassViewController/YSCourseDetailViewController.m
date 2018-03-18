@@ -56,7 +56,7 @@
     [self.view addSubview:label];
     UIWebView *WebView = [[UIWebView alloc] initWithFrame:frame];
     WebView.backgroundColor = [UIColor clearColor];
-    [WebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://v.qq.com/iframe/player.html?vid=a0514mkz1vk&tiny=0&auto=0"]]];
+    [WebView loadHTMLString:_htmlStr baseURL:nil];
     [self.view addSubview:WebView];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

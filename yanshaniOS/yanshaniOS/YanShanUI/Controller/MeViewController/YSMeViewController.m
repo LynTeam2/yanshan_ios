@@ -12,6 +12,7 @@
 #import "YSMessageViewController.h"
 #import "UITableViewCell+YSCustomCell.h"
 #import "YSWrongItemViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface YSMeViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -112,7 +113,7 @@
     headerView.backgroundColor = [UIColor whiteColor];
     
     UIImageView *headerIcon = [[UIImageView alloc] init];
-    headerIcon.image = [UIImage imageNamed:@"headericon"];
+    [headerIcon sd_setImageWithURL:[NSURL URLWithString:[YSUserModel shareInstance].userIcon] placeholderImage:[UIImage imageNamed:@"headericon"]];
     [headerView addSubview:headerIcon];
     
     UILabel *nickNameLabel = [[UILabel alloc] init];

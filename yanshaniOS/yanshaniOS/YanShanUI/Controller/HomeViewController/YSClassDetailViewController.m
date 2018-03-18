@@ -78,6 +78,7 @@
     [itemsList addObjectsFromArray:mcArrary];
     [itemsList addObjectsFromArray:tfArrary];
     [classVC setCoursesData:itemsList];
+    classVC.htmlStr = model.content;
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:classVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
