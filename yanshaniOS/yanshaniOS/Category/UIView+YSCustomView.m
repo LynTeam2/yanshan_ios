@@ -12,7 +12,7 @@
 
 + (UIView *)instanceSeperateLineWithoutFrame {
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = [UIColor grayColor];
+    line.backgroundColor = kLightGray;
     return line;
 }
 

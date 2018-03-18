@@ -17,6 +17,9 @@
     UIView *_seperateLine;
 }
 
+@property (nonatomic, strong) id data;
+
+
 - (void)updateClassInformation:(id)model;
 
 @end

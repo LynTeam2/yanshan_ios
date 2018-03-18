@@ -33,7 +33,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
     
     __weak YSNetWorkEngine *weakSelf = self;
     NSString *unzipPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    
+    [YSCommonHelper deleteFileByName:@"upgrade.zip"];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     NSURL *url = [NSURL URLWithString:downloadUrl];
@@ -52,11 +52,9 @@ static YSNetWorkEngine *netWorkEngine = nil;
 
 #pragma mark - zip file operation
 
-- (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)hadler {
+- (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    parameters = @{@"username":@"admin",
-//                   @"password":@"1234578"};
     manager.requestSerializer = [AFJSONRequestSerializer new];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];//请求
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];//响应
@@ -64,30 +62,38 @@ static YSNetWorkEngine *netWorkEngine = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:@"http://39.104.118.75/login" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0|1 error:nil];
-        hadler(nil,dic);
-        NSLog(@"%@---%@",dic,responseObject);
-//        [self post];
+        handler(nil,dic);
+        NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败--%@",error);
         NSLog(@"%@",error.userInfo);
-        hadler(error,nil);
+        handler(error,nil);
     }];
 }
 
-- (void)post {
-//    http://39.104.118.75/api/news?page=0&size=5
+- (void)getRequestNewWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSDictionary *parameters = @{@"page":@"0",
-                   @"size":@"5"};
-    
     [manager GET:@"http://39.104.118.75/api/news" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0|1 error:nil];
-//        NSLog(@"%@---%@",dic,responseObject);
+        handler(nil,responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败--%@",error);
         NSLog(@"%@",error.userInfo);
+        handler(error,nil);
+    }];
+}
+
+- (void)getWeatherDataWithparameters:(NSString *)city responseHandler:(NetWorkResponse)handler {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:@"https://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        handler(nil,responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"请求失败--%@",error);
+        NSLog(@"%@",error.userInfo);
+        handler(error,nil);
     }];
 }
 

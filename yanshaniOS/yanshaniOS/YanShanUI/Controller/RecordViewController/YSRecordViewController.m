@@ -53,6 +53,7 @@
     mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     mainView.delegate = self;
     mainView.dataSource = self;
+    mainView.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:mainView];
     
@@ -81,6 +82,7 @@
     
     testResultLabel = [[UILabel alloc] init];
     testResultLabel.text = @"暂无考试成绩统计";
+    testResultLabel.font = [UIFont boldSystemFontOfSize:17.f];
     testResultLabel.backgroundColor = [UIColor redColor];
     testResultLabel.textColor = [UIColor whiteColor];
     testResultLabel.layer.cornerRadius = 33;
@@ -131,6 +133,16 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+        [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        UIView *line = [[UILabel alloc] init];
+        line.backgroundColor = kLightGray;
+        [cell.contentView addSubview:line];
+        [line mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.contentView).offset(20);
+            make.right.equalTo(cell.contentView);
+            make.bottom.equalTo(cell.contentView.mas_bottom);
+            make.height.mas_equalTo(0.5);
+        }];
     }
     NSArray *arr1 = @[@"单选题",@"多选题",@"判断题"];
     NSArray *arr2 = @[[NSString stringWithFormat:@"错题%ld道",[examModel getSCItem].count],

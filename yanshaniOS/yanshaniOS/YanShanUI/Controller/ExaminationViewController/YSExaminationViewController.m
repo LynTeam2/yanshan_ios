@@ -106,6 +106,7 @@
         
         UILabel *label2 = [[UILabel alloc] init];
         label2.text = dic[@"title2"];
+        label2.textColor = [UIColor grayColor];
         [self.view addSubview:label2];
         
         [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -123,6 +124,7 @@
     UILabel *notiLabel = [[UILabel alloc] init];
     notiLabel.text = [NSString stringWithFormat:@"温馨提示:%@",examDic[@"introduction"]];
     notiLabel.numberOfLines = 3;
+    notiLabel.textColor = [UIColor grayColor];
     notiLabel.adjustsFontSizeToFitWidth = YES;
     notiLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:notiLabel];
@@ -136,7 +138,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"开始考试" forState:UIControlStateNormal];
-    [btn setBackgroundColor:[UIColor blueColor]];
+    [btn setBackgroundColor:kBlueColor];
     [self.view addSubview:btn];
     
     [btn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
@@ -431,19 +433,19 @@
     [self addSubview:headerView];
     
     icon1Btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [icon1Btn setImage:[UIImage imageNamed:@"testicon"] forState:UIControlStateNormal];
+    [icon1Btn setImage:[UIImage imageNamed:@"allitem"] forState:UIControlStateNormal];
     [headerView addSubview:icon1Btn];
     
     icon2Btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [icon2Btn setImage:[UIImage imageNamed:@"righticon"] forState:UIControlStateNormal];
+    [icon2Btn setImage:[UIImage imageNamed:@"testright"] forState:UIControlStateNormal];
     [headerView addSubview:icon2Btn];
     
     icon3Btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [icon3Btn setImage:[UIImage imageNamed:@"wrongicon"] forState:UIControlStateNormal];
+    [icon3Btn setImage:[UIImage imageNamed:@"testwrong"] forState:UIControlStateNormal];
     [headerView addSubview:icon3Btn];
     
     icon4Btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [icon4Btn setImage:[UIImage imageNamed:@"itemsicon"] forState:UIControlStateNormal];
+    [icon4Btn setImage:[UIImage imageNamed:@"currnetItem"] forState:UIControlStateNormal];
     [headerView addSubview:icon4Btn];
     
     title1Btn = [UIButton buttonWithType:UIButtonTypeCustom];

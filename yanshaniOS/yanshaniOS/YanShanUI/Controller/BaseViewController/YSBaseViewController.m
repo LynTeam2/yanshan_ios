@@ -44,7 +44,7 @@
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.navigationController.navigationBar.translucent = NO;
     self.tabBarController.tabBar.translucent = NO;
-    
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
 }
 
 - (void)addNavigationItems {

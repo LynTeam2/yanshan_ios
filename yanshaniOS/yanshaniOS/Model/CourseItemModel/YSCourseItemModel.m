@@ -57,7 +57,7 @@
         if ([str isEqualToString:@"choiceA"]) {
             [aws addObject:_choiceA];
         }
-        if ([str isEqualToString:@"choiceAB"]) {
+        if ([str isEqualToString:@"choiceB"]) {
             [aws addObject:_choiceB];
         }
         if ([str isEqualToString:@"choiceC"]) {

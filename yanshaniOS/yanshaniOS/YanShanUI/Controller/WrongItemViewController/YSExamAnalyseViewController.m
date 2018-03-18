@@ -125,6 +125,16 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    UIView *line = [[UILabel alloc] init];
+    line.backgroundColor = kLightGray;
+    [cell.contentView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cell.contentView).offset(20);
+        make.right.equalTo(cell.contentView);
+        make.bottom.equalTo(cell.contentView.mas_bottom);
+        make.height.mas_equalTo(0.5);
+    }];
     NSArray *arr1 = @[@"单选题",@"多选题",@"判断题"];
     NSArray *arr2 = @[[NSString stringWithFormat:@"错题%ld道",[examModel getSCItem].count],
                       [NSString stringWithFormat:@"错题%ld道",[examModel getMCItem].count],

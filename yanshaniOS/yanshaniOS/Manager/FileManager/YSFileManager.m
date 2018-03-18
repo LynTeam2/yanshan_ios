@@ -13,7 +13,7 @@ static YSFileManager *fileManager = nil;
 
 @implementation YSFileManager
 
-+(instancetype)sharedFileManager {
++ (instancetype)sharedFileManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         fileManager = [[YSFileManager alloc] init];
@@ -24,7 +24,9 @@ static YSFileManager *fileManager = nil;
 - (void)unzipFileAtPath:(NSString *)unzipPath toDestination:(NSString *)zipPath {
     if ([unzipPath isEmptyString] || [zipPath isEmptyString]) {
         NSLog(@"zip文件不存在！！！");
+        return;
     }
+    [YSCommonHelper deleteFileByName:@"upgrade"];
     BOOL unzipSuccess = [SSZipArchive unzipFileAtPath:unzipPath toDestination:zipPath];
     if (unzipSuccess) {
         NSLog(@"zip文件解压成功^-^");
@@ -43,7 +45,7 @@ static YSFileManager *fileManager = nil;
         return nil;
     }
     NSString *fullFilePath = [filePath stringByAppendingPathComponent:fileName];
-    if(![[NSFileManager defaultManager] isExecutableFileAtPath:fullFilePath]){
+    if(![[NSFileManager defaultManager] fileExistsAtPath:fullFilePath]){
         [[NSFileManager defaultManager] createFileAtPath:fullFilePath contents:nil attributes:nil];
     }
     return fullFilePath;

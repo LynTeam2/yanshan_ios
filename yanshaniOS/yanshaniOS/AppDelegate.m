@@ -18,6 +18,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:@"http://39.104.118.75/api/upgrade" toFilePath:@"zip"];
+    
+    [[UINavigationBar appearance] setBarTintColor:kBlueColor];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     return YES;
 }
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^NetWorkResponse)(NSError *error, NSDictionary *data);
+typedef void(^NetWorkResponse)(NSError *error, id data);
 
 @interface YSNetWorkEngine : NSObject
 
@@ -16,6 +16,9 @@ typedef void(^NetWorkResponse)(NSError *error, NSDictionary *data);
 
 - (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath;
 
-- (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)hadler;
+- (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler;
 
+- (void)getRequestNewWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler;
+
+- (void)getWeatherDataWithparameters:(NSString *)city responseHandler:(NetWorkResponse)handler;
 @end

@@ -51,7 +51,7 @@
     
     UIButton *logoutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logoutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
-    [logoutBtn setBackgroundColor:[UIColor blueColor]];
+    [logoutBtn setBackgroundColor:kBlueColor];
     [logoutBtn addTarget:self action:@selector(userLogout:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logoutBtn];
     [logoutBtn mas_makeConstraints:^(MASConstraintMaker *make) {

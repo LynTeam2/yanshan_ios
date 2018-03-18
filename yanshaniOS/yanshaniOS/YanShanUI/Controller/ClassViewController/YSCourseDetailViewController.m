@@ -61,7 +61,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"开始答题" forState:UIControlStateNormal];
-    [btn setBackgroundColor:[UIColor blueColor]];
+    [btn setBackgroundColor:kBlueColor];
     [self.view addSubview:btn];
     
     [btn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
