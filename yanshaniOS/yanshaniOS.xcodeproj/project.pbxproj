@@ -1466,7 +1466,7 @@
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jia.dai.yanshaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c9ccef53-faae-40f2-81d2-09d04422fe97";
+				PROVISIONING_PROFILE = "f0936fbe-d4d2-47f0-9ea5-80fad0feb2eb";
 				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jianjiandai/Desktop/anjian/yanshan_ios/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
