@@ -16,4 +16,6 @@
 #import "YSFileManager.h"
 #import "NSString+YSStringOperation.h"
 #import "YSCourseManager.h"
+#import "YSCommonHelper.h"
+#import "YSUserModel.h"
 #endif /* BaseView_Header_h */

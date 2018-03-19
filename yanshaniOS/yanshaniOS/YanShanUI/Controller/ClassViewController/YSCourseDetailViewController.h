@@ -10,6 +10,8 @@
 
 @interface YSCourseDetailViewController : YSBaseViewController
 
+@property (nonatomic, strong) NSString *htmlStr;
+
 - (void)setCoursesData:(NSArray *)datas;
 
 @end

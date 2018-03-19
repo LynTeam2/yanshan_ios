@@ -12,13 +12,13 @@
 
 - (void)addSeparatorLineWithLeftSpace:(CGFloat)space {
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = [UIColor grayColor];
+    line.backgroundColor = kLightGray;
     [self.contentView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(space);
         make.right.equalTo(self.contentView);
         make.bottom.equalTo(self.contentView);
-        make.height.mas_equalTo(0.5);
+        make.height.mas_equalTo(kLineHeight);
     }];
 }
 

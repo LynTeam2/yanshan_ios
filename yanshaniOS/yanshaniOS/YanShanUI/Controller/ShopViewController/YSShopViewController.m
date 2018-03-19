@@ -10,11 +10,13 @@
 #import "yanshaniOS-Swift.h"
 #import "YSGoodsDetailViewController.h"
 
-@interface YSShopViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,FSPagerViewDelegate,FSPagerViewDataSource>
+@interface YSShopViewController ()
 {
-    YSBaseCollectionView *_collectionView;
-    FSPagerView *_pageView;
-    FSPageControl *_pageControl;
+    NSMutableArray *weathers;
+    UILabel *titleLabel;
+    UILabel *infoLabel;
+    UILabel *FLabel;
+    UIImageView *imageV;
 }
 @end
 
@@ -26,7 +28,77 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    weathers = [NSMutableArray arrayWithCapacity:0];
+    self.view.backgroundColor = kBlueColor;
     // Do any additional setup after loading the view.
+    self.navigationController.navigationBarHidden = YES;
+    [[YSNetWorkEngine sharedInstance] getWeatherDataWithparameters:nil responseHandler:^(NSError *error, id data) {
+        NSLog(@"%@",data);
+
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            NSInteger status = [[data objectForKey:@"status"] integerValue];
+            if (200 == status) {
+                NSString *date = [data objectForKey:@"date"];
+                NSDictionary *dic = [data objectForKey:@"data"];
+                infoLabel.text = [NSString stringWithFormat:@"%@ %@",date,[self getChineseCalendarWithDate:date]];
+                FLabel.text = [NSString stringWithFormat:@"%@°",[dic objectForKey:@"wendu"]];
+                if ([dic objectForKey:@"forecast"]) {
+                    NSArray *arr = [dic objectForKey:@"forecast"];
+                    [weathers addObjectsFromArray:arr];
+                    CGFloat topSpace = 70;
+                    CGFloat height = 35;
+                    for (int i = 0; i < arr.count; i++) {
+                        YSWeatherInformationItem *item = [[YSWeatherInformationItem alloc] init];
+                        [item updateInformation:arr[i]];
+                        [imageV addSubview:item];
+                        [item mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.equalTo(imageV).offset(topSpace+height*i);
+                            make.left.equalTo(imageV);
+                            make.width.equalTo(imageV);
+                            make.height.mas_equalTo(height);
+                        }];
+                    }
+                }
+            }
+        }
+    }];
+}
+
+//日期阳历转换为农历；
+- (NSString *)getChineseCalendarWithDate:(NSString*)date{
+    
+    NSArray *chineseMonths=[NSArray arrayWithObjects:
+                            @"正月", @"二月", @"三月",
+                            @"四月", @"五月", @"六月",
+                            @"七月", @"八月",@"九月",
+                            @"十月", @"冬月", @"腊月", nil];
+    
+    NSArray *chineseDays=[NSArray arrayWithObjects:
+                          @"初一", @"初二", @"初三",
+                          @"初四", @"初五", @"初六",
+                          @"初七", @"初八", @"初九",
+                          @"初十",@"十一", @"十二",
+                          @"十三", @"十四", @"十五",
+                          @"十六", @"十七", @"十八",
+                          @"十九", @"二十",@"廿一",
+                          @"廿二", @"廿三", @"廿四",
+                          @"廿五", @"廿六", @"廿七",
+                          @"廿八", @"廿九", @"三十",
+                          @"三十-",
+                          nil];
+    
+    NSDate *dateTemp = nil;
+    NSDateFormatter *dateFormater = [[NSDateFormatter alloc]init];
+    [dateFormater setDateFormat:@"yyyyMMdd"];
+    dateTemp = [dateFormater dateFromString:date];
+    NSCalendar *localeCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents *localeComp = [localeCalendar components:unitFlags fromDate:dateTemp];
+    NSLog(@"%d_%d_%d  %@",localeComp.year,localeComp.month,localeComp.day, localeComp.date);
+    NSString *m_str = [chineseMonths objectAtIndex:localeComp.month-1];
+    NSString *d_str = [chineseDays objectAtIndex:localeComp.day-1];
+    NSString *chineseCal_str = [NSString stringWithFormat: @"%@%@",m_str,d_str];
+    return chineseCal_str;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,152 +107,154 @@
 }
 
 - (void)configView {
-    self.title = @"商场";
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    flowLayout.minimumLineSpacing = 0;
-    flowLayout.itemSize = CGSizeMake(self.view.frame.size.width, 112);
-    flowLayout.headerReferenceSize = CGSizeMake(self.view.frame.size.width, 195);
-    _collectionView = [[YSBaseCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-    _collectionView.delegate = self;
-    _collectionView.dataSource = self;
-    [self.view addSubview:_collectionView];
     
-    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsZero);
+    CGRect bounds = self.view.bounds;
+    
+    titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"北京";
+    titleLabel.font = [UIFont systemFontOfSize:20.f];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:titleLabel];
+//    @"9月03日  周日 农历七月十三"
+    infoLabel = [[UILabel alloc] init];
+    infoLabel.text = [self getChineseCalendarWithDate:@"20180318"];
+    infoLabel.textAlignment = NSTextAlignmentCenter;
+    infoLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:infoLabel];
+    
+    FLabel = [[UILabel alloc] init];
+    FLabel.text = @"26°";
+    FLabel.textAlignment = NSTextAlignmentCenter;
+    FLabel.textColor = [UIColor whiteColor];
+    FLabel.font = [UIFont systemFontOfSize:90.f];
+    [self.view addSubview:FLabel];
+    
+    imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weatherbg"]];
+    [self.view addSubview:imageV];
+    
+    if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.topLayoutGuide).offset(10);
+            make.centerX.equalTo(self.view.mas_centerX);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_equalTo(30);
+        }];
+        [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.topLayoutGuide).offset(74);
+            make.centerX.equalTo(self.view.mas_centerX);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_equalTo(20);
+        }];
+    }
+    if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop).offset(10);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_equalTo(30);
+        }];
+        [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop).offset(74);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_equalTo(20);
+        }];
+    }
+    
+    [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.bottom.equalTo(self.view.mas_centerY).offset(-40);
+        make.width.mas_equalTo(bounds.size.width-40);
+        make.height.mas_equalTo(70);
     }];
     
-    _collectionView.backgroundColor = [UIColor whiteColor];
-    [_collectionView registerClass:[YSGoodsInfromationCell class] forCellWithReuseIdentifier:@"goodsCell"];
-    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader   withReuseIdentifier:@"goodsBanners"];
-    
-}
-
-#pragma mark - dataSource(UICollectionView)
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger items = 10;
-    return items;
-}
-
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    YSGoodsInfromationCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"goodsCell" forIndexPath:indexPath];
-    [cell updateGoodsContent:nil];
-    return cell;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        UICollectionReusableView *reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"goodsBanners" forIndexPath:indexPath];
-        
-        _pageView = [[FSPagerView alloc] initWithFrame:reusableView.bounds];
-        _pageView.dataSource = self;
-        _pageView.delegate = self;
-        [_pageView registerClass:[FSPagerViewCell class] forCellWithReuseIdentifier:@"pageCell"];
-        [reusableView addSubview:_pageView];
-        FSPageControl *pageControl = [[FSPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(reusableView.frame)-20, CGRectGetWidth(reusableView.frame), 20)];
-        pageControl.numberOfPages = 4;
-        [reusableView addSubview:pageControl];
-        return reusableView;
-    }
-    return nil;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    YSGoodsDetailViewController *goodsVC = [[YSGoodsDetailViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:goodsVC animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
-}
-
-- (NSInteger)numberOfItemsInPagerView:(FSPagerView *)pagerView {
-    return 4;
-}
-
-- (FSPagerViewCell *)pagerView:(FSPagerView *)pagerView cellForItemAtIndex:(NSInteger)index {
-    FSPagerViewCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"pageCell" atIndex:index];
-    cell.imageView.image = [UIImage imageNamed:@"bannerplaceholder"];
-    return cell;
-}
-
-- (void)pagerView:(FSPagerView *)pagerView didSelectItemAtIndex:(NSInteger)index {
+    [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.view.mas_centerY).offset(20);
+        make.width.mas_equalTo(bounds.size.width-40);
+        make.height.mas_equalTo(270);
+    }];
     
 }
 
 @end
 
-@implementation YSGoodsInfromationCell
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+@implementation YSWeatherInformationItem
+{
+    UIImageView *dotImg;
+    UILabel *dateLabel;
+    UILabel *weatherLabel;
+    UILabel *FLabel;
+    UIImageView *weatherImg;
+}
+- (instancetype)init {
+    
+    self = [super init];
     if (self) {
         
-        goodCover = [[UIImageView alloc] init];
-        goodCover.userInteractionEnabled = YES;
-        [self.contentView addSubview:goodCover];
+        dotImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"orangedot"]];
+        [self addSubview:dotImg];
         
-        goodsNameLabel = [[UILabel alloc] init];
-        goodsNameLabel.numberOfLines = 2;
-        [self.contentView addSubview:goodsNameLabel];
+        dateLabel = [[UILabel alloc] init];
+        dateLabel.text = @"星期一";
+        dateLabel.font = [UIFont systemFontOfSize:16.f];
+        [self addSubview:dateLabel];
         
-        goodsPriceLabel = [[UILabel alloc] init];
-        goodsPriceLabel.textColor = [UIColor redColor];
-        goodsPriceLabel.font = [UIFont systemFontOfSize:13.f];
-        [self.contentView addSubview:goodsPriceLabel];
+        weatherLabel = [[UILabel alloc] init];
+        weatherLabel.font = [UIFont systemFontOfSize:13.f];
+        weatherLabel.textAlignment = NSTextAlignmentRight;
+        weatherLabel.textColor = [UIColor grayColor];
+        [self addSubview:weatherLabel];
         
-        goodsMarketPriceLabel = [[UILabel alloc] init];
-        goodsMarketPriceLabel.textColor = [UIColor grayColor];
-        goodsMarketPriceLabel.font = [UIFont systemFontOfSize:13.f];
-        [self.contentView addSubview:goodsMarketPriceLabel];
-        
-        line = [UIView instanceSeperateLineWithoutFrame];
-        [self.contentView addSubview:line];
+        FLabel = [[UILabel alloc] init];
+        FLabel.text = @"26°";
+        FLabel.textAlignment = NSTextAlignmentRight;
+        [self addSubview:FLabel];
+     
+        weatherImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sunandcloud"]];
+        [self addSubview:weatherImg];
     }
     return self;
 }
 
 - (void)layoutSubviews {
-    
-    CGFloat space = 10;
-    [goodCover mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).offset(space);
-        make.top.equalTo(self.contentView).offset(space);
-        make.bottom.equalTo(self.contentView).offset(-space);
-        make.width.mas_equalTo(CGRectGetHeight(self.frame)-2*space);
+    [dotImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(10);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(5, 5));
     }];
-    
-    [goodsNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(space);
-        make.left.equalTo(goodCover.mas_right).offset(space);
-        make.right.equalTo(self.contentView).offset(-space);
-        make.bottom.equalTo(self.contentView.mas_centerY);
+    [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(dotImg.mas_right).offset(10);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(90, 20));
     }];
-    [goodsPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(goodsNameLabel.mas_bottom);
-        make.left.equalTo(goodsNameLabel);
-        make.right.equalTo(self.contentView).offset(-space);
-        make.height.equalTo(goodsMarketPriceLabel);
+    [weatherLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.mas_centerX).offset(-20);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(50, 10));
     }];
-    [goodsMarketPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(goodsPriceLabel.mas_bottom);
-        make.left.equalTo(goodsNameLabel);
-        make.right.equalTo(self.contentView).offset(-space);
-        make.bottom.equalTo(self.contentView).offset(-space);
+    [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weatherImg.mas_left).offset(-30);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(60, 20));
     }];
-    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).offset(10);
-        make.right.equalTo(self.contentView).offset(-10);
-        make.bottom.equalTo(self.contentView);
-        make.height.mas_equalTo(0.5);
+    [weatherImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self).offset(-20);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(20, 20));
     }];
 }
 
-- (void)updateGoodsContent:(id)model {
-    goodsNameLabel.text = @"针对新型POS机恶意软件Trojan.Win32.Alinaos的分析";
-    goodsPriceLabel.text = @"50安全豆";
-    goodsMarketPriceLabel.text = @"市场参考价:50.00元";
-    goodCover.backgroundColor = kRandomColor;
+- (void)updateInformation:(NSDictionary *)dic {
+    NSString *date = [dic objectForKey:@"date"];
+    dateLabel.text = [date substringFromIndex:[date rangeOfString:@"星"].location];
+    weatherLabel.text = [dic objectForKey:@"type"];
+    NSString *str = [dic objectForKey:@"low"];
+    FLabel.text = [str stringByReplacingOccurrencesOfString:@"低温" withString:@""];
+    weatherImg.image = [YSCommonHelper weatherIcon:dic[@"type"]];
 }
 
 @end
+
+

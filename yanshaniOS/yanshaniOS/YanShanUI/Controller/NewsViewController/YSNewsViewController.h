@@ -10,4 +10,7 @@
 
 @interface YSNewsViewController : YSBaseViewController
 
+@property (nonatomic, strong) NSDictionary *dic;
+
+
 @end

@@ -49,6 +49,7 @@
 		641B409C1F8BA93500BF029E /* YSHomeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B409B1F8BA93500BF029E /* YSHomeReusableView.m */; };
 		641B409F1F8D0EB000BF029E /* YSClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B409E1F8D0EB000BF029E /* YSClassViewController.m */; };
 		641B40A21F8D0F8700BF029E /* YSClassDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B40A11F8D0F8700BF029E /* YSClassDetailViewController.m */; };
+		6432D82C205D0B550098167F /* YSCommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6432D82B205D0B550098167F /* YSCommonHelper.m */; };
 		643D259A1F77FE640034131C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25991F77FE640034131C /* main.m */; };
 		643D259D1F77FE640034131C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D259C1F77FE640034131C /* AppDelegate.m */; };
 		643D25A31F77FE640034131C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 643D25A11F77FE640034131C /* Main.storyboard */; };
@@ -116,6 +117,7 @@
 		64F41F4D1FD3C31600FC636D /* shigongjihua@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F41F451FD3C31600FC636D /* shigongjihua@3x.png */; };
 		64F41F4F1FD3C6C600FC636D /* classplaceholder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64F41F4E1FD3C6C600FC636D /* classplaceholder@3x.png */; };
 		64F41F521FD421FA00FC636D /* YSGoodsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F511FD421FA00FC636D /* YSGoodsDetailViewController.m */; };
+		64F4C907205EC1DB00453791 /* YSUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F4C906205EC1DB00453791 /* YSUserModel.m */; };
 		EEF8566575651070F0F05E1B /* Pods_yanshaniOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA53791F39B6ED02D97192B /* Pods_yanshaniOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -206,6 +208,8 @@
 		641B409E1F8D0EB000BF029E /* YSClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSClassViewController.m; sourceTree = "<group>"; };
 		641B40A01F8D0F8700BF029E /* YSClassDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSClassDetailViewController.h; sourceTree = "<group>"; };
 		641B40A11F8D0F8700BF029E /* YSClassDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSClassDetailViewController.m; sourceTree = "<group>"; };
+		6432D82A205D0B550098167F /* YSCommonHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSCommonHelper.h; sourceTree = "<group>"; };
+		6432D82B205D0B550098167F /* YSCommonHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSCommonHelper.m; sourceTree = "<group>"; };
 		643D25951F77FE630034131C /* yanshaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yanshaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		643D25991F77FE640034131C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		643D259B1F77FE640034131C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -306,6 +310,8 @@
 		64F41F4E1FD3C6C600FC636D /* classplaceholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "classplaceholder@3x.png"; sourceTree = "<group>"; };
 		64F41F501FD421FA00FC636D /* YSGoodsDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSGoodsDetailViewController.h; sourceTree = "<group>"; };
 		64F41F511FD421FA00FC636D /* YSGoodsDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSGoodsDetailViewController.m; sourceTree = "<group>"; };
+		64F4C905205EC1DB00453791 /* YSUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSUserModel.h; sourceTree = "<group>"; };
+		64F4C906205EC1DB00453791 /* YSUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSUserModel.m; sourceTree = "<group>"; };
 		79D74883B565E8E20D168652 /* Pods-yanshaniOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOSTests/Pods-yanshaniOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		8CA53791F39B6ED02D97192B /* Pods_yanshaniOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yanshaniOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06E4A9CF0331DE8D47AE1A8 /* Pods_yanshaniOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yanshaniOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -616,6 +622,8 @@
 			isa = PBXGroup;
 			children = (
 				641B408A1F8A3B0500BF029E /* FSPagerView */,
+				6432D82A205D0B550098167F /* YSCommonHelper.h */,
+				6432D82B205D0B550098167F /* YSCommonHelper.m */,
 			);
 			path = CommonLibrary;
 			sourceTree = "<group>";
@@ -850,6 +858,7 @@
 		64F41F361FD3B9F100FC636D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				64F4C904205EC1A200453791 /* UserInformation */,
 				6406D4832027444D0075D089 /* CourseCategoryModel */,
 				6406D47F20273FD00075D089 /* CourseItemModel */,
 				6406D47B20273BEE0075D089 /* CourseModel */,
@@ -866,6 +875,15 @@
 				64F41F391FD3BA2800FC636D /* YSMessageModel.m */,
 			);
 			path = MessageModel;
+			sourceTree = "<group>";
+		};
+		64F4C904205EC1A200453791 /* UserInformation */ = {
+			isa = PBXGroup;
+			children = (
+				64F4C905205EC1DB00453791 /* YSUserModel.h */,
+				64F4C906205EC1DB00453791 /* YSUserModel.m */,
+			);
+			path = UserInformation;
 			sourceTree = "<group>";
 		};
 		6DE35E2133E2605A3233C530 /* Pods */ = {
@@ -1260,6 +1278,7 @@
 				64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */,
 				6403AEB51FF8822E00E06D71 /* YSExaminationResultView.m in Sources */,
 				64F41F3A1FD3BA2800FC636D /* YSMessageModel.m in Sources */,
+				64F4C907205EC1DB00453791 /* YSUserModel.m in Sources */,
 				641B40941F8A3B0500BF029E /* FSPagerView.swift in Sources */,
 				64583CFA2020B25A002099D4 /* YSHistoryScoreViewController.m in Sources */,
 				641B3FED1F850F8A00BF029E /* YSHomeViewController.m in Sources */,
@@ -1300,6 +1319,7 @@
 				64BDEAEA1FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m in Sources */,
 				641B40981F8A3B0500BF029E /* FSPageViewTransformer.swift in Sources */,
 				641B3FFE1F88BEEE00BF029E /* YSCommonViewController.m in Sources */,
+				6432D82C205D0B550098167F /* YSCommonHelper.m in Sources */,
 				6403AEA91FF7F27000E06D71 /* YSExaminationItemViewController.m in Sources */,
 				64BDEA9F1FC104440036CD8E /* YSBaseCollectionView.m in Sources */,
 			);
@@ -1468,7 +1488,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f0936fbe-d4d2-47f0-9ea5-80fad0feb2eb";
 				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jianjiandai/Desktop/anjian/yanshan_ios/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1495,7 +1515,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c9ccef53-faae-40f2-81d2-09d04422fe97";
 				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jianjiandai/Desktop/anjian/yanshan_ios/yanshaniOS/yanshaniOS/yanshaniOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

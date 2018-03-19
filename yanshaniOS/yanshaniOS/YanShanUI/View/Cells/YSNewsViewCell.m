@@ -32,7 +32,7 @@
         [self addSubview:_subTitleLabel];
         
         _seperateLine = [[UIView alloc] init];
-        _seperateLine.backgroundColor = [UIColor grayColor];
+        _seperateLine.backgroundColor = kLightGray;
         [self addSubview:_seperateLine];
         
         _rightIndicator = [[UIImageView alloc] init];
@@ -64,6 +64,7 @@
 }
 
 - (void)updateClassInformation:(id)model {
+    _data = model;
     if([model isMemberOfClass:[YSCourseCategoryModel class]]) {
         YSCourseCategoryModel *obj = (YSCourseCategoryModel *)model;
         _coverImgView.image = [[YSFileManager sharedFileManager] getUnzipFileImageWithImageName:obj.iconName];
@@ -72,12 +73,12 @@
         return;
     }
     NSArray *images = @[@"dianyuan",@"gongyepin",@"jiaotongyunshu",@"renyuanmiji",@"shigongjihua"];
-    NSArray *titles = @[@"化学品教学",@"为新品教学",@"工业夹雪",@"人员密集场所教学",@"交通教学"];
     NSInteger index = arc4random() % images.count;
+    if ([model isKindOfClass:[NSDictionary class]]) {
+        _titleLable.text = [model objectForKey:@"title"];
+        _subTitleLabel.text = [model objectForKey:@"introduction"];
+    }
     _coverImgView.image = [UIImage imageNamed:images[index]];
-    _titleLable.text = titles[index];
-    _subTitleLabel.text = @"课程主要学习相关知识内容，在实际生活中遇到的实际情况等等。";
-    
 }
 
 @end

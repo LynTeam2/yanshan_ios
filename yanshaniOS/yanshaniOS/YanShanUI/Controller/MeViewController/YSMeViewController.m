@@ -11,6 +11,8 @@
 #import "YSQianDaoViewController.h"
 #import "YSMessageViewController.h"
 #import "UITableViewCell+YSCustomCell.h"
+#import "YSWrongItemViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface YSMeViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -33,8 +35,8 @@
 }
 
 - (void)configViewControllerParameter {
-    titles = @[@"个人设置",@"签到有礼",@"我的消息"];
-    icons = @[@"setting",@"qiandao",@"message"];
+    titles = @[@"个人设置",@"签到有礼",@"我的消息",@"我的错题"];
+    icons = @[@"setting",@"qiandao",@"message",@"message"];
 }
 
 - (void)configView {
@@ -111,21 +113,21 @@
     headerView.backgroundColor = [UIColor whiteColor];
     
     UIImageView *headerIcon = [[UIImageView alloc] init];
-    headerIcon.image = [UIImage imageNamed:@"headericon"];
+    [headerIcon sd_setImageWithURL:[NSURL URLWithString:[YSUserModel shareInstance].userIcon] placeholderImage:[UIImage imageNamed:@"headericon"]];
     [headerView addSubview:headerIcon];
     
     UILabel *nickNameLabel = [[UILabel alloc] init];
     nickNameLabel.textAlignment = NSTextAlignmentCenter;
-    nickNameLabel.text = @"闪乱神乐";
+    nickNameLabel.text = [YSUserModel shareInstance].userName;
     [headerView addSubview:nickNameLabel];
     
     UILabel *balanceLabel = [[UILabel alloc] init];
     balanceLabel.textAlignment = NSTextAlignmentCenter;
-    balanceLabel.text = @"财富值:100安全豆";
+//    balanceLabel.text = @"财富值:100安全豆";
     [headerView addSubview:balanceLabel];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = [UIColor grayColor];
+    line.backgroundColor = kLightGray;
     [headerView addSubview:line];
     
     [headerIcon mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -149,7 +151,7 @@
         make.bottom.equalTo(headerView.mas_bottom);
         make.centerX.equalTo(headerView);
         make.width.equalTo(headerView);
-        make.height.mas_equalTo(0.5);
+        make.height.mas_equalTo(kLineHeight);
     }];
     
     return headerView;
@@ -172,6 +174,21 @@
         case 2:{
             YSMessageViewController *messageVC = [[YSMessageViewController alloc] init];
             [self.navigationController pushViewController:messageVC animated:YES];
+        }
+            break;
+        case 3:{
+            NSArray *wrongItemsArray = [NSArray new];
+            if ([[YSCourseManager sharedCourseManager] getAllWrongCourseItem].count) {
+                wrongItemsArray = [NSArray arrayWithArray:[[YSCourseManager sharedCourseManager] getAllWrongCourseItem]];
+            }else{
+                YSCourseItemModel *model = [[YSCourseItemModel alloc] init];
+                model.question = @"暂无错题";
+                wrongItemsArray = [NSArray arrayWithObject:model];
+            }
+            YSWrongItemViewController *itemVC = [[YSWrongItemViewController alloc] init];
+            itemVC.wrongItemList = [NSArray arrayWithArray:wrongItemsArray];
+            itemVC.title = @"我的错题";
+            [self.navigationController pushViewController:itemVC animated:YES];
         }
             break;
         default:

@@ -7,20 +7,14 @@
 //
 
 #import "YSBaseViewController.h"
+#import "YSBaseView.h"
 
 @interface YSShopViewController : YSBaseViewController
 
 @end
 
-@interface YSGoodsInfromationCell : UICollectionViewCell
-{
-    UIImageView *goodCover;
-    UILabel *goodsNameLabel;
-    UILabel *goodsPriceLabel;
-    UILabel *goodsMarketPriceLabel;
-    UIView *line;
-}
+@interface YSWeatherInformationItem : YSBaseView
 
-- (void)updateGoodsContent:(id)model;
+- (void)updateInformation:(NSDictionary *)dic;
 
 @end

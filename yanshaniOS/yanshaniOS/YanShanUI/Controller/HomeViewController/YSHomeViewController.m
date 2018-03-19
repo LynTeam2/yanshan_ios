@@ -12,24 +12,35 @@
 #import "YSNewsViewCell.h"
 #import "YSHomeReusableView.h"
 
-#import "YSClassViewController.h"
+#import "YSMoreClassViewController.h"
 #import "YSExaminationViewController.h"
+#import "YSSpecialItemViewController.h"
 #import "YSNewsViewController.h"
 #import "YSCourseDetailViewController.h"
 #import "YSCourseModel.h"
+#import "YSCourseCategoryModel.h"
 
 @interface YSHomeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,YSHomeReusableViewDelegate>
 {
     YSBaseCollectionView *_collectionView;
     NSArray *lastestCourses;
+    NSMutableArray *newsList;
 }
 @end
 
 @implementation YSHomeViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (0 == newsList.count) {
+        [self requestNews];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    newsList = [NSMutableArray arrayWithCapacity:0];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,13 +73,14 @@
 - (void)addNavigationItems {
     CGFloat width = self.view.frame.size.width;
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchBtn setBackgroundColor:[UIColor grayColor]];
+    [searchBtn setBackgroundColor:kLightGray];
     [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [searchBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [searchBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
     [searchBtn setImageEdgeInsets:UIEdgeInsetsMake(6, 10, 6, width-40-28)];
     searchBtn.frame = CGRectMake(20, 0, width-40, 30);
-    searchBtn.layer.cornerRadius = 15;
+    searchBtn.layer.cornerRadius = 5;
     searchBtn.layer.masksToBounds = YES;
     searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
@@ -91,6 +103,25 @@
 
 - (void)requestNews {
 //    http://39.104.118.75/api/news?page=0&size=5
+    
+    NSDictionary *parameters = @{@"page":@"0",
+                                 @"size":@"5"};
+    [[YSNetWorkEngine sharedInstance] getRequestNewWithparameters:parameters responseHandler:^(NSError *error, id data) {
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dic = (NSDictionary *)data;
+            NSInteger code = [[dic objectForKey:@"code"] integerValue];
+            if (code) {
+                NSDictionary *res = [dic objectForKey:@"results"];
+                NSDictionary *list = [res objectForKey:@"newsList"];
+                NSArray *arr = [list objectForKey:@"content"];
+                if (arr.count) {
+                    [newsList removeAllObjects];
+                    [newsList addObjectsFromArray:arr];
+                    [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:2]];
+                }
+            }
+        }
+    }];
 }
 
 #pragma mark - delegate(UICollectionView)
@@ -113,6 +144,7 @@
     }
     if (indexPath.section == 2) {
         YSNewsViewController *newsVC = [[YSNewsViewController alloc] init];
+        newsVC.dic = newsList[indexPath.row];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:newsVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
@@ -130,7 +162,7 @@
             items = lastestCourses.count > 4 ? 4 : lastestCourses.count;
             break;
         case 2:
-            items = 5;
+            items = newsList.count;
             break;
         default:
             break;
@@ -147,7 +179,9 @@
         }
         case 2: {
             YSNewsViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"newsCell" forIndexPath:indexPath];
-            [cell updateClassInformation:nil];
+            if(indexPath.row < newsList.count){
+                [cell updateClassInformation:newsList[indexPath.row]];
+            }
             return cell;
         }
         default:
@@ -185,7 +219,7 @@
         }
     }else{
         UICollectionReusableView *reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
-        reusableView.backgroundColor = [UIColor grayColor];
+        reusableView.backgroundColor = kLightGray;
         [reusableView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         if (indexPath.section == 2) {
             UILabel *label = [[UILabel alloc] init];
@@ -207,7 +241,7 @@
         case 1:{
             CGSize size = collectionView.bounds.size;
             CGFloat width = (size.width-40)/2;
-            CGFloat height = width*0.7;
+            CGFloat height = width*0.8;
             itemSize = CGSizeMake(width, height);
         }
             break;
@@ -294,9 +328,7 @@
 #pragma mark - YSHomeReusableView delegate
 
 - (void)clickMenuButton:(UIButton *)button {
-    if ([[button currentTitle] isEqualToString:@"生活助手"]) {
-        return;
-    }
+    
     if ([[button currentTitle] isEqualToString:@"测评考试"]) {
         YSExaminationViewController *examinationVC = [[YSExaminationViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
@@ -304,10 +336,24 @@
         self.hidesBottomBarWhenPushed = NO;
         return;
     }
-    YSClassViewController *classVC = [[YSClassViewController alloc] init];
-    classVC.title = [button currentTitle];
+    NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"category.json" atDocumentName:@"course"];
+    NSArray *courses = [YSCourseCategoryModel arrayOfModelsFromDictionaries:dic[@"categories"] error:nil];
+    if ([[button currentTitle] isEqualToString:@"专项练习"]) {
+        NSArray *specialCoursesArray = [NSArray arrayWithArray:courses];
+        YSSpecialItemViewController *moreVC = [[YSSpecialItemViewController alloc] init];
+        moreVC.title = @"专项练习";
+        moreVC.leixingoneArray = [NSArray arrayWithArray:specialCoursesArray];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:moreVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+        return;
+    }
+    NSArray *coursesArray = [NSArray arrayWithArray:courses];
+    YSMoreClassViewController *moreVC = [[YSMoreClassViewController alloc] init];
+    moreVC.title = [button currentTitle];
+    moreVC.categoryCoursesArray = [NSArray arrayWithArray:coursesArray];
     self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:classVC animated:YES];
+    [self.navigationController pushViewController:moreVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
 

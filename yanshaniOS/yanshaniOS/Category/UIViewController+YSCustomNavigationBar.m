@@ -12,7 +12,7 @@
 
 - (void)addPopViewControllerButtonWithTarget:(id)target action:(SEL)selector {
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[UIImage imageNamed:@"navbackicon"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"whiteback"] forState:UIControlStateNormal];
     [backButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     backButton.frame = CGRectMake(0, 0, 18, 28);
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:backButton];

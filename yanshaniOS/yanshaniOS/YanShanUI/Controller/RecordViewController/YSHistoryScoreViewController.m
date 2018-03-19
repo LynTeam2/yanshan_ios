@@ -37,6 +37,7 @@
     mainView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     mainView.delegate = self;
     mainView.dataSource = self;
+    mainView.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:mainView];
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
@@ -79,7 +80,7 @@
         make.top.equalTo(circleLabel.mas_bottom).offset(25);
         make.left.equalTo(headerView);
         make.right.equalTo(headerView);
-        make.height.mas_equalTo(0.5);
+        make.height.mas_equalTo(kLineHeight);
     }];
     if ([[YSExamManager sharedExamManager] getAllExams].count) {
         allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
@@ -129,6 +130,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     YSExaminationItemModel *model = allExams[indexPath.row];
     UILabel *scoreLabel = [[UILabel alloc] init];
     scoreLabel.text = [NSString stringWithFormat:@"答错%ld题",model.wrongItemCount];
@@ -136,8 +138,13 @@
     
     UILabel *timeLabel = [[UILabel alloc] init];
     timeLabel.text = [NSString stringWithFormat:@"%@  %@",model.examJudgement,model.dateString];
+    timeLabel.adjustsFontSizeToFitWidth = YES;
     timeLabel.textAlignment = NSTextAlignmentRight;
     [cell.contentView addSubview:timeLabel];
+    
+    UIView *line = [[UIView alloc] init];
+    line.backgroundColor = kLightGray;
+    [cell.contentView addSubview:line];
     
     [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(cell.contentView).offset(20);
@@ -149,6 +156,12 @@
         make.left.equalTo(scoreLabel.mas_right).offset(20);
         make.top.equalTo(cell.contentView);
         make.height.equalTo(cell.contentView);
+        make.right.equalTo(cell.contentView).offset(-10);
+    }];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(cell.contentView).offset(20);
+        make.bottom.equalTo(cell.contentView);
+        make.height.mas_equalTo(kLineHeight);
         make.right.equalTo(cell.contentView);
     }];
     return cell;

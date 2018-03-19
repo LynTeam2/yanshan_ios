@@ -129,6 +129,8 @@
 }
 
 - (void)confirmChoice:(UIButton *)sender {
+    UITableViewCell *cell = [mainView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    cell.userInteractionEnabled = NO;
     sender.hidden = YES;
     showAWS = YES;
     [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
@@ -248,25 +250,13 @@
 
 - (void)selectChoice:(UIButton *)sender {
     sender.selected = YES;
-    
-    for (int i = 0; i < choiceButtons.count; i++) {
-        if ([sender isEqual:choiceButtons[i]]) {
-            if (_rightChoices.count) {
-                for (int j = 0; j < _rightChoices.count; j++) {
-                    NSString *str1 = _rightChoices[j];
-                    NSString *str2 = [choiceButtons[i] currentTitle];
-                    NSString *imageName = [str2 containsString:str1] ? @"rchoice" : @"wchoice";
-                    [iconButtons[i] setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-                    [iconButtons[i] setTitle:@" " forState:UIControlStateNormal];
-                    [_selectChoices addObject:choiceButtons[i]];
-                    if ([self.delegate respondsToSelector:@selector(selectChoice:)]&& self.delegate) {
-                        [self.delegate selectChoice:_selectChoices];
-                    }
-                }
-            }else{
-                NSString *imageName = _rightIndex == i ? @"rchoice" : @"wchoice";
+    if (![_model mcChoiceType]) {
+        _rightIndex = [_model getSMAnswerOrTFAnswer];
+        for (int i = 0; i < choiceButtons.count; i++) {
+            if ([sender isEqual:choiceButtons[i]]) {
+                NSString *imageName = _rightIndex == i ? @"right" : @"wrong";
                 [iconButtons[i] setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-                [iconButtons[_rightIndex] setBackgroundImage:[UIImage imageNamed:@"rchoice"] forState:UIControlStateNormal];
+                [iconButtons[_rightIndex] setBackgroundImage:[UIImage imageNamed:@"right"] forState:UIControlStateNormal];
                 [iconButtons[i] setTitle:@" " forState:UIControlStateNormal];
                 [iconButtons[_rightIndex] setTitle:@" " forState:UIControlStateNormal];
                 BOOL isRight = _rightIndex == i ? YES : NO;
@@ -275,9 +265,29 @@
                 }
                 self.userInteractionEnabled = NO;
             }
+            
+        }
+    }else{
+        if (_rightChoices.count) {
+            NSString *imageName = @"wrong";
+            for (int j = 0; j < _rightChoices.count; j++) {
+                NSString *str1 = _rightChoices[j];
+                NSString *str2 = [[sender currentTitle] stringByReplacingOccurrencesOfString:@" " withString:@""];
+                if ([str2 containsString:str1]) {
+                    imageName = @"right";
+                }
+            }
+            for (int i = 0; i < choiceButtons.count; i++) {
+                if ([sender isEqual:choiceButtons[i]]) {
+                    [iconButtons[i] setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+                    [iconButtons[i] setTitle:@" " forState:UIControlStateNormal];
+                    [_selectChoices addObject:choiceButtons[i]];
+                }
+            }
         }
     }
 }
+
 
 @end
 
@@ -321,7 +331,7 @@
     
     mcButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [mcButton setTitle:@"确认答案" forState:UIControlStateNormal];
-    [mcButton setBackgroundColor:[UIColor blueColor]];
+    [mcButton setBackgroundColor:kBlueColor];
     [self.contentView addSubview:mcButton];
     mcButton.hidden = YES;
 }
@@ -355,12 +365,12 @@
         make.top.equalTo(self.contentView).offset(40);
         make.left.equalTo(self.contentView).offset(20);
         make.right.equalTo(self.contentView).offset(-20);
-        make.height.mas_equalTo(60);
+        make.height.mas_equalTo(50);
     }];
 }
 
 - (void)updateAwsChoice:(NSString *)awsChoice {
-    anwserLabel.text = [NSString stringWithFormat:@"答案: %@",awsChoice];
+    anwserLabel.text = [[NSString stringWithFormat:@"答案: %@",awsChoice] stringByReplacingOccurrencesOfString:@"choice" withString:@""];
 }
 
 - (void)updateAwsAnalysis:(NSString *)analysis {

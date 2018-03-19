@@ -66,7 +66,7 @@
         
         btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitle:@"完成考试" forState:UIControlStateNormal];
-        [btn setBackgroundColor:[UIColor blueColor]];
+        [btn setBackgroundColor:kBlueColor];
         [self addSubview:btn];
         
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {

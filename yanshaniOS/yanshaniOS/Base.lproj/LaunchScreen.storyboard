@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,20 +23,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yan Shan iOS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpI-Gy-okT">
-                                <rect key="frame" x="0.0" y="233" width="375" height="74"/>
+                                <rect key="frame" x="115.5" y="567" width="145.5" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="74" id="yn8-HP-6ak"/>
+                                    <constraint firstAttribute="height" constant="80" id="4w1-H1-0lr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_black" translatesAutoresizingMaskIntoConstraints="NO" id="9q0-15-I5V">
+                                <rect key="frame" x="67" y="229" width="240" height="209"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.11338528245687485" green="0.11350587755441666" blue="0.11340392380952835" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="gpI-Gy-okT" secondAttribute="trailing" id="8lr-K5-Tsr"/>
-                            <constraint firstItem="gpI-Gy-okT" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="213" id="YTJ-vH-nid"/>
-                            <constraint firstItem="gpI-Gy-okT" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hyK-9f-VvZ"/>
+                            <constraint firstItem="gpI-Gy-okT" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1lL-s5-pUG"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="gpI-Gy-okT" secondAttribute="bottom" constant="20" id="4g4-eG-7mx"/>
+                            <constraint firstItem="9q0-15-I5V" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="51" id="Hwn-Ql-KE1"/>
+                            <constraint firstItem="9q0-15-I5V" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="209" id="QK8-5P-YGh"/>
+                            <constraint firstItem="9q0-15-I5V" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="W27-MH-n92"/>
+                            <constraint firstItem="9q0-15-I5V" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="q3G-zL-uQT"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -44,4 +51,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon_black" width="1024" height="1024"/>
+    </resources>
 </document>

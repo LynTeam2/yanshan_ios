@@ -36,16 +36,18 @@
     NSDictionary *parameters = @{@"username":_username.text,
                                  @"password":_password.text};
     [[YSNetWorkEngine sharedInstance] getRequestWithURLString:@"" parameters:parameters responseHandler:^(NSError *error, NSDictionary *data) {
-        if (error || ![[data objectForKey:@"code"] boolValue]) {
+        if (error) {
             [self.view makeToast:@"用户名或密码错误" duration:2.0 position:@"center"];
             return ;
         }
         if ([[data objectForKey:@"code"] boolValue]) {
+            NSDictionary *res = [data objectForKey:@"results"];
+            [[YSUserModel shareInstance] updateUserInformationWithData:res[@"user"]];
             UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
             [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];
         }
     }];
-    
+
 }
 
 @end

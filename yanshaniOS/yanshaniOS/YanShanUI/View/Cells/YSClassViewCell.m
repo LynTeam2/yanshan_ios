@@ -21,9 +21,9 @@
         
         _inforLabel = [[UILabel alloc] init];
         _inforLabel.userInteractionEnabled = YES;
-        _inforLabel.numberOfLines = 0;
+        _inforLabel.numberOfLines = 2;
         _inforLabel.font = [UIFont systemFontOfSize:13];
-        _inforLabel.textAlignment = NSTextAlignmentCenter;
+        _inforLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_inforLabel];
     }
     return self;
@@ -32,8 +32,8 @@
 - (void)layoutSubviews {
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
-    _coverImgView.frame = CGRectMake(0, 0, width, height*0.75);
-    _inforLabel.frame = CGRectMake(0, height*0.75, width, height*0.25);
+    _coverImgView.frame = CGRectMake(0, 0, width, height*0.6);
+    _inforLabel.frame = CGRectMake(0, height*0.65, width, height*0.35);
 }
 
 - (void)updateClassCellWith:(id)model {
