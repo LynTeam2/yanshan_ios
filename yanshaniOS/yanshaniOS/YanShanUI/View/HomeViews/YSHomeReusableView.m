@@ -37,7 +37,7 @@
         CGFloat space = 15;
         CGFloat width = (frame.size.width-20*2-15*3)/4;
         CGFloat height = 130-40;
-        NSArray *images = @[@"kechengxuexi", @"kaoshi", @"falvfagui", @"livehelp"];
+        NSArray *images = @[@"kechengxuexi", @"zhuanxianglianxi", @"kaoshi", @"falvfagui"];
         NSArray *titles = @[@"课程学习", @"专项练习", @"测评考试", @"法律法规"];
         for (int i = 0; i < 4; i++) {
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

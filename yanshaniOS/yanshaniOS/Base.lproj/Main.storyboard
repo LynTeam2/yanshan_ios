@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C7A-Ej-Xgc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C7A-Ej-Xgc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -112,7 +112,7 @@
         <scene sceneID="KiO-TP-2by">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nV7-QV-Ajm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="首页" image="homepage" selectedImage="homepage" id="Co9-3G-BoP"/>
+                    <tabBarItem key="tabBarItem" title="首页" image="homepage" selectedImage="homepageselect" id="Co9-3G-BoP"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WCg-1Y-zJp">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -131,7 +131,7 @@
         <scene sceneID="j3y-bB-bro">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="57Q-cz-Ip2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我的" image="account" selectedImage="account" id="bw9-OB-lje"/>
+                    <tabBarItem key="tabBarItem" title="我的" image="account" selectedImage="accountselect" id="bw9-OB-lje"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="11v-CZ-1qH">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -249,7 +249,7 @@
         <scene sceneID="ljb-o7-1F0">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VO5-Gw-5hE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="生活助手" image="cart" selectedImage="cart" id="yr1-tN-KFz"/>
+                    <tabBarItem key="tabBarItem" title="生活助手" image="lifenormal" selectedImage="life" id="yr1-tN-KFz"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wPM-lj-tkD">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -268,7 +268,7 @@
         <scene sceneID="pO1-2o-xLq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6cA-LC-VG6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="成绩" image="form" selectedImage="form" id="iPs-j6-9YX"/>
+                    <tabBarItem key="tabBarItem" title="成绩" image="form" selectedImage="chengjiselect" id="iPs-j6-9YX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7ge-Qc-fi4">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -286,8 +286,12 @@
     </scenes>
     <resources>
         <image name="account" width="21" height="20"/>
-        <image name="cart" width="21" height="21"/>
+        <image name="accountselect" width="21" height="20"/>
+        <image name="chengjiselect" width="19" height="21"/>
         <image name="form" width="19" height="21"/>
         <image name="homepage" width="23" height="21"/>
+        <image name="homepageselect" width="24" height="21"/>
+        <image name="life" width="24" height="20"/>
+        <image name="lifenormal" width="24" height="20"/>
     </resources>
 </document>
