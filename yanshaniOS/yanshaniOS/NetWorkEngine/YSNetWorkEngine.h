@@ -14,11 +14,14 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
 
 + (instancetype)sharedInstance;
 
-- (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath;
+- (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath responseHandler:(NetWorkResponse)handler;
 
 - (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler;
 
 - (void)getRequestNewWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler;
 
 - (void)getWeatherDataWithparameters:(NSString *)city responseHandler:(NetWorkResponse)handler;
+
+- (void)userLoginWithUseName:(NSString *)userName password:(NSString *)pw responseHandler:(NetWorkResponse)handler;
+
 @end

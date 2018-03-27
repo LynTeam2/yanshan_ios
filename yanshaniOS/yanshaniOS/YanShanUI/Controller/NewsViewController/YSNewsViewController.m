@@ -7,8 +7,9 @@
 //
 
 #import "YSNewsViewController.h"
+#import <WebKit/WebKit.h>
 
-@interface YSNewsViewController ()
+@interface YSNewsViewController ()<WKNavigationDelegate>
 
 @end
 
@@ -17,16 +18,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
     [webView loadHTMLString:_dic[@"content"] baseURL:nil];
+    webView.navigationDelegate = self;
     [self.view addSubview:webView];
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
     self.title = @"新闻详情";
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+    
+}
+
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 @end

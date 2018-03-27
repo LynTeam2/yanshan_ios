@@ -33,8 +33,6 @@
     // Do any additional setup after loading the view.
     self.navigationController.navigationBarHidden = YES;
     [[YSNetWorkEngine sharedInstance] getWeatherDataWithparameters:nil responseHandler:^(NSError *error, id data) {
-        NSLog(@"%@",data);
-
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSInteger status = [[data objectForKey:@"status"] integerValue];
             if (200 == status) {
@@ -91,13 +89,12 @@
     NSDateFormatter *dateFormater = [[NSDateFormatter alloc]init];
     [dateFormater setDateFormat:@"yyyyMMdd"];
     dateTemp = [dateFormater dateFromString:date];
-    NSCalendar *localeCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar];
-    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSCalendar *localeCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
     NSDateComponents *localeComp = [localeCalendar components:unitFlags fromDate:dateTemp];
-    NSLog(@"%d_%d_%d  %@",localeComp.year,localeComp.month,localeComp.day, localeComp.date);
     NSString *m_str = [chineseMonths objectAtIndex:localeComp.month-1];
     NSString *d_str = [chineseDays objectAtIndex:localeComp.day-1];
-    NSString *chineseCal_str = [NSString stringWithFormat: @"%@%@",m_str,d_str];
+    NSString *chineseCal_str = [NSString stringWithFormat:@"农历%@%@",m_str,d_str];
     return chineseCal_str;
 }
 
@@ -118,13 +115,13 @@
     [self.view addSubview:titleLabel];
 //    @"9月03日  周日 农历七月十三"
     infoLabel = [[UILabel alloc] init];
-    infoLabel.text = [self getChineseCalendarWithDate:@"20180318"];
+    infoLabel.text = @"--月--日 农历----";
     infoLabel.textAlignment = NSTextAlignmentCenter;
     infoLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:infoLabel];
     
     FLabel = [[UILabel alloc] init];
-    FLabel.text = @"26°";
+    FLabel.text = @"--°";
     FLabel.textAlignment = NSTextAlignmentCenter;
     FLabel.textColor = [UIColor whiteColor];
     FLabel.font = [UIFont systemFontOfSize:90.f];
@@ -197,7 +194,7 @@
         [self addSubview:dotImg];
         
         dateLabel = [[UILabel alloc] init];
-        dateLabel.text = @"星期一";
+        dateLabel.text = @"--";
         dateLabel.font = [UIFont systemFontOfSize:16.f];
         [self addSubview:dateLabel];
         
@@ -208,7 +205,7 @@
         [self addSubview:weatherLabel];
         
         FLabel = [[UILabel alloc] init];
-        FLabel.text = @"26°";
+        FLabel.text = @"--°";
         FLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:FLabel];
      

@@ -19,6 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[YSUserLoginModel shareInstance] userAutoLogin:^(BOOL success) {
+        if (success) {
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+            [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,18 +39,27 @@
         [self.view makeToast:@"请输入用户名或密码" duration:2.0 position:@"center"];
         return;
     }
-    NSDictionary *parameters = @{@"username":_username.text,
-                                 @"password":_password.text};
-    [[YSNetWorkEngine sharedInstance] getRequestWithURLString:@"" parameters:parameters responseHandler:^(NSError *error, NSDictionary *data) {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+   
+    [[YSNetWorkEngine sharedInstance] userLoginWithUseName:_username.text password:_password.text  responseHandler:^(NSError *error, NSDictionary *data) {
         if (error) {
             [self.view makeToast:@"用户名或密码错误" duration:2.0 position:@"center"];
             return ;
         }
         if ([[data objectForKey:@"code"] boolValue]) {
+            [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:kZipFileUrl toFilePath:@"zip" responseHandler:^(NSError *error, id data) {
+                if (error) {
+                    [[UIApplication sharedApplication].keyWindow makeToast:@"题库更新失败" duration:2.0 position:@"center"];
+                }
+            }];
             NSDictionary *res = [data objectForKey:@"results"];
             [[YSUserModel shareInstance] updateUserInformationWithData:res[@"user"]];
             UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
             [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];
+            [[YSUserLoginModel shareInstance] saveUserLoginInformation:_username.text password:_password.text];
+        }else{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self.view makeToast:@"用户名或密码错误" duration:2.0 position:@"center"];
         }
     }];
 

@@ -102,7 +102,6 @@
 }
 
 - (void)requestNews {
-//    http://39.104.118.75/api/news?page=0&size=5
     
     NSDictionary *parameters = @{@"page":@"0",
                                  @"size":@"5"};
