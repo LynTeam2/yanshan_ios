@@ -16,4 +16,6 @@
 
 + (UIImage *)weatherIcon:(NSString *)weather;
 
++ (NSString *)getUserCurrentLocation;
+
 @end

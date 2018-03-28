@@ -54,6 +54,10 @@
     return nil;
 }
 
+//+ (NSString *)getUserCurrentLocation {
+//    
+//}
+
 + (unsigned int)intFromHexString:(NSString *)hexStr
 {
     unsigned int hexInt = 0;

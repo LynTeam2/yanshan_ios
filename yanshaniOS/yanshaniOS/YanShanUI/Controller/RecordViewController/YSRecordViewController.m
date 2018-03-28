@@ -61,8 +61,7 @@
         [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view.mas_safeAreaLayoutGuide);
         }];
-    }
-    if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
+    }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
         [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
@@ -74,11 +73,6 @@
     
     UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recordicon"]];
     [headerView addSubview:iconView];
-    [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView);
-        make.centerX.equalTo(headerView);
-        make.size.mas_equalTo(CGSizeMake(170*1.7, 140*1.7));
-    }];
     
     testResultLabel = [[UILabel alloc] init];
     testResultLabel.text = @"暂无考试成绩统计";
@@ -94,6 +88,12 @@
         examModel = allExams[0];
         testResultLabel.text = [NSString stringWithFormat:@"%ld分 答错%ld题 %@",examModel.examScore,examModel.wrongItemCount,examModel.examJudgement];
     }
+    [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(headerView);
+        make.centerX.equalTo(headerView);
+        make.size.mas_equalTo(CGSizeMake(170*1.7, 140*1.7));
+    }];
+    
     [testResultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(iconView.mas_bottom).offset(10);
         make.centerX.equalTo(iconView);

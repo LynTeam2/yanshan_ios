@@ -1,16 +1,17 @@
 //
-//  YSNewsViewCell.h
+//  YSClassCatogaryCell.h
 //  yanshaniOS
 //
-//  Created by 代健 on 2017/10/8.
-//  Copyright © 2017年 jiandai. All rights reserved.
+//  Created by jianjiandai on 2018/3/28.
+//  Copyright © 2018年 jiandai. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface YSNewsViewCell : UICollectionViewCell
+@interface YSClassCatogaryCell : UICollectionViewCell
 {
     UIImageView *_coverImgView;
+    UIImageView *_rightIndicator;
     UILabel *_titleLable;
     UILabel *_subTitleLabel;
     UIView *_seperateLine;
