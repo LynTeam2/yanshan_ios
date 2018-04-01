@@ -19,6 +19,9 @@
     if (self) {
         wrongItems = [NSMutableArray arrayWithCapacity:0];
         rightItems = [NSMutableArray arrayWithCapacity:0];
+        _rightSMItemCount = 0;
+        _rightMCItemCount = 0;
+        _rightTFItemCount = 0;
     }
     return self;
 }
@@ -55,16 +58,98 @@
     return mArr;
 }
 
+- (NSArray *)getAllWrongSCItem {
+    NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
+    for (YSCourseItemModel *m in [self getSCItem]) {
+        if([m.doROW isEqual:@"n"]) {
+            [marr addObject:m];
+        }
+    }
+    return marr;
+}
+
+- (NSArray *)getAllWrongMCItem {
+    NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
+    for (YSCourseItemModel *m in [self getMCItem]) {
+        if([m.doROW isEqual:@"n"]) {
+            [marr addObject:m];
+        }
+    }
+    return marr;
+}
+
+- (NSArray *)getAllWrongTFItem {
+    NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
+    for (YSCourseItemModel *m in [self getTFItem]) {
+        if([m.doROW isEqual:@"n"]) {
+            [marr addObject:m];
+        }
+    }
+    return marr;
+}
+
+- (NSArray *)getAllUndoSCItem {
+    NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
+    for (YSCourseItemModel *m in [self getSCItem]) {
+        if(m.doROW.length == 0) {
+            [marr addObject:m];
+        }
+    }
+    return marr;
+}
+
+- (NSArray *)getAllUndoMCItem {
+    NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
+    for (YSCourseItemModel *m in [self getMCItem]) {
+        if(m.doROW.length == 0) {
+            [marr addObject:m];
+        }
+    }
+    return marr;
+}
+
+- (NSArray *)getAllUndoTFItem {
+    NSMutableArray *marr = [NSMutableArray arrayWithCapacity:0];
+    for (YSCourseItemModel *m in [self getTFItem]) {
+        if(m.doROW.length == 0) {
+            [marr addObject:m];
+        }
+    }
+    return marr;
+}
+
 - (void)saveWrongItem:(YSCourseItemModel *)model {
+    for (YSCourseItemModel *m in _items) {
+        if ([model.question isEqual:m.question]) {
+            m.doROW = @"n";
+            model.doROW = @"n";
+        }
+    }
     [wrongItems addObject:model];
 }
 
+- (NSArray *)allWrongItems {
+    return wrongItems;
+}
 - (void)saveRightItem:(YSCourseItemModel *)model {
+    for (YSCourseItemModel *m in _items) {
+        if ([model.question isEqual:m.question]) {
+            m.doROW = @"y";
+            model.doROW = @"y";
+        }
+    }
+    if ([model.questionType isEqualToString:@"sc"]) {
+        _rightSMItemCount ++;
+    }else if ([model.questionType isEqualToString:@"mc"]) {
+        _rightMCItemCount ++;
+    }else if ([model.questionType isEqualToString:@"tf"]) {
+        _rightTFItemCount ++;
+    }
     [rightItems addObject:model];
 }
 
-- (NSArray<YSCourseItemModel *> *)items {
-    return wrongItems;
+- (NSInteger)undoItem {
+    return _items.count - rightItems.count - wrongItems.count;
 }
 
 @end

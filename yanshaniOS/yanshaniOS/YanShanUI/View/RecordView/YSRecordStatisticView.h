@@ -7,6 +7,7 @@
 //
 
 #import "YSBaseView.h"
+#import "YSExaminationItemModel.h"
 
 typedef NS_ENUM(NSUInteger, YSRecordStatisticViewType) {
     YSRecordStatisticViewTypeSimple = 0,
@@ -19,7 +20,7 @@ typedef NS_ENUM(NSUInteger, YSRecordStatisticViewType) {
 
 - (void)proccessViewColor:(UIColor *)color;
 
-- (void)updateContentUseStatisticData:(NSDictionary *)data withViewType:(YSRecordStatisticViewType)type;
+- (void)updateContentUseStatisticData:(YSExaminationItemModel *)model withViewType:(YSRecordStatisticViewType)type;
 
 
 @end
@@ -29,6 +30,8 @@ typedef NS_ENUM(NSUInteger, YSRecordStatisticViewType) {
 
 - (instancetype)initWithButtonType:(UIButtonType)type;
 
+- (void)updateButtonContentWithData:(NSDictionary *)dic;
 
+- (void)addTarget:(id)target andSel:(SEL)sel;
 
 @end

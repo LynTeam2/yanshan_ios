@@ -236,7 +236,7 @@
     [self addChildViewController:pageVC];
     [self.view addSubview:pageVC.view];
     [pageVC didMoveToParentViewController:self];
-    
+    examModel.items = [testItems copy];
     for (int i = 0; i < testItems.count; i++) {
         YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];
         vc.index = i;
@@ -351,7 +351,7 @@
     [formatter setDateFormat:@"yyyy.MM.dd HH:mm"];
     NSString *current = [formatter stringFromDate:now];
     examModel.rightItemCount = rightCount;
-    examModel.wrongItemCount = testItems.count - rightCount;
+    examModel.wrongItemCount = [examModel allWrongItems].count;
     examModel.examScore = rightCount;
     examModel.dateString = current;
     [[YSExamManager sharedExamManager] saveCurrentExam:examModel];

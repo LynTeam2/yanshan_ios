@@ -47,11 +47,6 @@
             return ;
         }
         if ([[data objectForKey:@"code"] boolValue]) {
-            [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:kZipFileUrl toFilePath:@"zip" responseHandler:^(NSError *error, id data) {
-                if (error) {
-                    [[UIApplication sharedApplication].keyWindow makeToast:@"题库更新失败" duration:2.0 position:@"center"];
-                }
-            }];
             NSDictionary *res = [data objectForKey:@"results"];
             [[YSUserModel shareInstance] updateUserInformationWithData:res[@"user"]];
             UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];

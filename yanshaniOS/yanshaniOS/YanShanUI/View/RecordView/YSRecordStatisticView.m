@@ -15,6 +15,7 @@
     UIView *progressView;
     UILabel *amountLabel;
     UILabel *percentageLabel;
+    CGFloat percent;
 }
 
 - (instancetype)init {
@@ -66,9 +67,10 @@
         make.height.mas_equalTo(8);
         make.bottom.equalTo(self).offset(-8);
     }];
+    CGFloat progressWidth = [UIScreen mainScreen].bounds.size.width - 200;
     [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(categoryLabel.mas_right);
-        make.right.equalTo(self).offset(-160);
+        make.width.mas_equalTo(progressWidth*percent);
         make.height.mas_equalTo(8);
         make.bottom.equalTo(self).offset(-8);
     }];
@@ -85,14 +87,21 @@
     progressView.backgroundColor = color;
 }
 
-- (void)updateContentUseStatisticData:(NSDictionary *)data withViewType:(YSRecordStatisticViewType)type {
+- (void)updateContentUseStatisticData:(YSExaminationItemModel *)model withViewType:(YSRecordStatisticViewType)type {
     if (type == YSRecordStatisticViewTypeSimple) {
-        progressView.backgroundColor = [UIColor redColor];
+        categoryLabel.text = @"单选";
+        percent = ([model getSCItem].count - [model getAllWrongSCItem].count - [model getAllUndoSCItem].count)/(CGFloat)[model getSCItem].count;
+        percentageLabel.text = [NSString stringWithFormat:@"%ld",[model getSCItem].count];
     } else if (type == YSRecordStatisticViewTypeMultable) {
-        progressView.backgroundColor = [UIColor orangeColor];
+        categoryLabel.text = @"多选";
+        percent = ([model getMCItem].count - [model getAllWrongMCItem].count - [model getAllUndoMCItem].count)/(CGFloat)[model getMCItem].count;
+        percentageLabel.text = [NSString stringWithFormat:@"%ld",[model getMCItem].count];
     } else {
-        progressView.backgroundColor = [UIColor yellowColor];
+        categoryLabel.text = @"判断";
+        percent = ([model getTFItem].count - [model getAllWrongTFItem].count - [model getAllUndoTFItem].count)/(CGFloat)[model getTFItem].count;
+        percentageLabel.text = [NSString stringWithFormat:@"%ld",[model getTFItem].count];
     }
+    percent = isnan(percent) ? 0 :  percent;
 }
 
 @end
@@ -120,7 +129,7 @@
     
     
     imageView = [[UIImageView alloc] init];
-    imageView.backgroundColor = [UIColor redColor];
+//    imageView.backgroundColor = [UIColor redColor];
     [self addSubview:imageView];
     
     titleLabel = [[UILabel alloc] init];
@@ -128,13 +137,24 @@
     [self addSubview:titleLabel];
     
     subLabel = [[UILabel alloc] init];
-    subLabel.text = @"做错2题,未做96题";
-    subLabel.textColor = kLightGray;
-    subLabel.font = [UIFont systemFontOfSize:14.f];
+    subLabel.text = @"做错-题,未做-题";
+    subLabel.textColor = [UIColor grayColor];
+    subLabel.font = [UIFont systemFontOfSize:11.f];
     [self addSubview:subLabel];
     
-    titleLabel.backgroundColor = kRandomColor;
-    subLabel.backgroundColor = kRandomColor;
+//    titleLabel.backgroundColor = kRandomColor;
+//    subLabel.backgroundColor = kRandomColor;
+}
+
+- (void)updateButtonContentWithData:(NSDictionary *)dic {
+    imageView.image = [UIImage imageNamed:dic[@"image"]];
+    titleLabel.text = dic[@"title"];
+    subLabel.adjustsFontSizeToFitWidth = YES;
+    subLabel.text = dic[@"subtitle"];
+}
+
+- (void)addTarget:(id)target andSel:(SEL)sel {
+    [button addTarget:target action:sel forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)layoutSubviews {

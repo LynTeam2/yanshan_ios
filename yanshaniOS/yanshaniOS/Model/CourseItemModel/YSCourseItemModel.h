@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSString <Optional>*choiceB;
 @property (nonatomic, strong) NSString <Optional>*choiceC;
 @property (nonatomic, strong) NSString <Optional>*choiceD;
+@property (nonatomic, strong) NSString <Optional>*doROW;
+
 
 - (NSArray *)getItemChoices;
 

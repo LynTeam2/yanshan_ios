@@ -29,15 +29,37 @@ typedef NS_ENUM(NSUInteger, YSExaminationItemType) {
 
 @property (nonatomic, assign) NSInteger wrongItemCount;
 
+@property (nonatomic, assign) NSInteger rightSMItemCount;
+
+@property (nonatomic, assign) NSInteger rightMCItemCount;
+
+@property (nonatomic, assign) NSInteger rightTFItemCount;
+
+- (NSInteger)undoItem;
+
 - (NSArray *)getSCItem;
 
 - (NSArray *)getMCItem;
 
 - (NSArray *)getTFItem;
 
+- (NSArray *)getAllWrongSCItem;
+
+- (NSArray *)getAllWrongMCItem;
+
+- (NSArray *)getAllWrongTFItem;
+
+- (NSArray *)getAllUndoSCItem;
+
+- (NSArray *)getAllUndoMCItem;
+
+- (NSArray *)getAllUndoTFItem;
+
+
 - (void)saveWrongItem:(YSCourseItemModel *)model;
 
 - (void)saveRightItem:(YSCourseItemModel *)model;
 
+- (NSArray *)allWrongItems;
 
 @end

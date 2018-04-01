@@ -11,14 +11,32 @@
 #import "YSExamManager.h"
 #import "YSExaminationItemModel.h"
 #import "YSWrongItemsViewController.h"
+#import "YSRecordStatisticView.h"
+
+static NSString *redString     = @"ff6464";
+static NSString *orangeString  = @"ffc664";
+static NSString *blueString    = @"6490ff";
 
 @interface YSRecordViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
+//    NSArray *allExams;
+//    YSExaminationItemModel *examModel;
+//    UITableView *mainView;
+//    UILabel *testResultLabel;
     NSArray *allExams;
     YSExaminationItemModel *examModel;
     UITableView *mainView;
+    UILabel *scoreLabel;
     UILabel *testResultLabel;
+    YSRecordStatisticView *statiscView1;
+    YSRecordStatisticView *statiscView2;
+    YSRecordStatisticView *statiscView3;
+    YSRecordStatisticButton *btn1;
+    YSRecordStatisticButton *btn2;
+    YSRecordStatisticButton *btn3;
+    YSRecordStatisticButton *btn4;
 }
+
 @end
 
 @implementation YSRecordViewController
@@ -26,14 +44,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = kLightGray;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     if ([[YSExamManager sharedExamManager] getAllExams].count) {
         allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
         examModel = allExams[0];
-        testResultLabel.text = [NSString stringWithFormat:@"%ld分 答错%ld题 %@",examModel.examScore,examModel.wrongItemCount,examModel.examJudgement];
-        [mainView reloadData];
+        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题 %@",examModel.wrongItemCount,examModel.examJudgement];
+        scoreLabel.text = [NSString stringWithFormat:@"%ld分",examModel.examScore];
+        [statiscView1 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeSimple)];
+        [statiscView2 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeMultable)];
+        [statiscView3 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeTOF)];
+//        [mainView reloadData];
+    }
+    if ([[YSExamManager sharedExamManager] getAllExams].count) {
+        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题 %@",examModel.wrongItemCount,examModel.examJudgement];
+        NSString *subTitle = [NSString stringWithFormat:@"做错%ld题,未做%ld题",examModel.wrongItemCount,[examModel undoItem]];
+        NSDictionary *dic1 = @{@"image":@"newwrong",@"title":@"查看错题",@"subtitle":subTitle};
+        [btn1 updateButtonContentWithData:dic1];
+        subTitle = [NSString stringWithFormat:@"做错%ld题,未做%ld题",[examModel getAllWrongSCItem].count,[examModel getAllUndoSCItem].count];
+        NSDictionary *dic2 = @{@"image":@"newsc",@"title":@"单选错题",@"subtitle":subTitle};
+        [btn2 updateButtonContentWithData:dic2];
+        subTitle = [NSString stringWithFormat:@"做错%ld题,未做%ld题",[examModel getAllWrongMCItem].count,[examModel getAllUndoMCItem].count];
+        NSDictionary *dic3 = @{@"image":@"newmc",@"title":@"多选错题",@"subtitle":subTitle};
+        [btn3 updateButtonContentWithData:dic3];
+        subTitle = [NSString stringWithFormat:@"做错%ld题,未做%ld题",[examModel getAllWrongTFItem].count,[examModel getAllUndoTFItem].count];
+        NSDictionary *dic4 = @{@"image":@"newtf",@"title":@"判断错题",@"subtitle":subTitle};
+        [btn4 updateButtonContentWithData:dic4];
     }
 }
 
@@ -50,57 +88,229 @@
 
 - (void)configView {
     
-    mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    mainView.delegate = self;
-    mainView.dataSource = self;
-    mainView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    mainView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:mainView];
+//    mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+//    mainView.delegate = self;
+//    mainView.dataSource = self;
+//    mainView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    mainView.showsVerticalScrollIndicator = NO;
+//    [self.view addSubview:mainView];
+//    
+//    if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
+//        [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view.mas_safeAreaLayoutGuide);
+//        }];
+//    }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
+//        [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
+//    }
+//    
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 320)];
+//    headerView.backgroundColor = [UIColor whiteColor];
+//    mainView.tableHeaderView = headerView;
+//    
+//    UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recordicon"]];
+//    [headerView addSubview:iconView];
+//    
+//    testResultLabel = [[UILabel alloc] init];
+//    testResultLabel.text = @"暂无考试成绩统计";
+//    testResultLabel.font = [UIFont boldSystemFontOfSize:17.f];
+//    testResultLabel.backgroundColor = [UIColor redColor];
+//    testResultLabel.textColor = [UIColor whiteColor];
+//    testResultLabel.layer.cornerRadius = 33;
+//    testResultLabel.layer.masksToBounds = YES;
+//    testResultLabel.textAlignment = NSTextAlignmentCenter;
+//    [headerView addSubview:testResultLabel];
+//    if ([[YSExamManager sharedExamManager] getAllExams].count) {
+//        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
+//        examModel = allExams[0];
+//        testResultLabel.text = [NSString stringWithFormat:@"%ld分 答错%ld题 %@",examModel.examScore,examModel.wrongItemCount,examModel.examJudgement];
+//    }
+//    [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(headerView);
+//        make.centerX.equalTo(headerView);
+//        make.size.mas_equalTo(CGSizeMake(170*1.7, 140*1.7));
+//    }];
+//    
+//    [testResultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(iconView.mas_bottom).offset(10);
+//        make.centerX.equalTo(iconView);
+//        make.size.mas_equalTo(CGSizeMake(290, 66));
+//    }];
+    CGFloat height = self.view.frame.size.height*0.55;
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:headerView];
     
+    UIView *secondSectionView = [[UIView alloc] init];
+    secondSectionView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:secondSectionView];
+    [secondSectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(headerView.mas_bottom).offset(10);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
+    
+    //    mainView.tableHeaderView = headerView;
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
-        [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view.mas_safeAreaLayoutGuide);
+        [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+            make.left.equalTo(self.view);
+            make.right.equalTo(self.view);
+            make.height.mas_equalTo(height);
         }];
-    }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
-        [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+    }
+    if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
+        [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_topLayoutGuide);
+            make.left.equalTo(self.view);
+            make.right.equalTo(self.view);
+            make.height.mas_equalTo(height);
         }];
     }
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 320)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    mainView.tableHeaderView = headerView;
+    UIImageView *chengjiBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chengjitongjibg"]];
+    [headerView addSubview:chengjiBG];
     
-    UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recordicon"]];
-    [headerView addSubview:iconView];
+    scoreLabel = [[UILabel alloc] init];
+    scoreLabel.text = @"0分";
+    scoreLabel.textColor = [UIColor whiteColor];
+    scoreLabel.font = [UIFont systemFontOfSize:50];
+    scoreLabel.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:scoreLabel];
     
     testResultLabel = [[UILabel alloc] init];
     testResultLabel.text = @"暂无考试成绩统计";
-    testResultLabel.font = [UIFont boldSystemFontOfSize:17.f];
-    testResultLabel.backgroundColor = [UIColor redColor];
     testResultLabel.textColor = [UIColor whiteColor];
     testResultLabel.layer.cornerRadius = 33;
     testResultLabel.layer.masksToBounds = YES;
     testResultLabel.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:testResultLabel];
-    if ([[YSExamManager sharedExamManager] getAllExams].count) {
-        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
-        examModel = allExams[0];
-        testResultLabel.text = [NSString stringWithFormat:@"%ld分 答错%ld题 %@",examModel.examScore,examModel.wrongItemCount,examModel.examJudgement];
-    }
-    [iconView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    statiscView1 = [[YSRecordStatisticView alloc] init];
+    [statiscView1 proccessViewColor:[YSCommonHelper getUIColorFromHexString:redString]];
+    [headerView addSubview:statiscView1];
+    
+    statiscView2 = [[YSRecordStatisticView alloc] init];
+    [statiscView2 proccessViewColor:[YSCommonHelper getUIColorFromHexString:orangeString]];
+    [headerView addSubview:statiscView2];
+    
+    statiscView3 = [[YSRecordStatisticView alloc] init];
+    [statiscView3 proccessViewColor:[YSCommonHelper getUIColorFromHexString:blueString]];
+    [headerView addSubview:statiscView3];
+    
+    [chengjiBG mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView.mas_centerX);
         make.top.equalTo(headerView);
-        make.centerX.equalTo(headerView);
-        make.size.mas_equalTo(CGSizeMake(170*1.7, 140*1.7));
+        make.width.equalTo(headerView);
+        make.height.mas_equalTo(180);
     }];
     
-    [testResultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(iconView.mas_bottom).offset(10);
-        make.centerX.equalTo(iconView);
-        make.size.mas_equalTo(CGSizeMake(290, 66));
+    [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView.mas_centerX);
+        make.top.equalTo(headerView).offset(45);
+        make.size.mas_equalTo(CGSizeMake(500, 50));
     }];
+    [testResultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView.mas_centerX);
+        make.top.equalTo(scoreLabel.mas_bottom).offset(15);
+        make.size.mas_equalTo(CGSizeMake(500, 30));
+    }];
+    
+    [statiscView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView);
+        make.top.equalTo(testResultLabel.mas_bottom).offset(50);
+        make.height.mas_equalTo(30);
+        make.width.equalTo(headerView);
+    }];
+    [statiscView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView);
+        make.top.equalTo(statiscView1.mas_bottom).offset(10);
+        make.height.mas_equalTo(30);
+        make.width.equalTo(headerView);
+    }];
+    [statiscView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView);
+        make.top.equalTo(statiscView2.mas_bottom).offset(10);
+        make.height.mas_equalTo(30);
+        make.width.equalTo(headerView);
+    }];
+    
+    CGFloat btnSpace = 20;
+    CGFloat btnWidth = (self.view.frame.size.width-btnSpace*3)/2;
+    CGFloat btnHeight = 60;
+    btn1 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    [secondSectionView addSubview:btn1];
+    
+    btn2 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    [secondSectionView addSubview:btn2];
+    
+    btn3 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    [secondSectionView addSubview:btn3];
+    
+    btn4 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    [secondSectionView addSubview:btn4];
+    
+    [btn1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(secondSectionView).offset(btnSpace);
+        make.top.equalTo(secondSectionView).offset(btnSpace);
+        make.height.mas_equalTo(btnHeight);
+        make.width.mas_equalTo(btnWidth);
+    }];
+    [btn2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(secondSectionView).offset(-btnSpace);
+        make.top.equalTo(secondSectionView).offset(btnSpace);
+        make.height.mas_equalTo(btnHeight);
+        make.width.mas_equalTo(btnWidth);
+    }];
+    [btn3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(secondSectionView).offset(btnSpace);
+        make.top.equalTo(secondSectionView).offset(btnSpace*2+btnHeight);
+        make.height.mas_equalTo(btnHeight);
+        make.width.mas_equalTo(btnWidth);
+    }];
+    [btn4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(secondSectionView).offset(-btnSpace);
+        make.top.equalTo(secondSectionView).offset(btnSpace*2+btnHeight);
+        make.height.mas_equalTo(btnHeight);
+        make.width.mas_equalTo(btnWidth);
+    }];
+    [btn1 addTarget:self andSel:@selector(btn1:)];
+    [btn2 addTarget:self andSel:@selector(btn2:)];
+    [btn3 addTarget:self andSel:@selector(btn3:)];
+    [btn4 addTarget:self andSel:@selector(btn4:)];
+
 }
 
+- (void)btn1:(UIButton *)sender {
+    YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
+    [itemsVC setWrongItemsData:[examModel items]];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:itemsVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
+- (void)btn2:(UIButton *)sender {
+    YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
+    [itemsVC setWrongItemsData:[examModel getSCItem]];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:itemsVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
+- (void)btn3:(UIButton *)sender {
+    YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
+    [itemsVC setWrongItemsData:[examModel getMCItem]];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:itemsVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
+- (void)btn4:(UIButton *)sender {
+    YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
+    [itemsVC setWrongItemsData:[examModel getTFItem]];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:itemsVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
 - (void)configContainer {
     
 }
@@ -116,7 +326,6 @@
     scoreVC.title = @"历史成绩";
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreVC animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
 }
 
 #pragma mark - UITableView delegate - datasource

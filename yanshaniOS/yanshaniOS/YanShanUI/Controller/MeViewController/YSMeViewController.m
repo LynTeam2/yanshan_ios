@@ -36,7 +36,7 @@
 
 - (void)configViewControllerParameter {
     titles = @[@"个人设置",@"签到有礼",@"我的消息",@"我的错题"];
-    icons = @[@"setting",@"qiandao",@"message",@"message"];
+    icons = @[@"setting",@"qiandao",@"message",@"wrongdocument"];
 }
 
 - (void)configView {
