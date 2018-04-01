@@ -136,10 +136,12 @@
 #pragma mark - Button action
 
 - (void)userLogout:(UIButton *)sender {
-    
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-   [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"loginViewController"];
-    
+    [[YSUserLoginModel shareInstance] userLogout:^(BOOL success) {
+        if (success) {
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+            [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"loginViewController"];
+        }
+    }];
 }
 
 /*

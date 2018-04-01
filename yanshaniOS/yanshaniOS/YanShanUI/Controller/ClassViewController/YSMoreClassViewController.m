@@ -12,7 +12,7 @@
 
 #import "YSCourseCategoryModel.h"
 
-#import "YSNewsViewCell.h"
+#import "YSClassCatogaryCell.h"
 
 @interface YSMoreClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -48,7 +48,7 @@
     _collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_collectionView];
     
-    [_collectionView registerClass:[YSNewsViewCell class] forCellWithReuseIdentifier:@"classCell"];
+    [_collectionView registerClass:[YSClassCatogaryCell class] forCellWithReuseIdentifier:@"classCell"];
 }
 
 #pragma mark - UICollectionView delegate
@@ -58,7 +58,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    YSNewsViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"classCell" forIndexPath:indexPath];
+    YSClassCatogaryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"classCell" forIndexPath:indexPath];
     [cell updateClassInformation:_categoryCoursesArray[indexPath.row]];
     return cell;
 }

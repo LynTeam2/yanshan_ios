@@ -11,7 +11,6 @@
 @interface YSNewsViewCell : UICollectionViewCell
 {
     UIImageView *_coverImgView;
-    UIImageView *_rightIndicator;
     UILabel *_titleLable;
     UILabel *_subTitleLabel;
     UIView *_seperateLine;

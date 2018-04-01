@@ -29,21 +29,20 @@ static YSNetWorkEngine *netWorkEngine = nil;
     return self;
 }
 
-- (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath {
+- (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath responseHandler:(NetWorkResponse)handler{
     
-    __weak YSNetWorkEngine *weakSelf = self;
     NSString *unzipPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     [YSCommonHelper deleteFileByName:@"upgrade.zip"];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        handler(error,response.URL.absoluteString);
         NSLog(@"File downloaded to: %@", filePath.absoluteString);
         [[YSFileManager sharedFileManager] unzipFileAtPath:[NSString stringWithFormat:@"%@/upgrade.zip",unzipPath] toDestination:unzipPath];
     }];
@@ -63,10 +62,8 @@ static YSNetWorkEngine *netWorkEngine = nil;
     [manager POST:@"http://39.104.118.75/login" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0|1 error:nil];
         handler(nil,dic);
-        NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败--%@",error);
-        NSLog(@"%@",error.userInfo);
         handler(error,nil);
     }];
 }
@@ -79,7 +76,6 @@ static YSNetWorkEngine *netWorkEngine = nil;
         handler(nil,responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败--%@",error);
-        NSLog(@"%@",error.userInfo);
         handler(error,nil);
     }];
 }
@@ -91,9 +87,18 @@ static YSNetWorkEngine *netWorkEngine = nil;
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"请求失败--%@",error);
         NSLog(@"%@",error.userInfo);
         handler(error,nil);
+    }];
+}
+
+- (void)userLoginWithUseName:(NSString *)userName password:(NSString *)pw responseHandler:(NetWorkResponse)handler{
+    if (!userName || !pw) {
+        return;
+    }
+    NSDictionary *parameters = @{@"username":userName,@"password":pw};
+    [[YSNetWorkEngine sharedInstance] getRequestWithURLString:@"" parameters:parameters responseHandler:^(NSError *error, NSDictionary *data) {
+        handler(error,data);
     }];
 }
 

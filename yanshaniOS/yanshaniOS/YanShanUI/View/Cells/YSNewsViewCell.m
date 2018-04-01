@@ -34,11 +34,7 @@
         _seperateLine = [[UIView alloc] init];
         _seperateLine.backgroundColor = kLightGray;
         [self addSubview:_seperateLine];
-        
-        _rightIndicator = [[UIImageView alloc] init];
-        _rightIndicator.image = [UIImage imageNamed:@"rightgoicon"];
-        _rightIndicator.userInteractionEnabled = YES;
-        [self addSubview:_rightIndicator];
+
     }
     return self;
 }
@@ -51,27 +47,30 @@
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
     
-    _coverImgView.frame = CGRectMake(leftSpace, topSpace, height-2*topSpace, height-2*topSpace);
+    [_titleLable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(leftSpace);
+        make.top.equalTo(self).offset(topSpace);
+        make.right.equalTo(self).offset(-leftSpace);
+        make.height.mas_equalTo(2*topSpace);
+    }];
     
-    _titleLable.frame = CGRectMake(CGRectGetMaxX(_coverImgView.frame)+leftSpace, topSpace,
-        width-_coverImgView.frame.size.width-5*leftSpace,
-            _coverImgView.frame.size.height/2);
-    _subTitleLabel.frame = CGRectMake(CGRectGetMinX(_titleLable.frame), CGRectGetMaxY(_titleLable.frame), CGRectGetWidth(_titleLable.frame), CGRectGetHeight(_titleLable.frame));
+    [_coverImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(leftSpace);
+        make.top.equalTo(_titleLable.mas_bottom).offset(topSpace/2);
+        make.size.mas_equalTo(CGSizeMake(3*topSpace, 2*topSpace));
+    }];
     
+    [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_coverImgView.mas_right).offset(leftSpace/2);
+        make.top.equalTo(_coverImgView.mas_top);
+        make.right.equalTo(self).offset(-leftSpace);
+        make.bottom.equalTo(self).offset(-2*topSpace);
+    }];
     _seperateLine.frame = CGRectMake(leftSpace, height-1, width-40, 0.5);
-    
-    _rightIndicator.frame = CGRectMake(width-leftSpace-16, height/2-15/2, 8, 15);
 }
 
 - (void)updateClassInformation:(id)model {
     _data = model;
-    if([model isMemberOfClass:[YSCourseCategoryModel class]]) {
-        YSCourseCategoryModel *obj = (YSCourseCategoryModel *)model;
-        _coverImgView.image = [[YSFileManager sharedFileManager] getUnzipFileImageWithImageName:obj.iconName];
-        _titleLable.text = obj.categoryName;
-        _subTitleLabel.text = obj.introduction;
-        return;
-    }
     NSArray *images = @[@"dianyuan",@"gongyepin",@"jiaotongyunshu",@"renyuanmiji",@"shigongjihua"];
     NSInteger index = arc4random() % images.count;
     if ([model isKindOfClass:[NSDictionary class]]) {
@@ -80,5 +79,6 @@
     }
     _coverImgView.image = [UIImage imageNamed:images[index]];
 }
+
 
 @end

@@ -9,14 +9,17 @@
 #import "YSShopViewController.h"
 #import "yanshaniOS-Swift.h"
 #import "YSGoodsDetailViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface YSShopViewController ()
+@interface YSShopViewController ()<CLLocationManagerDelegate>
 {
     NSMutableArray *weathers;
     UILabel *titleLabel;
     UILabel *infoLabel;
     UILabel *FLabel;
     UIImageView *imageV;
+    CLLocationManager * locationManager;
+    NSString * currentCity; //当前城市
 }
 @end
 
@@ -33,8 +36,6 @@
     // Do any additional setup after loading the view.
     self.navigationController.navigationBarHidden = YES;
     [[YSNetWorkEngine sharedInstance] getWeatherDataWithparameters:nil responseHandler:^(NSError *error, id data) {
-        NSLog(@"%@",data);
-
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSInteger status = [[data objectForKey:@"status"] integerValue];
             if (200 == status) {
@@ -61,6 +62,65 @@
                 }
             }
         }
+    }];
+    [self locate];
+}
+
+- (void)locate {
+    //判断定位功能是否打开
+    if ([CLLocationManager locationServicesEnabled]) {
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        //        [locationManager requestAlwaysAuthorization];
+        currentCity = [[NSString alloc] init];
+        [locationManager startUpdatingLocation];
+    }
+    
+}
+
+#pragma mark CoreLocation delegate
+
+//定位失败则执行此代理方法
+//定位失败弹出提示框,点击"打开定位"按钮,会打开系统的设置,提示打开定位服务
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"允许\"定位\"提示" message:@"请在设置中打开定位" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * ok = [UIAlertAction actionWithTitle:@"打开定位" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开定位设置
+        NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:settingsURL];
+    }];
+    UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alertVC addAction:cancel];
+    [alertVC addAction:ok];
+    [self presentViewController:alertVC animated:YES completion:nil];
+    
+}
+//定位成功
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    [locationManager stopUpdatingLocation];
+    CLLocation *currentLocation = [locations lastObject];
+    CLGeocoder * geoCoder = [[CLGeocoder alloc] init];
+    
+    //反编码
+    [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (placemarks.count > 0) {
+            CLPlacemark *placeMark = placemarks[0];
+            currentCity = placeMark.locality;
+            if (!currentCity) {
+                currentCity = @"无法定位当前城市";
+            }
+            NSLog(@"%@",currentCity); //这就是当前的城市
+            NSLog(@"%@",placeMark.name);//具体地址:  xx市xx区xx街道
+        }
+        else if (error == nil && placemarks.count == 0) {
+            NSLog(@"No location and error return");
+        }
+        else if (error) {
+            NSLog(@"location error: %@ ",error);
+        }
+        
     }];
 }
 
@@ -91,13 +151,12 @@
     NSDateFormatter *dateFormater = [[NSDateFormatter alloc]init];
     [dateFormater setDateFormat:@"yyyyMMdd"];
     dateTemp = [dateFormater dateFromString:date];
-    NSCalendar *localeCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSChineseCalendar];
-    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSCalendar *localeCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
     NSDateComponents *localeComp = [localeCalendar components:unitFlags fromDate:dateTemp];
-    NSLog(@"%d_%d_%d  %@",localeComp.year,localeComp.month,localeComp.day, localeComp.date);
     NSString *m_str = [chineseMonths objectAtIndex:localeComp.month-1];
     NSString *d_str = [chineseDays objectAtIndex:localeComp.day-1];
-    NSString *chineseCal_str = [NSString stringWithFormat: @"%@%@",m_str,d_str];
+    NSString *chineseCal_str = [NSString stringWithFormat:@"农历%@%@",m_str,d_str];
     return chineseCal_str;
 }
 
@@ -118,13 +177,13 @@
     [self.view addSubview:titleLabel];
 //    @"9月03日  周日 农历七月十三"
     infoLabel = [[UILabel alloc] init];
-    infoLabel.text = [self getChineseCalendarWithDate:@"20180318"];
+    infoLabel.text = @"--月--日 农历----";
     infoLabel.textAlignment = NSTextAlignmentCenter;
     infoLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:infoLabel];
     
     FLabel = [[UILabel alloc] init];
-    FLabel.text = @"26°";
+    FLabel.text = @"--°";
     FLabel.textAlignment = NSTextAlignmentCenter;
     FLabel.textColor = [UIColor whiteColor];
     FLabel.font = [UIFont systemFontOfSize:90.f];
@@ -197,7 +256,7 @@
         [self addSubview:dotImg];
         
         dateLabel = [[UILabel alloc] init];
-        dateLabel.text = @"星期一";
+        dateLabel.text = @"--";
         dateLabel.font = [UIFont systemFontOfSize:16.f];
         [self addSubview:dateLabel];
         
@@ -208,7 +267,7 @@
         [self addSubview:weatherLabel];
         
         FLabel = [[UILabel alloc] init];
-        FLabel.text = @"26°";
+        FLabel.text = @"--°";
         FLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:FLabel];
      

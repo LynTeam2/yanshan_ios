@@ -29,6 +29,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    
+    NSLog(@"%@ release",[self class]);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - config view controller
 
 - (void)configViewControllerParameter {

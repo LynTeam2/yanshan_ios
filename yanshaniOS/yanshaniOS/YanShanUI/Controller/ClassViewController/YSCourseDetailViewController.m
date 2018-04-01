@@ -10,16 +10,25 @@
 #import "YSExaminationItemViewController.h"
 #import "YSCourseManager.h"
 #import "YSCourseItemModel.h"
+#import <WebKit/WebKit.h>
 
-@interface YSCourseDetailViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate>
+@interface YSCourseDetailViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate,WKNavigationDelegate,WKUIDelegate>
 {
     NSMutableArray *vcs;
     NSArray *courseItems;
     UIPageViewController *pageVC;
+    WKWebView *webView;
 }
 @end
 
 @implementation YSCourseDetailViewController
+
+- (void)loadView {
+    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
+    webView.UIDelegate = self;
+    self.view = webView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,14 +59,15 @@
 - (void)configView {
     CGRect frame = self.view.bounds;
     frame.size.height = 300;
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.text = @"视频正在加载中...";
-    label.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:label];
-    UIWebView *WebView = [[UIWebView alloc] initWithFrame:frame];
-    WebView.backgroundColor = [UIColor clearColor];
-    [WebView loadHTMLString:_htmlStr baseURL:nil];
-    [self.view addSubview:WebView];
+    
+//    webView.frame = self.view.bounds;
+    webView.navigationDelegate = self;
+//    if (_htmlStr) {
+//        [webView loadHTMLString:_htmlStr baseURL:nil];
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    }
+//    [self.view addSubview:webView];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"开始答题" forState:UIControlStateNormal];
@@ -73,6 +83,19 @@
         make.height.mas_equalTo(40);
     }];
     
+}
+
+- (void)configContainer {
+    
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [self.view makeToast:@"数据加载失败" duration:2.0 position:@"center"];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void)beginTest:(UIButton *)sender {
@@ -123,11 +146,6 @@
         return nil;
     }
     return [vcs objectAtIndex:index];
-}
-
-
-- (void)configContainer {
-    
 }
 
 - (void)selectAnwser:(YSExaminationItemViewController *)examinationItemController {

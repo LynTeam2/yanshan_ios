@@ -102,7 +102,6 @@
 }
 
 - (void)requestNews {
-//    http://39.104.118.75/api/news?page=0&size=5
     
     NSDictionary *parameters = @{@"page":@"0",
                                  @"size":@"5"};
@@ -246,7 +245,7 @@
         }
             break;
         case 2:
-            itemSize = CGSizeMake(self.view.frame.size.width, 100);
+            itemSize = CGSizeMake(self.view.frame.size.width, 150);
         default:
             break;
     }
@@ -319,7 +318,6 @@
 }
 
 #pragma mark - DZNEmptyDataSetDelegate
-
 
 
 #pragma mark - DZNEmptyDataSetSource

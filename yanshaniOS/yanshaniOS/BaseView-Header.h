@@ -18,4 +18,6 @@
 #import "YSCourseManager.h"
 #import "YSCommonHelper.h"
 #import "YSUserModel.h"
+#import "MBProgressHUD.h"
+#import "YSUserLoginModel.h"
 #endif /* BaseView_Header_h */

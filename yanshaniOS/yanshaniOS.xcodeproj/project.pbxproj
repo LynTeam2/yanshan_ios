@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0B16D7CAAB7C224060EDB57A /* Pods_yanshaniOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06E4A9CF0331DE8D47AE1A8 /* Pods_yanshaniOSTests.framework */; };
+		451F7E27206A28C80032852C /* YSUserLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 451F7E26206A28C80032852C /* YSUserLoginModel.m */; };
+		451F7E29206A39550032852C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451F7E28206A39540032852C /* WebKit.framework */; };
+		4558102F206B6BA00033987C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4558102E206B6BA00033987C /* CoreLocation.framework */; };
 		45A9F72E205A0EAD00476DBD /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A9F72D205A0EAD00476DBD /* Toast+UIView.m */; };
+		45ADAF44206B692A00801DC3 /* YSClassCatogaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ADAF43206B692A00801DC3 /* YSClassCatogaryCell.m */; };
 		5135D98B58F79BA0D21BFEB2 /* Pods_yanshaniOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E631F904FD22CCE043526828 /* Pods_yanshaniOSUITests.framework */; };
 		6403AE9D1FF73ECB00E06D71 /* YSExaminationItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6403AE9C1FF73ECB00E06D71 /* YSExaminationItemModel.m */; };
 		6403AEA11FF756A500E06D71 /* YSRecordStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6403AEA01FF756A500E06D71 /* YSRecordStatisticView.m */; };
@@ -140,8 +144,14 @@
 
 /* Begin PBXFileReference section */
 		3E8A9A68D17669E0E9873C98 /* Pods-yanshaniOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yanshaniOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-yanshaniOSUITests/Pods-yanshaniOSUITests.release.xcconfig"; sourceTree = "<group>"; };
+		451F7E25206A28C80032852C /* YSUserLoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSUserLoginModel.h; sourceTree = "<group>"; };
+		451F7E26206A28C80032852C /* YSUserLoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSUserLoginModel.m; sourceTree = "<group>"; };
+		451F7E28206A39540032852C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		4558102E206B6BA00033987C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		45A9F72C205A0EAD00476DBD /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
 		45A9F72D205A0EAD00476DBD /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
+		45ADAF42206B692A00801DC3 /* YSClassCatogaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSClassCatogaryCell.h; sourceTree = "<group>"; };
+		45ADAF43206B692A00801DC3 /* YSClassCatogaryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSClassCatogaryCell.m; sourceTree = "<group>"; };
 		6403AE9B1FF73ECB00E06D71 /* YSExaminationItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExaminationItemModel.h; sourceTree = "<group>"; };
 		6403AE9C1FF73ECB00E06D71 /* YSExaminationItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExaminationItemModel.m; sourceTree = "<group>"; };
 		6403AE9F1FF756A500E06D71 /* YSRecordStatisticView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSRecordStatisticView.h; sourceTree = "<group>"; };
@@ -327,6 +337,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4558102F206B6BA00033987C /* CoreLocation.framework in Frameworks */,
+				451F7E29206A39550032852C /* WebKit.framework in Frameworks */,
 				EEF8566575651070F0F05E1B /* Pods_yanshaniOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +362,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4558102D206B6B0B0033987C /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LocationManager;
+			sourceTree = "<group>";
+		};
 		45A9F72B205A0EAD00476DBD /* UIView+Toast */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,6 +481,7 @@
 		6406D48B2028A5E10075D089 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				4558102D206B6B0B0033987C /* LocationManager */,
 				6406D48D2028A5E10075D089 /* CourseManager */,
 				6406D48C2028A5E10075D089 /* ExamManager */,
 				6406D48E2028A5E10075D089 /* FileManager */,
@@ -614,6 +634,8 @@
 				641B40011F89C68100BF029E /* YSClassViewCell.m */,
 				641B40031F89C69000BF029E /* YSNewsViewCell.h */,
 				641B40041F89C69000BF029E /* YSNewsViewCell.m */,
+				45ADAF42206B692A00801DC3 /* YSClassCatogaryCell.h */,
+				45ADAF43206B692A00801DC3 /* YSClassCatogaryCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -882,6 +904,8 @@
 			children = (
 				64F4C905205EC1DB00453791 /* YSUserModel.h */,
 				64F4C906205EC1DB00453791 /* YSUserModel.m */,
+				451F7E25206A28C80032852C /* YSUserLoginModel.h */,
+				451F7E26206A28C80032852C /* YSUserLoginModel.m */,
 			);
 			path = UserInformation;
 			sourceTree = "<group>";
@@ -902,6 +926,8 @@
 		F289F35A669F7C13F523B152 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4558102E206B6BA00033987C /* CoreLocation.framework */,
+				451F7E28206A39540032852C /* WebKit.framework */,
 				8CA53791F39B6ED02D97192B /* Pods_yanshaniOS.framework */,
 				A06E4A9CF0331DE8D47AE1A8 /* Pods_yanshaniOSTests.framework */,
 				E631F904FD22CCE043526828 /* Pods_yanshaniOSUITests.framework */,
@@ -1239,6 +1265,7 @@
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
+				"${BUILT_PRODUCTS_DIR}/SVPullToRefresh/SVPullToRefresh.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1249,6 +1276,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVPullToRefresh.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1288,6 +1316,7 @@
 				6406D48220273FE70075D089 /* YSCourseItemModel.m in Sources */,
 				6406D486202744630075D089 /* YSCourseCategoryModel.m in Sources */,
 				641B3FF81F85119E00BF029E /* YSRecordViewController.m in Sources */,
+				45ADAF44206B692A00801DC3 /* YSClassCatogaryCell.m in Sources */,
 				64BDEAE51FC1A5EC0036CD8E /* YSUserSettingViewController.m in Sources */,
 				641B40961F8A3B0500BF029E /* FSPagerViewLayoutAttributes.swift in Sources */,
 				647FC4DE201C5786006C4B06 /* YSMoreClassViewController.m in Sources */,
@@ -1319,6 +1348,7 @@
 				64BDEAEA1FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m in Sources */,
 				641B40981F8A3B0500BF029E /* FSPageViewTransformer.swift in Sources */,
 				641B3FFE1F88BEEE00BF029E /* YSCommonViewController.m in Sources */,
+				451F7E27206A28C80032852C /* YSUserLoginModel.m in Sources */,
 				6432D82C205D0B550098167F /* YSCommonHelper.m in Sources */,
 				6403AEA91FF7F27000E06D71 /* YSExaminationItemViewController.m in Sources */,
 				64BDEA9F1FC104440036CD8E /* YSBaseCollectionView.m in Sources */,

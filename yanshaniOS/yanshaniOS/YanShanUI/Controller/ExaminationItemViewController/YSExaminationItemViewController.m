@@ -101,6 +101,7 @@
             }else{
                 cell.rightIndex = [_itemModel getSMAnswerOrTFAnswer];
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
             break;
@@ -118,6 +119,7 @@
             }else{
                 [cell showMCConfirmButton:[_itemModel mcChoiceType]];
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell addTarget:self confirmChoice:@selector(confirmChoice:)];
             return cell;
         }
@@ -235,7 +237,7 @@
         [sender addSubview:iconButton];
         
         [iconButton addTarget:self action:@selector(select:) forControlEvents:UIControlEventTouchUpInside];
-        
+
         iconButtons[i] = iconButton;
         [sender setTitleEdgeInsets:UIEdgeInsetsMake(0, 35, 0, 0)];
         [self.contentView addSubview:sender];
