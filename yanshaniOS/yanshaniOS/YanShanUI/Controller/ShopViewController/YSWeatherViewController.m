@@ -6,16 +6,17 @@
 //  Copyright © 2017年 jiandai. All rights reserved.
 //
 
-#import "YSShopViewController.h"
+#import "YSWeatherViewController.h"
 #import "yanshaniOS-Swift.h"
 #import "YSGoodsDetailViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface YSShopViewController ()<CLLocationManagerDelegate>
+@interface YSWeatherViewController ()<CLLocationManagerDelegate>
 {
     NSMutableArray *weathers;
     UILabel *titleLabel;
     UILabel *infoLabel;
+    UILabel *dateLabel;
     UILabel *FLabel;
     UIImageView *imageV;
     CLLocationManager * locationManager;
@@ -23,7 +24,7 @@
 }
 @end
 
-@implementation YSShopViewController
+@implementation YSWeatherViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -39,15 +40,19 @@
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSInteger status = [[data objectForKey:@"status"] integerValue];
             if (200 == status) {
-                NSString *date = [data objectForKey:@"date"];
+//                NSString *date = [data objectForKey:@"date"];
                 NSDictionary *dic = [data objectForKey:@"data"];
-                infoLabel.text = [NSString stringWithFormat:@"%@ %@",date,[self getChineseCalendarWithDate:date]];
+                infoLabel.text = [NSString stringWithFormat:@"空气质量:   %@",dic[@"quality"]];
                 FLabel.text = [NSString stringWithFormat:@"%@°",[dic objectForKey:@"wendu"]];
                 if ([dic objectForKey:@"forecast"]) {
                     NSArray *arr = [dic objectForKey:@"forecast"];
                     [weathers addObjectsFromArray:arr];
-                    CGFloat topSpace = 70;
+                    CGFloat topSpace = 20;
                     CGFloat height = 35;
+                    if (weathers.count) {
+                        NSString *date = [weathers[0] objectForKey:@"date"];
+                        dateLabel.text = [date substringFromIndex:[date rangeOfString:@"星"].location];
+                    }
                     for (int i = 0; i < arr.count; i++) {
                         YSWeatherInformationItem *item = [[YSWeatherInformationItem alloc] init];
                         [item updateInformation:arr[i]];
@@ -177,7 +182,7 @@
     [self.view addSubview:titleLabel];
 //    @"9月03日  周日 农历七月十三"
     infoLabel = [[UILabel alloc] init];
-    infoLabel.text = @"--月--日 农历----";
+    infoLabel.text = @"空气质量: ----";
     infoLabel.textAlignment = NSTextAlignmentCenter;
     infoLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:infoLabel];
@@ -189,7 +194,13 @@
     FLabel.font = [UIFont systemFontOfSize:90.f];
     [self.view addSubview:FLabel];
     
-    imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weatherbg"]];
+    dateLabel = [[UILabel alloc] init];
+    dateLabel.text = @"--";
+    dateLabel.textAlignment = NSTextAlignmentCenter;
+    dateLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:dateLabel];
+    
+    imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weatherbgnew"]];
     [self.view addSubview:imageV];
     
     if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
@@ -223,16 +234,44 @@
     
     [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.bottom.equalTo(self.view.mas_centerY).offset(-40);
+        make.top.equalTo(infoLabel.mas_bottom).offset(20);
         make.width.mas_equalTo(bounds.size.width-40);
         make.height.mas_equalTo(70);
     }];
+    [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(FLabel.mas_bottom).offset(20);
+        make.width.mas_equalTo(bounds.size.width-40);
+        make.height.mas_equalTo(20);
+    }];
+    
+    CGFloat timeViewWidth = (bounds.size.width-40)/5;
+    
+    NSArray *icons = @[@"sunwhite",@"moonwhite",@"nightwhite"];
+    for (int i = 0; i < 5; i++) {
+        
+        NSDictionary *dic = @{
+                              @"time":[YSCommonHelper timeFromNowWithTimeInterval:i*30*60],
+                              @"image":icons[arc4random()%2],
+                              @"c":@"18°"};
+        
+        YSWeatherTimeView *timeView = [[YSWeatherTimeView alloc] init];
+        [timeView updateTimeWeatherData:dic];
+        [self.view addSubview:timeView];
+        
+        [timeView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).offset(20+timeViewWidth*i);
+            make.top.equalTo(dateLabel.mas_bottom).offset(20);
+            make.width.mas_equalTo(timeViewWidth);
+            make.height.mas_equalTo(100);
+        }];
+    }
     
     [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view.mas_centerY).offset(20);
+        make.top.equalTo(self.view.mas_centerY).offset(70);
         make.width.mas_equalTo(bounds.size.width-40);
-        make.height.mas_equalTo(270);
+        make.height.mas_equalTo(220);
     }];
     
 }
@@ -268,6 +307,7 @@
         
         FLabel = [[UILabel alloc] init];
         FLabel.text = @"--°";
+        FLabel.font = [UIFont systemFontOfSize:13.f];
         FLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:FLabel];
      
@@ -296,7 +336,7 @@
     [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weatherImg.mas_left).offset(-30);
         make.centerY.equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(60, 20));
+        make.size.mas_equalTo(CGSizeMake(100, 20));
     }];
     [weatherImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self).offset(-20);
@@ -309,11 +349,88 @@
     NSString *date = [dic objectForKey:@"date"];
     dateLabel.text = [date substringFromIndex:[date rangeOfString:@"星"].location];
     weatherLabel.text = [dic objectForKey:@"type"];
-    NSString *str = [dic objectForKey:@"low"];
-    FLabel.text = [str stringByReplacingOccurrencesOfString:@"低温" withString:@""];
+    NSString *lowstr = [dic objectForKey:@"low"];
+    NSString *highstr = [dic objectForKey:@"high"];
+    if (lowstr) {
+        lowstr = [lowstr stringByReplacingOccurrencesOfString:@"低温" withString:@""];
+        lowstr = [lowstr stringByReplacingOccurrencesOfString:@".0℃" withString:@""];
+    }
+    if (highstr) {
+        highstr = [highstr stringByReplacingOccurrencesOfString:@"高温" withString:@""];
+        highstr = [highstr stringByReplacingOccurrencesOfString:@".0℃" withString:@""];
+    }
+    FLabel.text = [NSString stringWithFormat:@"%@°~%@°",lowstr,highstr];
     weatherImg.image = [YSCommonHelper weatherIcon:dic[@"type"]];
 }
 
 @end
+
+@implementation YSWeatherTimeView
+
+{
+    UILabel *timeLabel;
+    UIImageView *weatherIcon;
+    UILabel *Flabel;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initSubViews];
+    }
+    return self;
+}
+
+- (void)initSubViews {
+    
+    timeLabel = [[UILabel alloc] init];
+    timeLabel.text = [YSCommonHelper timeFromNowWithTimeInterval:30*60];//@"现在"
+    timeLabel.textAlignment = NSTextAlignmentCenter;
+    timeLabel.font = [UIFont systemFontOfSize:14.f];
+    timeLabel.textColor = [UIColor whiteColor];
+    [self addSubview:timeLabel];
+    
+    weatherIcon = [[UIImageView alloc] init];
+    weatherIcon.image = [YSCommonHelper weatherIcon:@"多云"];
+    [self addSubview:weatherIcon];
+    
+    Flabel = [[UILabel alloc] init];
+    Flabel.text = @"29°";
+    Flabel.textAlignment = NSTextAlignmentCenter;
+    Flabel.font = [UIFont systemFontOfSize:10.f];
+    Flabel.textColor = [UIColor whiteColor];
+    [self addSubview:Flabel];
+    
+}
+
+- (void)layoutSubviews {
+    [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.top.equalTo(self);
+        make.width.equalTo(self);
+        make.height.mas_equalTo(20);
+    }];
+    [weatherIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.centerY.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(20, 20));
+    }];
+    [Flabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.bottom.equalTo(self);
+        make.width.equalTo(self);
+        make.height.mas_equalTo(20);
+    }];
+}
+
+- (void)updateTimeWeatherData:(NSDictionary *)data {
+    timeLabel.text = data[@"time"];
+    weatherIcon.image = [UIImage imageNamed:data[@"image"]];
+    Flabel.text = data[@"c"];
+}
+
+@end
+
 
 

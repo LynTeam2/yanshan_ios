@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="2015" y="797"/>
         </scene>
-        <!--Shop View Controller-->
+        <!--Weather View Controller-->
         <scene sceneID="fOD-Y1-aSu">
             <objects>
-                <viewController id="m9r-hb-rLf" customClass="YSShopViewController" sceneMemberID="viewController">
+                <viewController id="m9r-hb-rLf" customClass="YSWeatherViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7AK-aX-Noa"/>
                         <viewControllerLayoutGuide type="bottom" id="Lf7-2h-hpF"/>

@@ -18,4 +18,6 @@
 
 + (NSString *)getUserCurrentLocation;
 
++ (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval;
+
 @end

@@ -12,6 +12,11 @@
 #import "YSWrongItemsViewController.h"
 #import "YSRecordStatisticView.h"
 
+static NSString *redString     = @"ff6464";
+static NSString *orangeString  = @"ffc664";
+static NSString *blueString    = @"6490ff";
+
+
 @interface YSExamAnalyseViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *allExams;
@@ -19,6 +24,9 @@
     UITableView *mainView;
     UILabel *scoreLabel;
     UILabel *testResultLabel;
+    YSRecordStatisticView *statiscView1;
+    YSRecordStatisticView *statiscView2;
+    YSRecordStatisticView *statiscView3;
 }
 @end
 
@@ -39,7 +47,7 @@
         allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
         examModel = allExams[0];
         testResultLabel.text = [NSString stringWithFormat:@"答错%ld题 %@",examModel.wrongItemCount,examModel.examJudgement];
-        [mainView reloadData];
+//        [mainView reloadData];
     }
 }
 
@@ -51,29 +59,35 @@
 
 - (void)configView {
     
-    mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    mainView.delegate = self;
-    mainView.dataSource = self;
-    mainView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:mainView];
-    
+//    mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+//    mainView.delegate = self;
+//    mainView.dataSource = self;
+//    mainView.showsVerticalScrollIndicator = NO;
+//    [self.view addSubview:mainView];
+    CGFloat height = self.view.frame.size.height*0.55;
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:headerView];
+//    mainView.tableHeaderView = headerView;
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
-        [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view.mas_safeAreaLayoutGuide);
+        [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+            make.left.equalTo(self.view);
+            make.right.equalTo(self.view);
+            make.height.mas_equalTo(height);
         }];
     }
     if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
-        [mainView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+        [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_topLayoutGuide);
+            make.left.equalTo(self.view);
+            make.right.equalTo(self.view);
+            make.height.mas_equalTo(height);
         }];
     }
     
-    CGFloat height = self.view.frame.size.height*0.55;
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
-    headerView.backgroundColor = kBlueColor;
-    mainView.tableHeaderView = headerView;
-    
+    UIImageView *chengjiBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chengjitongjibg"]];
+    [headerView addSubview:chengjiBG];
     
     scoreLabel = [[UILabel alloc] init];
     scoreLabel.text = @"90分";
@@ -95,14 +109,24 @@
         testResultLabel.text = [NSString stringWithFormat:@"答错%ld题 %@",examModel.wrongItemCount,examModel.examJudgement];
     }
     
-    YSRecordStatisticView *statiscView1 = [[YSRecordStatisticView alloc] init];
+    statiscView1 = [[YSRecordStatisticView alloc] init];
+    [statiscView1 proccessViewColor:[YSCommonHelper getUIColorFromHexString:redString]];
     [headerView addSubview:statiscView1];
     
-    YSRecordStatisticView *statiscView2 = [[YSRecordStatisticView alloc] init];
+    statiscView2 = [[YSRecordStatisticView alloc] init];
+    [statiscView2 proccessViewColor:[YSCommonHelper getUIColorFromHexString:orangeString]];
     [headerView addSubview:statiscView2];
     
-    YSRecordStatisticView *statiscView3 = [[YSRecordStatisticView alloc] init];
+    statiscView3 = [[YSRecordStatisticView alloc] init];
+    [statiscView3 proccessViewColor:[YSCommonHelper getUIColorFromHexString:blueString]];
     [headerView addSubview:statiscView3];
+    
+    [chengjiBG mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView.mas_centerX);
+        make.top.equalTo(headerView);
+        make.width.equalTo(headerView);
+        make.height.mas_equalTo(180);
+    }];
     
     [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headerView.mas_centerX);
@@ -114,6 +138,7 @@
         make.top.equalTo(scoreLabel.mas_bottom).offset(15);
         make.size.mas_equalTo(CGSizeMake(500, 30));
     }];
+    
     [statiscView1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headerView);
         make.top.equalTo(testResultLabel.mas_bottom).offset(50);
@@ -126,22 +151,23 @@
         make.height.mas_equalTo(30);
         make.width.equalTo(headerView);
     }];
-//    [statiscView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(headerView);
-//        make.top.equalTo(statiscView2.mas_bottom).offset(10);
-//        make.height.mas_equalTo(30);
-//        make.width.equalTo(headerView);
-//    }];
-    
-    YSRecordStatisticButton *btn = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
-    [self.view addSubview:btn];
-    
-    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [statiscView3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headerView);
         make.top.equalTo(statiscView2.mas_bottom).offset(10);
-        make.height.mas_equalTo(60);
-        make.width.mas_equalTo(headerView.frame.size.width/2);
+        make.height.mas_equalTo(30);
+        make.width.equalTo(headerView);
     }];
+    
+//    YSRecordStatisticButton *btn = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+//    btn.backgroundColor = kRandomColor;
+//    [self.view addSubview:btn];
+//
+//    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(headerView);
+//        make.top.equalTo(statiscView2.mas_bottom).offset(10);
+//        make.height.mas_equalTo(60);
+//        make.width.mas_equalTo(headerView.frame.size.width/2);
+//    }];
     
 }
 

@@ -58,6 +58,16 @@
 //    
 //}
 
++ (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval {
+    
+    NSDateFormatter *fomatter = [[NSDateFormatter alloc] init];
+    fomatter.timeZone = [NSTimeZone localTimeZone];
+    fomatter.dateFormat = @"hh:mm";
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:interval];
+    return [fomatter stringFromDate:date];
+}
+
 + (unsigned int)intFromHexString:(NSString *)hexStr
 {
     unsigned int hexInt = 0;

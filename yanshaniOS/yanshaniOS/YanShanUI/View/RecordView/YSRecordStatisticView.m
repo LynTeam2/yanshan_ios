@@ -46,7 +46,8 @@
     
     percentageLabel = [[UILabel alloc] init];
     percentageLabel.text = @"23";
-    percentageLabel.textColor = kLightGray;
+    percentageLabel.font = [UIFont systemFontOfSize:14.f];
+    percentageLabel.textColor = [UIColor grayColor];
     percentageLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:percentageLabel];
     
@@ -78,6 +79,10 @@
         make.bottom.equalTo(self);
     }];
     [super updateConstraints];
+}
+
+- (void)proccessViewColor:(UIColor *)color {
+    progressView.backgroundColor = color;
 }
 
 - (void)updateContentUseStatisticData:(NSDictionary *)data withViewType:(YSRecordStatisticViewType)type {
@@ -146,15 +151,15 @@
     
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(imageView.mas_right).offset(10);
-        make.right.equalTo(self).offset(10);
+        make.right.equalTo(self).offset(-10);
         make.top.equalTo(self);
         make.height.equalTo(subLabel);
     }];
     
     [subLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(imageView.mas_right).offset(10);
-        make.right.equalTo(self).offset(10);
-        make.top.equalTo(titleLabel.mas_bottom);
+        make.right.equalTo(self).offset(-10);
+        make.bottom.equalTo(self);
         make.height.equalTo(titleLabel);
     }];
 }

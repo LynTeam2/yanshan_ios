@@ -9,7 +9,7 @@
 #import "YSBaseViewController.h"
 #import "YSBaseView.h"
 
-@interface YSShopViewController : YSBaseViewController
+@interface YSWeatherViewController : YSBaseViewController
 
 @end
 
@@ -18,3 +18,10 @@
 - (void)updateInformation:(NSDictionary *)dic;
 
 @end
+
+@interface YSWeatherTimeView : YSBaseView
+
+- (void)updateTimeWeatherData:(NSDictionary *)data;
+
+@end
+

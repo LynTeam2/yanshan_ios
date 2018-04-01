@@ -12,21 +12,21 @@
 #import "YSCourseItemModel.h"
 #import <WebKit/WebKit.h>
 
-@interface YSCourseDetailViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate,WKNavigationDelegate,WKUIDelegate>
+@interface YSCourseDetailViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate,WKNavigationDelegate,WKUIDelegate,UIWebViewDelegate>
 {
     NSMutableArray *vcs;
     NSArray *courseItems;
     UIPageViewController *pageVC;
-    WKWebView *webView;
+    UIWebView *webView;
 }
 @end
 
 @implementation YSCourseDetailViewController
 
 - (void)loadView {
-    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-    webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
-    webView.UIDelegate = self;
+//    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    webView.delegate = self;
     self.view = webView;
 }
 
@@ -61,12 +61,12 @@
     frame.size.height = 300;
     
 //    webView.frame = self.view.bounds;
-    webView.navigationDelegate = self;
-//    if (_htmlStr) {
-//        [webView loadHTMLString:_htmlStr baseURL:nil];
-        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
+//    webView.navigationDelegate = self;
+    if (_htmlStr) {
+        [webView loadHTMLString:_htmlStr baseURL:nil];
+//        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    }
+    }
 //    [self.view addSubview:webView];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -87,6 +87,14 @@
 
 - (void)configContainer {
     
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {

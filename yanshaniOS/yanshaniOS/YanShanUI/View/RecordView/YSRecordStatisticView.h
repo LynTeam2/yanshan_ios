@@ -17,6 +17,8 @@ typedef NS_ENUM(NSUInteger, YSRecordStatisticViewType) {
 @interface YSRecordStatisticView : YSBaseView
 
 
+- (void)proccessViewColor:(UIColor *)color;
+
 - (void)updateContentUseStatisticData:(NSDictionary *)data withViewType:(YSRecordStatisticViewType)type;
 
 

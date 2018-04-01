@@ -37,7 +37,7 @@
 		6406D4942028A61E0075D089 /* YSCourseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6406D4932028A61E0075D089 /* YSCourseManager.m */; };
 		641B3FE91F850EE600BF029E /* YSBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B3FE81F850EE600BF029E /* YSBaseViewController.m */; };
 		641B3FED1F850F8A00BF029E /* YSHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B3FEC1F850F8A00BF029E /* YSHomeViewController.m */; };
-		641B3FF51F85119300BF029E /* YSShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B3FF41F85119300BF029E /* YSShopViewController.m */; };
+		641B3FF51F85119300BF029E /* YSWeatherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B3FF41F85119300BF029E /* YSWeatherViewController.m */; };
 		641B3FF81F85119E00BF029E /* YSRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B3FF71F85119E00BF029E /* YSRecordViewController.m */; };
 		641B3FFB1F8511AC00BF029E /* YSMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B3FFA1F8511AC00BF029E /* YSMeViewController.m */; };
 		641B3FFE1F88BEEE00BF029E /* YSCommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B3FFD1F88BEEE00BF029E /* YSCommonViewController.m */; };
@@ -190,8 +190,8 @@
 		641B3FE81F850EE600BF029E /* YSBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSBaseViewController.m; sourceTree = "<group>"; };
 		641B3FEB1F850F8A00BF029E /* YSHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSHomeViewController.h; sourceTree = "<group>"; };
 		641B3FEC1F850F8A00BF029E /* YSHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSHomeViewController.m; sourceTree = "<group>"; };
-		641B3FF31F85119300BF029E /* YSShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSShopViewController.h; sourceTree = "<group>"; };
-		641B3FF41F85119300BF029E /* YSShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSShopViewController.m; sourceTree = "<group>"; };
+		641B3FF31F85119300BF029E /* YSWeatherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSWeatherViewController.h; sourceTree = "<group>"; };
+		641B3FF41F85119300BF029E /* YSWeatherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSWeatherViewController.m; sourceTree = "<group>"; };
 		641B3FF61F85119E00BF029E /* YSRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSRecordViewController.h; sourceTree = "<group>"; };
 		641B3FF71F85119E00BF029E /* YSRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSRecordViewController.m; sourceTree = "<group>"; };
 		641B3FF91F8511AC00BF029E /* YSMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSMeViewController.h; sourceTree = "<group>"; };
@@ -536,7 +536,7 @@
 				641B3FEA1F850F5300BF029E /* HomeViewControllers */,
 				6403AEB61FF887D600E06D71 /* NewsViewController */,
 				641B3FF11F8510FA00BF029E /* RecordViewControllers */,
-				641B3FF21F8510FA00BF029E /* ShopViewControllers */,
+				641B3FF21F8510FA00BF029E /* WeatherViewControllers */,
 				641B3FF01F8510FA00BF029E /* UserInformationViewControllers */,
 				64572EEB2042EC5B003F3B05 /* WrongItemViewController */,
 			);
@@ -615,15 +615,15 @@
 			path = RecordViewController;
 			sourceTree = "<group>";
 		};
-		641B3FF21F8510FA00BF029E /* ShopViewControllers */ = {
+		641B3FF21F8510FA00BF029E /* WeatherViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				641B3FF31F85119300BF029E /* YSShopViewController.h */,
-				641B3FF41F85119300BF029E /* YSShopViewController.m */,
+				641B3FF31F85119300BF029E /* YSWeatherViewController.h */,
+				641B3FF41F85119300BF029E /* YSWeatherViewController.m */,
 				64F41F501FD421FA00FC636D /* YSGoodsDetailViewController.h */,
 				64F41F511FD421FA00FC636D /* YSGoodsDetailViewController.m */,
 			);
-			name = ShopViewControllers;
+			name = WeatherViewControllers;
 			path = ShopViewController;
 			sourceTree = "<group>";
 		};
@@ -1343,7 +1343,7 @@
 				6406D4912028A5E10075D089 /* YSFileManager.m in Sources */,
 				641B40A21F8D0F8700BF029E /* YSClassDetailViewController.m in Sources */,
 				6403AEBD1FF88A4F00E06D71 /* YSCourseDetailViewController.m in Sources */,
-				641B3FF51F85119300BF029E /* YSShopViewController.m in Sources */,
+				641B3FF51F85119300BF029E /* YSWeatherViewController.m in Sources */,
 				6406D4942028A61E0075D089 /* YSCourseManager.m in Sources */,
 				64BDEAEA1FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m in Sources */,
 				641B40981F8A3B0500BF029E /* FSPageViewTransformer.swift in Sources */,
