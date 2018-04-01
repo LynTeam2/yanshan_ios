@@ -174,7 +174,6 @@
     [analyseVC setExamAnalyseModel:model];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:analyseVC animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

@@ -326,6 +326,7 @@ static NSString *blueString    = @"6490ff";
     scoreVC.title = @"历史成绩";
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 #pragma mark - UITableView delegate - datasource
