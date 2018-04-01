@@ -245,11 +245,11 @@
             </objects>
             <point key="canvasLocation" x="-1001" y="139"/>
         </scene>
-        <!--生活助手-->
+        <!--生活-->
         <scene sceneID="ljb-o7-1F0">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VO5-Gw-5hE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="生活助手" image="lifenormal" selectedImage="life" id="yr1-tN-KFz"/>
+                    <tabBarItem key="tabBarItem" title="生活" image="lifenormal" selectedImage="life" id="yr1-tN-KFz"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wPM-lj-tkD">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
