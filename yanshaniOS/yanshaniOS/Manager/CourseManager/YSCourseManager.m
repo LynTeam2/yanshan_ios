@@ -62,6 +62,19 @@ static  NSString *allCourseFile = @"allcourses.plist";
     }
 }
 
+- (void)deleteCourseItem:(YSCourseItemModel *)model {
+    NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:allCourseFile andDocumentName:nil];
+    NSMutableArray *allArr = [YSCourseItemModel arrayOfModelsFromDictionaries:[NSArray arrayWithContentsOfFile:filePath] error:nil];
+    for (YSCourseItemModel *tmp in allArr) {
+        if ([tmp.question isEqual:model.question]) {
+            [allArr removeObject:tmp];
+            break;
+        }
+    }
+    NSArray *mArr = [YSCourseItemModel arrayOfDictionariesFromModels:allArr];
+    [mArr writeToFile:filePath atomically:YES];
+}
+
 - (NSArray *)getAllWrongCourseItem {
     NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:allCourseFile andDocumentName:nil];
     NSArray *allArr = [NSArray arrayWithContentsOfFile:filePath];

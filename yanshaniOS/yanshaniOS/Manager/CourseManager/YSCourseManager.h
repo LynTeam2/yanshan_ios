@@ -22,4 +22,6 @@
 
 - (void)mergeCourseItem;
 
+- (void)deleteCourseItem:(YSCourseItemModel *)model;
+
 @end

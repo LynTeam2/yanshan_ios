@@ -28,19 +28,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    weathers = [NSMutableArray arrayWithCapacity:0];
-    self.view.backgroundColor = kBlueColor;
-    // Do any additional setup after loading the view.
-    self.navigationController.navigationBarHidden = YES;
     [[YSNetWorkEngine sharedInstance] getWeatherDataWithparameters:nil responseHandler:^(NSError *error, id data) {
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSInteger status = [[data objectForKey:@"status"] integerValue];
             if (200 == status) {
-//                NSString *date = [data objectForKey:@"date"];
+                //                NSString *date = [data objectForKey:@"date"];
                 NSDictionary *dic = [data objectForKey:@"data"];
                 infoLabel.text = [NSString stringWithFormat:@"空气质量:   %@",dic[@"quality"]];
                 FLabel.text = [NSString stringWithFormat:@"%@°",[dic objectForKey:@"wendu"]];
@@ -53,6 +45,7 @@
                         NSString *date = [weathers[0] objectForKey:@"date"];
                         dateLabel.text = [date substringFromIndex:[date rangeOfString:@"星"].location];
                     }
+                    [imageV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
                     for (int i = 0; i < arr.count; i++) {
                         YSWeatherInformationItem *item = [[YSWeatherInformationItem alloc] init];
                         [item updateInformation:arr[i]];
@@ -68,6 +61,14 @@
             }
         }
     }];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    weathers = [NSMutableArray arrayWithCapacity:0];
+    self.view.backgroundColor = kBlueColor;
+    // Do any additional setup after loading the view.
+    self.navigationController.navigationBarHidden = YES;
     [self locate];
 }
 

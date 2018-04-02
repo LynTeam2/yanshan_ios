@@ -156,8 +156,8 @@
         return 0;
     }
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    CGFloat heigt = [content boundingRectWithSize:CGSizeMake(width-30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.f]} context:nil].size.height;
-    return (heigt < 200 ? 200 : heigt);
+    CGFloat heigt = [content boundingRectWithSize:CGSizeMake(width-30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18.f]} context:nil].size.height;
+    return (heigt < 44 ? 44 : heigt);
 }
 
 - (CGFloat)heightForChoice:(NSString *)choice {
