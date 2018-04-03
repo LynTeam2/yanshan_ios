@@ -101,7 +101,6 @@
 
 - (void)unzipFileSuccess:(NSNotification *)noti {
     NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"category.json" atDocumentName:@"course"];
-    NSLog(@"%@",jsonDic);
     [self handleZipFileData];
     [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
 }

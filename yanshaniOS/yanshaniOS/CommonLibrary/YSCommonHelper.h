@@ -22,4 +22,6 @@
 
 + (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval;
 
++ (UIImage *)imageFromColor:(UIColor *)color withSize:(CGSize)size;
+
 @end

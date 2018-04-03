@@ -49,14 +49,11 @@ static NSString *blueString    = @"6490ff";
 
 - (void)viewWillAppear:(BOOL)animated {
     if (examModel) {
-        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
-        examModel = allExams[0];
-        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题 %@",examModel.wrongItemCount,examModel.examJudgement];
+        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题,未做%ld题 %@",examModel.wrongItemCount,[examModel undoItem],examModel.examJudgement];
         scoreLabel.text = [NSString stringWithFormat:@"%ld分",examModel.examScore];
         [statiscView1 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeSimple)];
         [statiscView2 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeMultable)];
         [statiscView3 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeTOF)];
-//        [mainView reloadData];
     }
 }
 
@@ -68,11 +65,6 @@ static NSString *blueString    = @"6490ff";
 
 - (void)configView {
     
-//    mainView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-//    mainView.delegate = self;
-//    mainView.dataSource = self;
-//    mainView.showsVerticalScrollIndicator = NO;
-//    [self.view addSubview:mainView];
     CGFloat height = self.view.frame.size.height*0.55;
     UIView *headerView = [[UIView alloc] init];
     headerView.backgroundColor = [UIColor whiteColor];
@@ -88,7 +80,6 @@ static NSString *blueString    = @"6490ff";
         make.bottom.equalTo(self.view);
     }];
     
-//    mainView.tableHeaderView = headerView;
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
         [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
@@ -177,19 +168,15 @@ static NSString *blueString    = @"6490ff";
     CGFloat btnWidth = (self.view.frame.size.width-btnSpace*3)/2;
     CGFloat btnHeight = 60;
     btn1 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
-//    btn1.backgroundColor = kRandomColor;
     [secondSectionView addSubview:btn1];
 
     btn2 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
-//    btn2.backgroundColor = kRandomColor;
     [secondSectionView addSubview:btn2];
     
     btn3 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
-//    btn3.backgroundColor = kRandomColor;
     [secondSectionView addSubview:btn3];
     
     btn4 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
-//    btn4.backgroundColor = kRandomColor;
     [secondSectionView addSubview:btn4];
     
     [btn1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -217,9 +204,7 @@ static NSString *blueString    = @"6490ff";
         make.width.mas_equalTo(btnWidth);
     }];
     if ([[YSExamManager sharedExamManager] getAllExams].count) {
-        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
-        examModel = allExams[0];
-        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题 %@",examModel.wrongItemCount,examModel.examJudgement];
+        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题,未做%ld题 %@",examModel.wrongItemCount,[examModel undoItem],examModel.examJudgement];
         NSString *subTitle = [NSString stringWithFormat:@"做错%ld题,未做%ld题",examModel.wrongItemCount,[examModel undoItem]];
         NSDictionary *dic1 = @{@"image":@"newwrong",@"title":@"查看错题",@"subtitle":subTitle};
         [btn1 updateButtonContentWithData:dic1];

@@ -56,25 +56,25 @@
 
 - (void)updateConstraints {
     
-    [categoryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [categoryLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self);
         make.size.mas_equalTo(CGSizeMake(100, 30));
         make.bottom.equalTo(self);
     }];
-    [progressBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [progressBgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(categoryLabel.mas_right);
         make.right.equalTo(self).offset(-100);
         make.height.mas_equalTo(8);
         make.bottom.equalTo(self).offset(-8);
     }];
     CGFloat progressWidth = [UIScreen mainScreen].bounds.size.width - 200;
-    [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [progressView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(categoryLabel.mas_right);
         make.width.mas_equalTo(progressWidth*percent);
         make.height.mas_equalTo(8);
         make.bottom.equalTo(self).offset(-8);
     }];
-    [percentageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [percentageLabel mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(progressBgView.mas_right);
         make.right.equalTo(self);
         make.height.mas_equalTo(30);
@@ -102,6 +102,9 @@
         percentageLabel.text = [NSString stringWithFormat:@"%ld",[model getTFItem].count];
     }
     percent = isnan(percent) ? 0 :  percent;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+//    [self layoutIfNeeded];
 }
 
 @end

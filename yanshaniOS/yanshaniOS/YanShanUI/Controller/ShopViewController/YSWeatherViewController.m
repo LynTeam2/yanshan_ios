@@ -229,7 +229,7 @@
         }];
     }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.topLayoutGuide).offset(10);
+            make.top.equalTo(self.mas_topLayoutGuide).offset(10);
             make.centerX.equalTo(self.view.mas_centerX);
             make.width.mas_equalTo(bounds.size.width-40);
             make.height.mas_equalTo(30);
@@ -241,7 +241,7 @@
             make.height.mas_equalTo(20);
         }];
     }
-    
+    NSArray *ddd = [UIFont familyNames];
     [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.top.equalTo(infoLabel.mas_bottom).offset(20);

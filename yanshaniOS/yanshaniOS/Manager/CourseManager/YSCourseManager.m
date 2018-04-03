@@ -42,8 +42,9 @@ static  NSString *allCourseFile = @"allcourses.plist";
 }
 
 - (void)saveCourseItem:(YSCourseItemModel *)model {
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"question == %@", model.question];
-    NSArray *filteredArray = [recentCourses filteredArrayUsingPredicate:predicate];
+    NSArray *filteredArray = [[self getAllWrongCourseItem] filteredArrayUsingPredicate:predicate];
     if (filteredArray.count) {
         return;
     }

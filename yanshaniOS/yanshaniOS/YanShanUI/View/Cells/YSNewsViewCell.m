@@ -37,6 +37,7 @@
 
         _sourceLabel = [[UILabel alloc] init];
         _sourceLabel.text = @"独家";
+        _sourceLabel.font = [UIFont systemFontOfSize:15.f];
         _sourceLabel.textColor = kBlueColor;
         [self addSubview:_sourceLabel];
         
@@ -45,7 +46,7 @@
         NSTextAttachment *ment = [[NSTextAttachment alloc] init];
         ment.image = [UIImage imageNamed:@"message"];
         NSMutableAttributedString *mentA = [NSMutableAttributedString attributedStringWithAttachment:ment];
-        [mentA appendAttributedString:[[NSAttributedString alloc]initWithString:@" 2" attributes:@{NSForegroundColorAttributeName:[UIColor grayColor]}]];
+        [mentA appendAttributedString:[[NSAttributedString alloc]initWithString:@" 2" attributes:@{NSForegroundColorAttributeName:[UIColor grayColor],NSFontAttributeName:[UIFont systemFontOfSize:15.f]}]];
         _messageLabel.attributedText = mentA;
     }
     return self;
