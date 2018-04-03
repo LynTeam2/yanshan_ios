@@ -19,8 +19,8 @@
     UILabel *dateLabel;
     UILabel *FLabel;
     UIImageView *imageV;
-    CLLocationManager * locationManager;
-    NSString * currentCity; //当前城市
+    CLLocationManager *locationManager;
+    NSString *currentCity; //当前城市
 }
 @end
 
@@ -28,39 +28,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[YSNetWorkEngine sharedInstance] getWeatherDataWithparameters:nil responseHandler:^(NSError *error, id data) {
-        if ([data isKindOfClass:[NSDictionary class]]) {
-            NSInteger status = [[data objectForKey:@"status"] integerValue];
-            if (200 == status) {
-                //                NSString *date = [data objectForKey:@"date"];
-                NSDictionary *dic = [data objectForKey:@"data"];
-                infoLabel.text = [NSString stringWithFormat:@"空气质量:   %@",dic[@"quality"]];
-                FLabel.text = [NSString stringWithFormat:@"%@°",[dic objectForKey:@"wendu"]];
-                if ([dic objectForKey:@"forecast"]) {
-                    NSArray *arr = [dic objectForKey:@"forecast"];
-                    [weathers addObjectsFromArray:arr];
-                    CGFloat topSpace = 20;
-                    CGFloat height = 35;
-                    if (weathers.count) {
-                        NSString *date = [weathers[0] objectForKey:@"date"];
-                        dateLabel.text = [date substringFromIndex:[date rangeOfString:@"星"].location];
-                    }
-                    [imageV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-                    for (int i = 0; i < arr.count; i++) {
-                        YSWeatherInformationItem *item = [[YSWeatherInformationItem alloc] init];
-                        [item updateInformation:arr[i]];
-                        [imageV addSubview:item];
-                        [item mas_makeConstraints:^(MASConstraintMaker *make) {
-                            make.top.equalTo(imageV).offset(topSpace+height*i);
-                            make.left.equalTo(imageV);
-                            make.width.equalTo(imageV);
-                            make.height.mas_equalTo(height);
-                        }];
-                    }
-                }
-            }
-        }
-    }];
+    currentCity = currentCity.length == 0 ? @"北京" : currentCity;
+    [self requestWeatherDataWithCity:currentCity];
 }
 
 - (void)viewDidLoad {
@@ -69,6 +38,7 @@
     self.view.backgroundColor = kBlueColor;
     // Do any additional setup after loading the view.
     self.navigationController.navigationBarHidden = YES;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self locate];
 }
 
@@ -77,9 +47,12 @@
     if ([CLLocationManager locationServicesEnabled]) {
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
-        //        [locationManager requestAlwaysAuthorization];
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        locationManager.distanceFilter = 500;
+        [locationManager requestAlwaysAuthorization];
         currentCity = [[NSString alloc] init];
         [locationManager startUpdatingLocation];
+//        [locationManager requestLocation];
     }
     
 }
@@ -117,6 +90,7 @@
             if (!currentCity) {
                 currentCity = @"无法定位当前城市";
             }
+            [self requestWeatherDataWithCity:currentCity];
             NSLog(@"%@",currentCity); //这就是当前的城市
             NSLog(@"%@",placeMark.name);//具体地址:  xx市xx区xx街道
         }
@@ -127,6 +101,43 @@
             NSLog(@"location error: %@ ",error);
         }
         
+    }];
+}
+
+- (void)requestWeatherDataWithCity:(NSString *)city {
+    titleLabel.text = city;
+    [[YSNetWorkEngine sharedInstance] getWeatherDataWithparameters:city responseHandler:^(NSError *error, id data) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            NSInteger status = [[data objectForKey:@"status"] integerValue];
+            if (200 == status) {
+                NSDictionary *dic = [data objectForKey:@"data"];
+                infoLabel.text = [NSString stringWithFormat:@"空气质量:   %@",dic[@"quality"]];
+                FLabel.text = [NSString stringWithFormat:@"%@°",[dic objectForKey:@"wendu"]];
+                if ([dic objectForKey:@"forecast"]) {
+                    NSArray *arr = [dic objectForKey:@"forecast"];
+                    [weathers addObjectsFromArray:arr];
+                    CGFloat topSpace = 20;
+                    CGFloat height = 35;
+                    if (weathers.count) {
+                        NSString *date = [weathers[0] objectForKey:@"date"];
+                        dateLabel.text = [date substringFromIndex:[date rangeOfString:@"星"].location];
+                    }
+                    [imageV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                    for (int i = 0; i < arr.count; i++) {
+                        YSWeatherInformationItem *item = [[YSWeatherInformationItem alloc] init];
+                        [item updateInformation:arr[i]];
+                        [imageV addSubview:item];
+                        [item mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.top.equalTo(imageV).offset(topSpace+height*i);
+                            make.left.equalTo(imageV);
+                            make.width.equalTo(imageV);
+                            make.height.mas_equalTo(height);
+                        }];
+                    }
+                }
+            }
+        }
     }];
 }
 
@@ -176,7 +187,7 @@
     CGRect bounds = self.view.bounds;
     
     titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"北京";
+    titleLabel.text = @"--";
     titleLabel.font = [UIFont systemFontOfSize:20.f];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor whiteColor];
@@ -203,21 +214,6 @@
     
     imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weatherbgnew"]];
     [self.view addSubview:imageV];
-    
-    if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.topLayoutGuide).offset(10);
-            make.centerX.equalTo(self.view.mas_centerX);
-            make.width.mas_equalTo(bounds.size.width-40);
-            make.height.mas_equalTo(30);
-        }];
-        [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.topLayoutGuide).offset(74);
-            make.centerX.equalTo(self.view.mas_centerX);
-            make.width.mas_equalTo(bounds.size.width-40);
-            make.height.mas_equalTo(20);
-        }];
-    }
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
@@ -228,6 +224,19 @@
         [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
             make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop).offset(74);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_equalTo(20);
+        }];
+    }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.topLayoutGuide).offset(10);
+            make.centerX.equalTo(self.view.mas_centerX);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_equalTo(30);
+        }];
+        [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.topLayoutGuide).offset(74);
+            make.centerX.equalTo(self.view.mas_centerX);
             make.width.mas_equalTo(bounds.size.width-40);
             make.height.mas_equalTo(20);
         }];

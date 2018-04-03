@@ -10,7 +10,11 @@
 
 @interface YSFileManager : NSObject
 
+@property (nonatomic, assign) BOOL zipUpdate;
+
 + (instancetype)sharedFileManager;
+
+- (void)zipDoUpdate;
 
 - (void)unzipFileAtPath:(NSString *)unzipPath toDestination:(NSString *)zipPath;
 

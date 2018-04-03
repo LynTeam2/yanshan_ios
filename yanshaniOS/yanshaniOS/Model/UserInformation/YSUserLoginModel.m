@@ -54,6 +54,13 @@ static YSUserLoginModel *loginModel = nil;
     handler(YES);
 }
 
+- (BOOL)userInformationComplete {
+    if (_userName && _userPassWord) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void)saveUserLoginInformation:(NSString *)userName password:(NSString *)pw {
     
     if (userName) {

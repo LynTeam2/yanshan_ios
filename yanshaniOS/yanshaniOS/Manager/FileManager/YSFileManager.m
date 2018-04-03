@@ -21,6 +21,16 @@ static YSFileManager *fileManager = nil;
     return fileManager;
 }
 
+- (void)zipDoUpdate {
+    [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:kZipFileUrl toFilePath:@"zip" responseHandler:^(NSError *error, id data) {
+        if (error) {
+            [[UIApplication sharedApplication].keyWindow makeToast:@"题库更新失败" duration:2.0 position:@"center"];
+        }else{
+            self.zipUpdate = YES;
+        }
+    }];
+}
+
 - (void)unzipFileAtPath:(NSString *)unzipPath toDestination:(NSString *)zipPath {
     if ([unzipPath isEmptyString] || [zipPath isEmptyString]) {
         NSLog(@"zip文件不存在！！！");

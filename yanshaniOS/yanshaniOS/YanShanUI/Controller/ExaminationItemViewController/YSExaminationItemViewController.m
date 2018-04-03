@@ -146,16 +146,20 @@
     }
     for (int i = 0; i < mcChoices.count; i++) {
         UIButton *btn = mcChoices[i];
+        BOOL rightBtn = NO;
         for (int j = 0; j < [_itemModel getMCAnswer].count; j++) {
             NSString *answers = [_itemModel getMCAnswer][j];
-            if (![[btn currentTitle] containsString:answers]) {
-                self.isRight = NO;
-                [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
-                if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
-                    [self.delegate selectAnwser:self];
-                }
-                return;
+            if ([[btn currentTitle] containsString:answers]) {
+                rightBtn = YES;
             }
+        }
+        if (!rightBtn) {
+            self.isRight = NO;
+            [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
+            if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
+                [self.delegate selectAnwser:self];
+            }
+            return;
         }
     }
     self.isRight = YES;
@@ -186,7 +190,7 @@
 }
 
 - (void)selectChoice:(NSArray *)selectIndexs {
-    [mcChoices removeAllObjects];
+//    [mcChoices removeAllObjects];
     [mcChoices addObjectsFromArray:selectIndexs];
 }
 
@@ -277,6 +281,10 @@
                 NSString *str2 = [[sender currentTitle] stringByReplacingOccurrencesOfString:@" " withString:@""];
                 if ([str2 containsString:str1]) {
                     imageName = @"right";
+                    //TODO:
+                    if (self.delegate && [self.delegate respondsToSelector:@selector(selectChoice:)]) {
+                        [self.delegate selectChoice:@[sender]];
+                    }
                 }
             }
             for (int i = 0; i < choiceButtons.count; i++) {

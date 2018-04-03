@@ -18,6 +18,8 @@
 
 + (NSString *)getUserCurrentLocation;
 
++ (NSString *)urlencode:(NSString *)encodeString;
+
 + (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval;
 
 @end

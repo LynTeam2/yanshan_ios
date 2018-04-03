@@ -40,7 +40,6 @@ static YSNetWorkEngine *netWorkEngine = nil;
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-        
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         handler(error,response.URL.absoluteString);
         NSLog(@"File downloaded to: %@", filePath.absoluteString);
@@ -82,7 +81,9 @@ static YSNetWorkEngine *netWorkEngine = nil;
 
 - (void)getWeatherDataWithparameters:(NSString *)city responseHandler:(NetWorkResponse)handler {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:@"https://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    city = [YSCommonHelper urlencode:city];
+    NSString *url = [NSString stringWithFormat:@"https://www.sojson.com/open/api/weather/json.shtml?city=%@",city];
+    [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);

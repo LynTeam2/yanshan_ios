@@ -19,7 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if ([[YSUserLoginModel shareInstance] userInformationComplete]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
     [[YSUserLoginModel shareInstance] userAutoLogin:^(BOOL success) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (success) {
             UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
             [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];

@@ -15,7 +15,9 @@ static  NSString *allCourseFile = @"allcourses.plist";
 @implementation YSCourseManager
 {
     NSMutableArray *recentCourses;
+    NSMutableArray *allCourses;
 }
+
 + (instancetype)sharedCourseManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -34,6 +36,7 @@ static  NSString *allCourseFile = @"allcourses.plist";
             [[YSFileManager sharedFileManager] createFileName:allCourseFile atFilePath:[[YSFileManager sharedFileManager] getDocumentDirectoryPath]];
         }
         recentCourses = [NSMutableArray arrayWithCapacity:0];
+        allCourses = [NSMutableArray arrayWithCapacity:0];
     }
     return self;
 }

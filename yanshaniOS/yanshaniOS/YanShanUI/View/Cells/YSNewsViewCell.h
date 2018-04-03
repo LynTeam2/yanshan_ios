@@ -14,6 +14,8 @@
     UILabel *_titleLable;
     UILabel *_subTitleLabel;
     UIView *_seperateLine;
+    UILabel *_sourceLabel;
+    UILabel *_messageLabel;
 }
 
 @property (nonatomic, strong) id data;

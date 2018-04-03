@@ -20,6 +20,8 @@ typedef void(^UserLoginCallBack)(BOOL success);
 
 - (void)userLogout:(UserLoginCallBack)handler;
 
+- (BOOL)userInformationComplete;
+
 - (void)saveUserLoginInformation:(NSString *)userName password:(NSString *)pw;
 
 @end

@@ -148,8 +148,10 @@
     [rightItems addObject:model];
 }
 
+
+
 - (NSInteger)undoItem {
-    return _items.count - rightItems.count - wrongItems.count;
+    return ([self getAllUndoMCItem].count+[self getAllUndoSCItem].count+[self getAllUndoTFItem].count);
 }
 
 @end

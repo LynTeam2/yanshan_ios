@@ -35,6 +35,18 @@
         _seperateLine.backgroundColor = kLightGray;
         [self addSubview:_seperateLine];
 
+        _sourceLabel = [[UILabel alloc] init];
+        _sourceLabel.text = @"独家";
+        _sourceLabel.textColor = kBlueColor;
+        [self addSubview:_sourceLabel];
+        
+        _messageLabel = [[UILabel alloc] init];
+        [self addSubview:_messageLabel];
+        NSTextAttachment *ment = [[NSTextAttachment alloc] init];
+        ment.image = [UIImage imageNamed:@"message"];
+        NSMutableAttributedString *mentA = [NSMutableAttributedString attributedStringWithAttachment:ment];
+        [mentA appendAttributedString:[[NSAttributedString alloc]initWithString:@" 2" attributes:@{NSForegroundColorAttributeName:[UIColor grayColor]}]];
+        _messageLabel.attributedText = mentA;
     }
     return self;
 }
@@ -66,6 +78,21 @@
         make.right.equalTo(self).offset(-leftSpace);
         make.bottom.equalTo(self).offset(-2*topSpace);
     }];
+    
+    [_sourceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_right).offset(-110);
+        make.bottom.equalTo(_coverImgView);
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(20);
+    }];
+    
+    [_messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_sourceLabel.mas_right).offset(10);
+        make.right.equalTo(self).offset(-leftSpace);
+        make.bottom.equalTo(_coverImgView);
+        make.height.mas_equalTo(20);
+    }];
+    
     _seperateLine.frame = CGRectMake(leftSpace, height-1, width-40, 0.5);
 }
 

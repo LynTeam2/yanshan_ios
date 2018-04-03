@@ -25,15 +25,25 @@
     YSBaseCollectionView *_collectionView;
     NSArray *lastestCourses;
     NSMutableArray *newsList;
+    UICollectionViewFlowLayout *flowLayout;
 }
 @end
 
 @implementation YSHomeViewController
 
+- (void)loadView {
+    flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    _collectionView = [[YSBaseCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    self.view = _collectionView;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (0 == newsList.count) {
         [self requestNews];
+    }
+    if (![[YSFileManager sharedFileManager] zipUpdate]) {
+        [[YSFileManager sharedFileManager] zipDoUpdate];
     }
 }
 
@@ -48,18 +58,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)configView {
+#pragma mark - class method
 
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+- (void)configView {
+    
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    CGRect frame = self.view.bounds;
-    frame.size.height -= 49+64;
-    _collectionView = [[YSBaseCollectionView alloc] initWithFrame:frame collectionViewLayout:flowLayout];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.emptyDataSetDelegate = self;
     _collectionView.emptyDataSetSource = self;
-    [self.view addSubview:_collectionView];
     [_collectionView registerClass:[YSClassViewCell class] forCellWithReuseIdentifier:@"classCell"];
     [_collectionView registerClass:[YSNewsViewCell class] forCellWithReuseIdentifier:@"newsCell"];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
@@ -71,7 +78,7 @@
 }
 
 - (void)addNavigationItems {
-    CGFloat width = self.view.frame.size.width;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchBtn setBackgroundColor:kLightGray];
     [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
@@ -89,16 +96,22 @@
 
 - (void)configViewControllerParameter {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unzipFileSuccess:) name:@"unzipFileSuccess" object:nil];
-    NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"latest.json" atDocumentName:@"course"];
-    if ([jsonDic objectForKey:@"courses"]) {
-        NSArray *courses = [jsonDic objectForKey:@"courses"];
-        lastestCourses = [NSArray arrayWithArray:[YSCourseModel arrayOfModelsFromDictionaries:courses error:nil]];
-    }
+    [self handleZipFileData];
 }
 
 - (void)unzipFileSuccess:(NSNotification *)noti {
     NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"category.json" atDocumentName:@"course"];
     NSLog(@"%@",jsonDic);
+    [self handleZipFileData];
+    [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
+}
+
+- (void)handleZipFileData {
+    NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"latest.json" atDocumentName:@"course"];
+    if ([jsonDic objectForKey:@"courses"]) {
+        NSArray *courses = [jsonDic objectForKey:@"courses"];
+        lastestCourses = [NSArray arrayWithArray:[YSCourseModel arrayOfModelsFromDictionaries:courses error:nil]];
+    }
 }
 
 - (void)requestNews {
