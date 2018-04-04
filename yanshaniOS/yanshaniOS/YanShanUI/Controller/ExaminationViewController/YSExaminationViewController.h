@@ -13,31 +13,3 @@
 
 @end
 
-@interface YSExaminationToolView : YSBaseView <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
-{
-    UIButton *icon1Btn;
-    UIButton *icon2Btn;
-    UIButton *icon3Btn;
-    UIButton *icon4Btn;
-    UIButton *title1Btn;
-    UIButton *wrongItemBtn;
-    UIButton *rightItemBtn;
-    UIButton *currentItemBtn;
-}
-
-@property (nonatomic, assign) NSInteger itemsCount;
-
-
-- (void)updateWrongChoiceCount:(NSInteger)count;
-
-- (void)updateRightChoiceCount:(NSInteger)count;
-
-- (void)updateCurrentItemIndex:(NSString *)index;
-
-- (void)updateitemCountWith:(NSInteger)count isRight:(BOOL)right;
-
-- (void)addtarget:(id)target method:(SEL)action;
-
-- (void)currentItemIndex:(NSInteger)index;
-
-@end
