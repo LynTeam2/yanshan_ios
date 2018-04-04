@@ -35,8 +35,8 @@
 }
 
 - (void)configViewControllerParameter {
-    titles = @[@"个人设置",@"签到有礼",@"我的消息",@"我的错题"];
-    icons = @[@"setting",@"qiandao",@"message",@"wrongdocument"];
+    titles = @[@"个人设置",@"签到有礼",/*@"我的消息",*/@"我的错题"];
+    icons = @[@"setting",@"qiandao",/*@"message",*/@"wrongdocument"];
 }
 
 - (void)configView {
@@ -171,12 +171,12 @@
             [self.navigationController pushViewController:qiandaoVC animated:YES];
         }
             break;
-        case 2:{
+        case 2:/*{
             YSMessageViewController *messageVC = [[YSMessageViewController alloc] init];
             [self.navigationController pushViewController:messageVC animated:YES];
         }
             break;
-        case 3:{
+        case 3:*/{
             NSArray *wrongItemsArray = [NSArray new];
             if ([[YSCourseManager sharedCourseManager] getAllWrongCourseItem].count) {
                 wrongItemsArray = [NSArray arrayWithArray:[[YSCourseManager sharedCourseManager] getAllWrongCourseItem]];

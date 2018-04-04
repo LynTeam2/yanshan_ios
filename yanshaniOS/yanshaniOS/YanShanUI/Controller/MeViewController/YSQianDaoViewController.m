@@ -8,6 +8,8 @@
 
 #import "YSQianDaoViewController.h"
 
+static NSString *qiandao = @"qiandao";
+
 @interface YSQianDaoViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *qiandaoLabel;
 
@@ -34,10 +36,13 @@
 
 - (void)configView {
     
+    NSString *btnTitle = [[NSUserDefaults standardUserDefaults] objectForKey:qiandao] ? @"已签到": @"签到";
     UIButton *qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [qiandaoBtn setTitle:@"签到" forState:UIControlStateNormal];
+    [qiandaoBtn setTitle:btnTitle forState:UIControlStateNormal];
     [qiandaoBtn setBackgroundImage:[UIImage imageNamed:@"qiandaobgicon"] forState:UIControlStateNormal];
+    [qiandaoBtn addTarget:self action:@selector(qiandao:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:qiandaoBtn];
+    qiandaoBtn.enabled = [[NSUserDefaults standardUserDefaults] objectForKey:qiandao] ? NO : YES;
     
     [qiandaoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
@@ -65,7 +70,7 @@
     CGFloat height = width * (320.0/215.0);
     
     for (int i = 0; i < 4; i++) {
-        UIView *tmpView = [self instanceDateViewWithFrame:CGRectMake(15+(width+5)*i, 210+20, width, height)];
+        UIView *tmpView = [self instanceDateViewWithFrame:CGRectMake(15+(width+5)*i, 210+20, width, height) dayInterval:(i-3)];
         [self.view addSubview:tmpView];
     }
     
@@ -112,16 +117,23 @@
 #pragma mark - UIButton action
 
 - (IBAction)userQiandao:(UIButton *)sender {
-    if ([[sender currentTitle] isEqualToString:@"签到"]) {
-        [sender setTitle:@"已签到" forState:UIControlStateNormal];
-    }else{
-        [sender setTitle:@"签到" forState:UIControlStateNormal];
-    }
+//    if ([[sender currentTitle] isEqualToString:@"签到"]) {
+//        [sender setTitle:@"已签到" forState:UIControlStateNormal];
+//    }else{
+//        [sender setTitle:@"签到" forState:UIControlStateNormal];
+//    }
+}
+
+- (void)qiandao:(UIButton *)sender {
+    [sender setTitle:@"已签到" forState:UIControlStateNormal];
+    sender.enabled = NO;
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:qiandao];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - custom view
 
-- (UIView *)instanceDateViewWithFrame:(CGRect)frame {
+- (UIView *)instanceDateViewWithFrame:(CGRect)frame dayInterval:(int)interval {
     
     UIView *dateBGV = [[UIView alloc] initWithFrame:frame];
     dateBGV.backgroundColor = kLightGray;
@@ -129,7 +141,7 @@
     UILabel *monthLabel = [[UILabel alloc] init];
     monthLabel.frame = CGRectMake(0, 15, frame.size.width, 20);
     monthLabel.font = [UIFont systemFontOfSize:14.f];
-    monthLabel.text = @"八月";
+    monthLabel.text = [[YSCommonHelper timeFromNowWithTimeInterval:(60*60*24) dateFormat:@"M"] stringByAppendingString:@"月"];
     monthLabel.textColor = [UIColor redColor];
     monthLabel.textAlignment = NSTextAlignmentCenter;
     [dateBGV addSubview:monthLabel];
@@ -137,7 +149,7 @@
     UILabel *dayLabel = [[UILabel alloc] init];
     dayLabel.frame = CGRectMake(0, 0, frame.size.width, 20);
     dayLabel.font = [UIFont systemFontOfSize:25.f];
-    dayLabel.text = @"29";
+    dayLabel.text = [YSCommonHelper timeFromNowWithTimeInterval:(60*60*24*interval) dateFormat:@"dd"];
     dayLabel.center = CGPointMake(frame.size.width/2, frame.size.height/2);
     dayLabel.textColor = [UIColor redColor];
     dayLabel.textAlignment = NSTextAlignmentCenter;

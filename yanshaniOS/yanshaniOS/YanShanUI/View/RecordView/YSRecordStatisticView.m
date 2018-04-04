@@ -46,11 +46,17 @@
     [self addSubview:progressView];
     
     percentageLabel = [[UILabel alloc] init];
-    percentageLabel.text = @"23";
+    percentageLabel.text = @"--";
     percentageLabel.font = [UIFont systemFontOfSize:14.f];
     percentageLabel.textColor = [UIColor grayColor];
     percentageLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:percentageLabel];
+    
+    amountLabel = [[UILabel alloc] init];
+    amountLabel.font = [UIFont systemFontOfSize:14.f];
+    amountLabel.text = @"0";
+    amountLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:amountLabel];
     
 }
 
@@ -75,6 +81,11 @@
         make.bottom.equalTo(self).offset(-8);
     }];
     [percentageLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(progressView.mas_right);
+        make.bottom.equalTo(progressView.mas_top);
+        make.size.mas_equalTo(CGSizeMake(100, 20));
+    }];
+    [amountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(progressBgView.mas_right);
         make.right.equalTo(self);
         make.height.mas_equalTo(30);
@@ -91,17 +102,18 @@
     if (type == YSRecordStatisticViewTypeSimple) {
         categoryLabel.text = @"单选";
         percent = ([model getSCItem].count - [model getAllWrongSCItem].count - [model getAllUndoSCItem].count)/(CGFloat)[model getSCItem].count;
-        percentageLabel.text = [NSString stringWithFormat:@"%ld",[model getSCItem].count];
+        amountLabel.text = [NSString stringWithFormat:@"%ld",[model getSCItem].count];
     } else if (type == YSRecordStatisticViewTypeMultable) {
         categoryLabel.text = @"多选";
         percent = ([model getMCItem].count - [model getAllWrongMCItem].count - [model getAllUndoMCItem].count)/(CGFloat)[model getMCItem].count;
-        percentageLabel.text = [NSString stringWithFormat:@"%ld",[model getMCItem].count];
+        amountLabel.text = [NSString stringWithFormat:@"%ld",[model getMCItem].count];
     } else {
         categoryLabel.text = @"判断";
         percent = ([model getTFItem].count - [model getAllWrongTFItem].count - [model getAllUndoTFItem].count)/(CGFloat)[model getTFItem].count;
-        percentageLabel.text = [NSString stringWithFormat:@"%ld",[model getTFItem].count];
+        amountLabel.text = [NSString stringWithFormat:@"%ld",[model getTFItem].count];
     }
     percent = isnan(percent) ? 0 :  percent;
+    percentageLabel.text = [NSString stringWithFormat:@"%.0f%%",percent*100];
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
 //    [self layoutIfNeeded];

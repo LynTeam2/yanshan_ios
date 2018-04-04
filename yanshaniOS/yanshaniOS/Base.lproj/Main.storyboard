@@ -65,7 +65,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qWs-MZ-G0W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2002" y="1466"/>
+            <point key="canvasLocation" x="2000.8" y="1465.8170914542729"/>
         </scene>
         <!--Me View Controller-->
         <scene sceneID="ext-OT-and">
@@ -196,13 +196,12 @@
                                 <rect key="frame" x="49" y="300" width="283" height="1"/>
                                 <color key="backgroundColor" red="0.27263057231903076" green="0.56576210260391235" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0O-C2-8el">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0O-C2-8el">
                                 <rect key="frame" x="46" y="381" width="283" height="50"/>
                                 <color key="backgroundColor" red="0.27269166707992554" green="0.56591242551803589" blue="0.99769347906112671" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="CN0-mz-1BJ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="登录">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>

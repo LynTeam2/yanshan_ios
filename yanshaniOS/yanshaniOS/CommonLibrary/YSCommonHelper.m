@@ -89,11 +89,11 @@
 //    
 //}
 
-+ (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval {
++ (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval dateFormat:(NSString *)format {
     
     NSDateFormatter *fomatter = [[NSDateFormatter alloc] init];
     fomatter.timeZone = [NSTimeZone localTimeZone];
-    fomatter.dateFormat = @"hh:mm";
+    fomatter.dateFormat = format;
     
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:interval];
     return [fomatter stringFromDate:date];

@@ -261,7 +261,7 @@
     for (int i = 0; i < 5; i++) {
         
         NSDictionary *dic = @{
-                              @"time":[YSCommonHelper timeFromNowWithTimeInterval:i*30*60],
+                              @"time":[YSCommonHelper timeFromNowWithTimeInterval:i*30*60 dateFormat:@"hh:mm"],
                               @"image":icons[arc4random()%2],
                               @"c":@"18°"};
         
@@ -395,7 +395,7 @@
 - (void)initSubViews {
     
     timeLabel = [[UILabel alloc] init];
-    timeLabel.text = [YSCommonHelper timeFromNowWithTimeInterval:30*60];//@"现在"
+    timeLabel.text = [YSCommonHelper timeFromNowWithTimeInterval:30*60 dateFormat:@"hh:mm"];//@"现在"
     timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.font = [UIFont systemFontOfSize:14.f];
     timeLabel.textColor = [UIColor whiteColor];

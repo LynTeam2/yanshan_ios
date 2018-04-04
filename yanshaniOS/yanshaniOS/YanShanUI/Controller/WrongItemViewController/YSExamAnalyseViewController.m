@@ -49,7 +49,7 @@ static NSString *blueString    = @"6490ff";
 
 - (void)viewWillAppear:(BOOL)animated {
     if (examModel) {
-        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题,未做%ld题 %@",examModel.wrongItemCount,[examModel undoItem],examModel.examJudgement];
+        testResultLabel.text = [NSString stringWithFormat:@"答错%ld题,未做%ld题,%@",examModel.wrongItemCount,[examModel undoItem],examModel.examJudgement];
         scoreLabel.text = [NSString stringWithFormat:@"%ld分",examModel.examScore];
         [statiscView1 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeSimple)];
         [statiscView2 updateContentUseStatisticData:examModel withViewType:(YSRecordStatisticViewTypeMultable)];

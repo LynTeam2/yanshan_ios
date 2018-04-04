@@ -20,7 +20,7 @@
 
 + (NSString *)urlencode:(NSString *)encodeString;
 
-+ (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval;
++ (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval dateFormat:(NSString *)format;
 
 + (UIImage *)imageFromColor:(UIColor *)color withSize:(CGSize)size;
 

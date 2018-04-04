@@ -70,11 +70,11 @@
     [_coverImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(leftSpace);
         make.top.equalTo(_titleLable.mas_bottom).offset(topSpace/2);
-        make.size.mas_equalTo(CGSizeMake(3*topSpace, 2*topSpace));
+        make.size.mas_equalTo(CGSizeMake(4.5*topSpace, 3*topSpace));
     }];
-    
+
     [_subTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_coverImgView.mas_right).offset(leftSpace/2);
+        make.left.equalTo(_coverImgView.mas_right).offset(leftSpace);
         make.top.equalTo(_coverImgView.mas_top);
         make.right.equalTo(self).offset(-leftSpace);
         make.bottom.equalTo(self).offset(-2*topSpace);

@@ -32,7 +32,7 @@
 #pragma mark - config view controller
 
 - (void)configViewControllerParameter {
-    _settings = @[@"头像",@"昵称",@"其他"];
+    _settings = @[@"头像",@"昵称"/*,@"其他"*/];
 }
 
 - (void)configView {
