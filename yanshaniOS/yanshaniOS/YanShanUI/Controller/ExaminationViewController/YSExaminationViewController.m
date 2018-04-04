@@ -19,14 +19,15 @@
     NSMutableArray *testItems;
     YSExamToolView *toolView;
     YSExaminationResultView *resultView;
+    YSExaminationItemModel *examModel;
     UIView *backgroundView;
-    NSInteger wrongCount;
-    NSInteger rightCount;
-    NSInteger timeCount;
     NSTimer *examTimer;
     NSDictionary *examDic;
     BOOL beginExam;
-    YSExaminationItemModel *examModel;
+    NSInteger wrongCount;
+    NSInteger rightCount;
+    NSInteger timeCount;
+    CGFloat safeAreaHeight;
 }
 @end
 
@@ -261,17 +262,16 @@
     [backgroundView addGestureRecognizer:tap];
     CGRect toolFrame = self.view.bounds;
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
-        NSLog(@"%@",NSStringFromUIEdgeInsets([self.view safeAreaInsets]));
-        toolFrame.origin.y = toolFrame.size.height - 40 - [self.view safeAreaInsets].bottom;
+        safeAreaHeight = 40 + [self.view safeAreaInsets].bottom;
     }else if ([UIViewController instancesRespondToSelector:@selector(bottomLayoutGuide)]) {
-        toolFrame.origin.y = toolFrame.size.height - 40;
+        safeAreaHeight = 40;
     }
+    toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
     toolView = [[YSExamToolView alloc] initWithFrame:toolFrame];
     [toolView addtarget:self method:@selector(jiaojuan:)];
     [self.view addSubview:toolView];
     [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,testItems.count]];
     toolView.itemsCount = testItems.count;
-    toolView.backgroundColor = kRandomColor;
 }
 
 
@@ -318,7 +318,7 @@
      if(sender.tag == kTiMuTag){
         CGRect toolFrame = self.view.bounds;
         if (toolView.frame.origin.y == 80) {
-            toolFrame.origin.y = toolFrame.size.height - 40;
+            toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
             backgroundView.hidden = YES;
         }else{
             toolFrame.origin.y = 80;

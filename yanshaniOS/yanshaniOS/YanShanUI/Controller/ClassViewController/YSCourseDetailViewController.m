@@ -59,15 +59,10 @@
 - (void)configView {
     CGRect frame = self.view.bounds;
     frame.size.height = 300;
-    
-//    webView.frame = self.view.bounds;
-//    webView.navigationDelegate = self;
     if (_htmlStr) {
         [webView loadHTMLString:_htmlStr baseURL:nil];
-//        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
-//    [self.view addSubview:webView];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"开始答题" forState:UIControlStateNormal];
@@ -82,10 +77,6 @@
         make.right.equalTo(self.view).offset(-30);
         make.height.mas_equalTo(40);
     }];
-    
-}
-
-- (void)configContainer {
     
 }
 

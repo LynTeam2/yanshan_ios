@@ -241,7 +241,6 @@
             make.height.mas_equalTo(20);
         }];
     }
-    NSArray *ddd = [UIFont familyNames];
     [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.top.equalTo(infoLabel.mas_bottom).offset(20);

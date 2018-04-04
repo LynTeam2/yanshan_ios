@@ -10,11 +10,14 @@
 #import "YSExaminationItemViewController.h"
 #import "YSCourseManager.h"
 #import "YSCourseItemModel.h"
+#import "YSExamToolView.h"
 
 @interface YSWrongItemsViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate>
 {
     NSMutableArray *vcs;
     UIPageViewController *pageVC;
+    CGFloat safeAreaHeight;
+    YSExamToolView *toolView;
 }
 @end
 
@@ -23,6 +26,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    CGRect toolFrame = self.view.bounds;
+    if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
+        if (@available(iOS 11.0, *)) {
+            safeAreaHeight = 40 + [self.view safeAreaInsets].bottom;
+        }
+    }else if ([UIViewController instancesRespondToSelector:@selector(bottomLayoutGuide)]) {
+        safeAreaHeight = 40;
+    }
+    toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
+    toolView.frame = toolFrame;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,11 +55,21 @@
     self.title = @"我的错题";
 }
 
+- (void)configView {
+    toolView = [[YSExamToolView alloc] initWithFrame:CGRectZero];
+    [toolView addtarget:self method:@selector(jiaojuan:)];
+    [self.view addSubview:toolView];
+    toolView.backgroundColor = [UIColor yellowColor];
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,vcs.count]];
+    toolView.itemsCount = vcs.count;
+}
+
 - (void)addNavigationItems {
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
 
 - (void)setWrongItemsData:(NSArray *)items {
+    
     vcs = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < items.count; i++) {
         YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];
@@ -51,11 +82,13 @@
         YSCourseItemModel *model = items[i];
         vc.itemModel = model;
     }
+
     if (vcs.count) {
         pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:@{UIPageViewControllerOptionInterPageSpacingKey:@10}];
         pageVC.dataSource = self;
         [self addChildViewController:pageVC];
         [self.view addSubview:pageVC.view];
+        [self.view sendSubviewToBack:pageVC.view];
         [pageVC didMoveToParentViewController:self];
         pageVC.view.backgroundColor = [UIColor redColor];
         [pageVC setViewControllers:@[vcs[0]]

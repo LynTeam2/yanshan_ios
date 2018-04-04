@@ -95,12 +95,6 @@ static NSString *blueString    = @"6490ff";
     UIView *secondSectionView = [[UIView alloc] init];
     secondSectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:secondSectionView];
-    [secondSectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view);
-        make.top.equalTo(headerView.mas_bottom).offset(10);
-        make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-    }];
     
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
         [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -109,8 +103,7 @@ static NSString *blueString    = @"6490ff";
             make.right.equalTo(self.view);
             make.height.mas_equalTo(height);
         }];
-    }
-    if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
+    }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
         [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.mas_topLayoutGuide);
             make.left.equalTo(self.view);
@@ -118,6 +111,13 @@ static NSString *blueString    = @"6490ff";
             make.height.mas_equalTo(height);
         }];
     }
+    
+    [secondSectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.top.equalTo(headerView.mas_bottom).offset(10);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+    }];
     
     UIImageView *chengjiBG = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chengjitongjibg"]];
     [headerView addSubview:chengjiBG];
@@ -232,6 +232,13 @@ static NSString *blueString    = @"6490ff";
 
 }
 
+- (void)addNavigationItems {
+    UIButton *sender = [self customNavgationBarItem:self.navigationItem.rightBarButtonItem withTitle:@"历史成绩"];
+    [sender addTarget:self action:@selector(historyScore:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - class method
+
 - (void)btn1:(UIButton *)sender {
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
     [itemsVC setWrongItemsData:[examModel items]];
@@ -239,6 +246,7 @@ static NSString *blueString    = @"6490ff";
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
+
 - (void)btn2:(UIButton *)sender {
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
     [itemsVC setWrongItemsData:[examModel getSCItem]];
@@ -246,6 +254,7 @@ static NSString *blueString    = @"6490ff";
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
+
 - (void)btn3:(UIButton *)sender {
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
     [itemsVC setWrongItemsData:[examModel getMCItem]];
@@ -253,20 +262,13 @@ static NSString *blueString    = @"6490ff";
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
+
 - (void)btn4:(UIButton *)sender {
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
     [itemsVC setWrongItemsData:[examModel getTFItem]];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
-}
-- (void)configContainer {
-    
-}
-
-- (void)addNavigationItems {
-    UIButton *sender = [self customNavgationBarItem:self.navigationItem.rightBarButtonItem withTitle:@"历史成绩"];
-    [sender addTarget:self action:@selector(historyScore:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)historyScore:(UIButton *)sender {
