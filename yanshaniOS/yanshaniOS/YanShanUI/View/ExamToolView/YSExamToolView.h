@@ -11,19 +11,27 @@
 #define kJiaoJuanTag     2000
 #define kTiMuTag         2001
 
+typedef NS_ENUM(NSUInteger, ExamToolViewType) {
+    ExamToolViewTypeExam = 0,
+    ExamToolViewTypeWrongItem,
+};
+
+
 @interface YSExamToolView : YSBaseView <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UIButton *icon1Btn;
     UIButton *icon2Btn;
     UIButton *icon3Btn;
     UIButton *icon4Btn;
-    UIButton *title1Btn;
+    UIButton *commitBtn;
     UIButton *wrongItemBtn;
     UIButton *rightItemBtn;
     UIButton *currentItemBtn;
 }
 
 @property (nonatomic, assign) NSInteger itemsCount;
+
+- (instancetype)initWithFrame:(CGRect)frame withType:(ExamToolViewType)viewType;
 
 - (void)updateWrongChoiceCount:(NSInteger)count;
 

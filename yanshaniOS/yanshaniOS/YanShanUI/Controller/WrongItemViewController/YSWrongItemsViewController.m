@@ -18,6 +18,9 @@
     UIPageViewController *pageVC;
     CGFloat safeAreaHeight;
     YSExamToolView *toolView;
+    NSInteger wrongCount;
+    NSInteger rightCount;
+
 }
 @end
 
@@ -44,6 +47,13 @@
     }
     toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
     toolView.frame = toolFrame;
+    if (nil == toolView) {
+        toolView = [[YSExamToolView alloc] initWithFrame:toolFrame withType:ExamToolViewTypeWrongItem];
+        [toolView addtarget:self method:@selector(jiaojuan:)];
+        [self.view addSubview:toolView];
+        [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,vcs.count]];
+        toolView.itemsCount = vcs.count;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,17 +66,33 @@
 }
 
 - (void)configView {
-    toolView = [[YSExamToolView alloc] initWithFrame:CGRectZero];
-    [toolView addtarget:self method:@selector(jiaojuan:)];
-    [self.view addSubview:toolView];
-    toolView.backgroundColor = [UIColor yellowColor];
-    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,vcs.count]];
-    toolView.itemsCount = vcs.count;
+   
 }
 
 - (void)addNavigationItems {
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
+
+#pragma mark - class method
+
+- (void)jiaojuan:(UIButton *)sender {
+    if(sender.tag == kTiMuTag){
+        CGRect toolFrame = self.view.bounds;
+        if (sender.selected) {
+            toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
+        }else{
+//            toolFrame.origin.y = 80;
+//            toolFrame.size.height -= 80;
+        }
+        toolView.frame = toolFrame;
+        sender.selected = !sender.selected;
+        [toolView setNeedsUpdateConstraints];
+//        [UIView animateWithDuration:0.5 animations:^{
+//            toolView.frame = toolFrame;
+//        }];
+    }
+}
+
 
 - (void)setWrongItemsData:(NSArray *)items {
     
@@ -101,9 +127,11 @@
 {
     NSUInteger index = ((YSExaminationItemViewController *)viewController).index;
     if ((index == 0) || (index == NSNotFound)) {
+        [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,vcs.count]];
         return nil;
     }
     index -= 1;
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,vcs.count]];
     return [vcs objectAtIndex:index];
 }
 
@@ -117,6 +145,7 @@
     if (index == [vcs count]) {
         return nil;
     }
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,vcs.count]];
     return [vcs objectAtIndex:index];
 }
 
@@ -129,7 +158,15 @@
                          direction:UIPageViewControllerNavigationDirectionForward
                           animated:YES completion:nil];
     }
-    
+    if (examinationItemController.isRight) {
+        rightCount++;
+        //        [examModel saveRightItem:examinationItemController.itemModel];
+        [toolView updateRightChoiceCount:rightCount];
+    }else{
+        wrongCount++;
+        //        [examModel saveWrongItem:examinationItemController.itemModel];
+        [toolView updateWrongChoiceCount:wrongCount];
+    }
 }
 
 @end

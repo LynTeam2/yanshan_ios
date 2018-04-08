@@ -11,6 +11,7 @@
 #import "YSCourseManager.h"
 #import "YSCourseItemModel.h"
 #import <WebKit/WebKit.h>
+#import "YSExamToolView.h"
 
 @interface YSCourseDetailViewController ()<UIPageViewControllerDelegate,YSExaminationItemViewControllerDelegate,WKNavigationDelegate,WKUIDelegate,UIWebViewDelegate>
 {
@@ -18,6 +19,10 @@
     NSArray *courseItems;
     UIPageViewController *pageVC;
     UIWebView *webView;
+    CGFloat safeAreaHeight;
+    YSExamToolView *toolView;
+    NSInteger rightCount;
+    NSInteger wrongCount;
 }
 @end
 
@@ -122,15 +127,29 @@
             
         }];
     }
+    CGRect toolFrame = self.view.bounds;
+    if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
+        safeAreaHeight = 40 + [self.view safeAreaInsets].bottom;
+    }else if ([UIViewController instancesRespondToSelector:@selector(bottomLayoutGuide)]) {
+        safeAreaHeight = 40;
+    }
+    toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
+    toolView = [[YSExamToolView alloc] initWithFrame:toolFrame withType:ExamToolViewTypeWrongItem];
+    [toolView addtarget:self method:@selector(jiaojuan:)];
+    [self.view addSubview:toolView];
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,courseItems.count]];
+    toolView.itemsCount = courseItems.count;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSUInteger index = ((YSExaminationItemViewController *)viewController).index;
     if ((index == 0) || (index == NSNotFound)) {
+        [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,courseItems.count]];
         return nil;
     }
     index -= 1;
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,courseItems.count]];
     return [vcs objectAtIndex:index];
 }
 
@@ -144,6 +163,7 @@
     if (index == [vcs count]) {
         return nil;
     }
+    [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",index+1,courseItems.count]];
     return [vcs objectAtIndex:index];
 }
 
@@ -156,11 +176,39 @@
                          direction:UIPageViewControllerNavigationDirectionForward
                           animated:YES completion:nil];
     }
-    
+    if (examinationItemController.isRight) {
+        rightCount++;
+//        [examModel saveRightItem:examinationItemController.itemModel];
+        [toolView updateRightChoiceCount:rightCount];
+    }else{
+        wrongCount++;
+//        [examModel saveWrongItem:examinationItemController.itemModel];
+        [toolView updateWrongChoiceCount:wrongCount];
+    }
 }
 
 - (void)addNavigationItems {
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
+}
+
+#pragma mark - class method
+
+- (void)jiaojuan:(UIButton *)sender {
+    if(sender.tag == kTiMuTag){
+        CGRect toolFrame = self.view.bounds;
+        if (sender.selected) {
+            toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
+        }else{
+            //            toolFrame.origin.y = 80;
+            //            toolFrame.size.height -= 80;
+        }
+        toolView.frame = toolFrame;
+        sender.selected = !sender.selected;
+        [toolView setNeedsUpdateConstraints];
+        //        [UIView animateWithDuration:0.5 animations:^{
+        //            toolView.frame = toolFrame;
+        //        }];
+    }
 }
 
 @end

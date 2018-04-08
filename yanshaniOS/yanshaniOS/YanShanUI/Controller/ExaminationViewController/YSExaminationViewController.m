@@ -20,7 +20,6 @@
     YSExamToolView *toolView;
     YSExaminationResultView *resultView;
     YSExaminationItemModel *examModel;
-    UIView *backgroundView;
     NSTimer *examTimer;
     NSDictionary *examDic;
     BOOL beginExam;
@@ -254,12 +253,6 @@
         
     }];
     
-    backgroundView = [[UIView alloc] initWithFrame:self.view.bounds];
-    backgroundView.hidden = YES;
-    backgroundView.backgroundColor = kRGBColor(0, 0, 0, 0.5);
-    [self.view addSubview:backgroundView];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancel:)];
-    [backgroundView addGestureRecognizer:tap];
     CGRect toolFrame = self.view.bounds;
     if ([self.view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
         safeAreaHeight = 40 + [self.view safeAreaInsets].bottom;
@@ -267,7 +260,7 @@
         safeAreaHeight = 40;
     }
     toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
-    toolView = [[YSExamToolView alloc] initWithFrame:toolFrame];
+    toolView = [[YSExamToolView alloc] initWithFrame:toolFrame withType:ExamToolViewTypeExam];
     [toolView addtarget:self method:@selector(jiaojuan:)];
     [self.view addSubview:toolView];
     [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,testItems.count]];
@@ -298,14 +291,6 @@
     return resultArray;
 }
 
-
-- (void)cancel:(UITapGestureRecognizer *)tap {
-    backgroundView.hidden = YES;
-    CGRect toolFrame = self.view.bounds;
-    toolFrame.origin.y = toolFrame.size.height - 40;
-    toolView.frame = toolFrame;
-}
-
 - (NSString *)transformSectionToFormmaterTime:(NSInteger)seconds {
     
     long second = seconds%60;
@@ -316,19 +301,26 @@
 
 - (void)jiaojuan:(UIButton *)sender {
      if(sender.tag == kTiMuTag){
-        CGRect toolFrame = self.view.bounds;
-        if (toolView.frame.origin.y == 80) {
-            toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
-            backgroundView.hidden = YES;
-        }else{
-            toolFrame.origin.y = 80;
-            toolFrame.size.height -= 80;
-            backgroundView.hidden = NO;
-        }
-        [UIView animateWithDuration:0.5 animations:^{
-            toolView.frame = toolFrame;
-        }];
-        sender.selected = !sender.selected;
+//         CGRect toolFrame = self.view.bounds;
+//         if (toolView.frame.origin.y == 80) {
+//             toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
+//         }else{
+//             toolFrame.origin.y = 80;
+//             toolFrame.size.height -= 80;
+//         }
+//         [UIView animateWithDuration:0.5 animations:^{
+//             toolView.frame = toolFrame;
+//         }];
+         CGRect toolFrame = self.view.bounds;
+         if (sender.selected) {
+             toolFrame.origin.y = toolFrame.size.height - safeAreaHeight;
+         }else{
+             //            toolFrame.origin.y = 80;
+             //            toolFrame.size.height -= 80;
+         }
+         toolView.frame = toolFrame;
+         sender.selected = !sender.selected;
+         [toolView setNeedsUpdateConstraints];
      }else{
          UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"交卷" message:@"请确认所有试题做完后在交卷！！！" preferredStyle:UIAlertControllerStyleAlert];
          __weak YSExaminationViewController *weakSelf = self;

@@ -91,6 +91,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];
+    vc.title = @"错题回顾";
     vc.delegate = self;
     vc.index = indexPath.row;
     vc.itemType = RightItemTypeNone;

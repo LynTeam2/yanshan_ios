@@ -8,16 +8,30 @@
 
 #import "YSExamToolView.h"
 
+CGFloat headerHeight = 40.f;
+
 @implementation YSExamToolView
 
 {
     UICollectionView *examView;
     UIView *headerView;
+    ExamToolViewType toolViewType;
+    UIView *backgroundView;
+    CGFloat topSpace;
 }
 - (instancetype)init {
     self = [super init];
     if (self) {
         
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame withType:(ExamToolViewType)viewType {
+    self = [self initWithFrame:frame];
+    if (self) {
+        toolViewType = viewType;
+        topSpace = frame.size.height - headerHeight;
     }
     return self;
 }
@@ -31,6 +45,13 @@
 }
 
 - (void)initSubViews {
+    
+    backgroundView = [[UIView alloc] init];
+    backgroundView.hidden = YES;
+    backgroundView.backgroundColor = kRGBColor(0, 0, 0, 0.5);
+    [self addSubview:backgroundView];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancel:)];
+    [backgroundView addGestureRecognizer:tap];
     
     headerView = [[UIView alloc] init];
     headerView.backgroundColor = [UIColor whiteColor];
@@ -52,9 +73,9 @@
     [icon4Btn setImage:[UIImage imageNamed:@"currnetItem"] forState:UIControlStateNormal];
     [headerView addSubview:icon4Btn];
     
-    title1Btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [title1Btn setTitle:@"交卷" forState:UIControlStateNormal];
-    [headerView addSubview:title1Btn];
+    commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [commitBtn setTitle:@"交卷" forState:UIControlStateNormal];
+    [headerView addSubview:commitBtn];
     
     rightItemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightItemBtn setTitle:@"0" forState:UIControlStateNormal];
@@ -70,7 +91,8 @@
     
     icon1Btn.tag = kJiaoJuanTag;
     icon4Btn.tag = kTiMuTag;
-    [title1Btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    [commitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [wrongItemBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [rightItemBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [currentItemBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -86,14 +108,15 @@
     [examView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
 }
 
-
 - (void)layoutSubviews {
-    
+    [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
     [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self);
+        make.top.equalTo(self).offset(topSpace);
         make.left.equalTo(self);
         make.right.equalTo(self);
-        make.height.mas_equalTo(40);
+        make.height.mas_equalTo(headerHeight);
     }];
     
     [icon1Btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -101,6 +124,7 @@
         make.centerY.equalTo(headerView);
         make.size.mas_equalTo(CGSizeMake(20, 20));
     }];
+    
     [icon2Btn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headerView).offset(155);
         make.centerY.equalTo(headerView);
@@ -117,7 +141,7 @@
         make.size.mas_equalTo(CGSizeMake(20, 20));
     }];
     
-    [title1Btn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(icon1Btn.mas_right).offset(0);
         make.centerY.equalTo(headerView);
         make.size.mas_equalTo(CGSizeMake(60, 20));
@@ -138,10 +162,44 @@
         make.size.mas_equalTo(CGSizeMake(60, 20));
     }];
     
-    UIEdgeInsets insets = UIEdgeInsetsMake(40, 0, 0, 0);
+    //    UIEdgeInsets insets = UIEdgeInsetsMake(40, 0, 0, 0);
     [examView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self).insets(insets);
+        make.top.equalTo(headerView.mas_bottom);
+        make.left.equalTo(self);
+        make.right.equalTo(self);
+        make.bottom.equalTo(self);
     }];
+    if (toolViewType == ExamToolViewTypeWrongItem) {
+        icon1Btn.hidden = YES;
+        commitBtn.hidden = YES;
+    }
+}
+
+- (void)updateConstraints {
+   
+    if (!icon4Btn.selected) {
+        topSpace = 0;
+        backgroundView.hidden = YES;
+    }else{
+        topSpace = 80;
+        backgroundView.hidden = NO;
+    }
+
+    [headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).offset(topSpace);
+        make.left.equalTo(self);
+        make.right.equalTo(self);
+        make.height.mas_equalTo(headerHeight);
+    }];
+    
+    [examView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(headerView.mas_bottom);
+        make.left.equalTo(self);
+        make.right.equalTo(self);
+        make.bottom.equalTo(self);
+    }];
+
+    [super updateConstraints];
 }
 
 - (void)updateitemCountWith:(NSInteger)count isRight:(BOOL)right {
@@ -150,10 +208,28 @@
     }
 }
 
+- (void)cancel:(UIButton *)sender {
+    icon4Btn.selected = NO;
+    [self showItems:icon4Btn];
+}
+
+- (void)showItems:(UIButton *)sender {
+    CGRect frame = self.frame;
+//    if (topSpace == 80) {
+        frame.origin.y = frame.size.height - headerHeight;
+    icon4Btn.selected = NO;
+//    }else{
+//        topSpace = 80;
+//        backgroundView.hidden = NO;
+//    }
+    self.frame = frame;
+    [self setNeedsUpdateConstraints];
+}
+
 - (void)addtarget:(id)target method:(SEL)action {
     [icon1Btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [icon4Btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    [title1Btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [commitBtn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)currentItemIndex:(NSInteger)index {
