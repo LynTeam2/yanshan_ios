@@ -59,6 +59,7 @@ static NSString *examplist = @"exam.plist";
 }
 
 - (NSArray *)getAllExams {
+    passCount = 0;
     NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:examplist andDocumentName:nil];
     NSArray *olderExams = [NSArray arrayWithContentsOfFile:filePath];
     NSMutableArray *mArr = [NSMutableArray arrayWithCapacity:0];

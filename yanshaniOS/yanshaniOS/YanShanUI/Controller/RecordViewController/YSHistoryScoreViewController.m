@@ -61,7 +61,7 @@
     circleLabel.numberOfLines = 0;
     circleLabel.layer.cornerRadius = 75;
     circleLabel.layer.masksToBounds = YES;
-    circleLabel.layer.borderWidth = 5;
+    circleLabel.layer.borderWidth = kLineHeight;
     circleLabel.layer.borderColor = kRandomColor.CGColor;
     circleLabel.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:circleLabel];
@@ -183,6 +183,7 @@
     label.frame = CGRectMake(-0.5, 0, self.view.frame.size.width+0.5, 44);
     label.layer.borderWidth = 0.5;
     label.layer.borderColor = [UIColor grayColor].CGColor;
+    label.backgroundColor = [UIColor whiteColor];
     return label;
 }
 
