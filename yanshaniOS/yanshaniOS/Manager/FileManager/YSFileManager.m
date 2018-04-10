@@ -98,4 +98,16 @@ static YSFileManager *fileManager = nil;
     return YES;
 }
 
+- (NSString *)createFileAtDocumentDirectoryPath:(NSString *)fileName {
+    if ([fileName isEmptyString]) {
+        return nil;
+    }
+    NSString *filePath = [self getDocumentDirectoryPath];
+    NSString *fullFilePath = [filePath stringByAppendingPathComponent:fileName];
+    if(![[NSFileManager defaultManager] fileExistsAtPath:fullFilePath]){
+        [[NSFileManager defaultManager] createFileAtPath:fullFilePath contents:nil attributes:nil];
+    }
+    return fullFilePath;
+}
+
 @end

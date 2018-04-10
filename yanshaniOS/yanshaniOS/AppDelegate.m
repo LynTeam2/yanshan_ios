@@ -20,6 +20,7 @@
 //    NSString *
     [[UIWebView alloc] init];
     [[YSFileManager sharedFileManager] zipDoUpdate];
+    [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile];
 //    [[UINavigationBar appearance] setBarTintColor:kBlueColor];
     [[UINavigationBar appearance] setBackgroundImage:[YSCommonHelper imageFromColor:kBlueColor withSize:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];

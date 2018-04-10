@@ -25,5 +25,9 @@
 #define kZipFileUrl            @"http://39.104.118.75/api/upgrade"
 
 
+#pragma mark - file name
+
+#define kQianDaoFile           @"qiandao.plist"
+
 
 #endif /* CommonMacro_h */

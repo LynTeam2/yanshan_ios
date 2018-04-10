@@ -75,18 +75,22 @@ CGFloat headerHeight = 40.f;
     
     commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [commitBtn setTitle:@"交卷" forState:UIControlStateNormal];
+    commitBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [headerView addSubview:commitBtn];
     
     rightItemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightItemBtn setTitle:@"0" forState:UIControlStateNormal];
+    rightItemBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [headerView addSubview:rightItemBtn];
     
     wrongItemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [wrongItemBtn setTitle:@"0" forState:UIControlStateNormal];
+    wrongItemBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [headerView addSubview:wrongItemBtn];
     
     currentItemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [currentItemBtn setTitle:@"0/0" forState:UIControlStateNormal];
+    currentItemBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [headerView addSubview:currentItemBtn];
     
     icon1Btn.tag = kJiaoJuanTag;
@@ -109,9 +113,11 @@ CGFloat headerHeight = 40.f;
 }
 
 - (void)layoutSubviews {
+    CGFloat space = 0;
     [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
+    
     [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(topSpace);
         make.left.equalTo(self);
@@ -124,42 +130,44 @@ CGFloat headerHeight = 40.f;
         make.centerY.equalTo(headerView);
         make.size.mas_equalTo(CGSizeMake(20, 20));
     }];
-    
-    [icon2Btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerView).offset(155);
-        make.centerY.equalTo(headerView);
-        make.size.mas_equalTo(CGSizeMake(20, 20));
-    }];
-    [icon3Btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerView).offset(220);
-        make.centerY.equalTo(headerView);
-        make.size.mas_equalTo(CGSizeMake(20, 20));
-    }];
-    [icon4Btn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(headerView).offset(-80);
-        make.centerY.equalTo(headerView);
-        make.size.mas_equalTo(CGSizeMake(20, 20));
-    }];
-    
     [commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(icon1Btn.mas_right).offset(0);
         make.centerY.equalTo(headerView);
         make.size.mas_equalTo(CGSizeMake(60, 20));
     }];
+    
+    [icon2Btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(rightItemBtn.mas_left).offset(0);
+        make.centerY.equalTo(headerView);
+        make.size.mas_equalTo(CGSizeMake(20, 20));
+    }];
     [rightItemBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(icon2Btn.mas_right).offset(0);
+        make.right.equalTo(icon3Btn.mas_left).offset(0);
         make.centerY.equalTo(headerView);
         make.size.mas_equalTo(CGSizeMake(40, 20));
     }];
+    
+    [icon3Btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(wrongItemBtn.mas_left).offset(space);
+        make.centerY.equalTo(headerView);
+        make.size.mas_equalTo(CGSizeMake(20, 20));
+    }];
     [wrongItemBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(icon3Btn.mas_right).offset(0);
+        make.right.equalTo(icon4Btn.mas_left).offset(0);
         make.centerY.equalTo(headerView);
         make.size.mas_equalTo(CGSizeMake(40, 20));
+    }];
+    
+    [icon4Btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(currentItemBtn.mas_left).offset(0);
+        make.centerY.equalTo(headerView);
+        make.size.mas_equalTo(CGSizeMake(20, 20));
     }];
     [currentItemBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(icon4Btn.mas_right).offset(0);
+        make.right.equalTo(headerView).offset(-20);
         make.centerY.equalTo(headerView);
-        make.size.mas_equalTo(CGSizeMake(60, 20));
+        make.size.mas_equalTo(CGSizeMake(50, 20));
     }];
     
     //    UIEdgeInsets insets = UIEdgeInsetsMake(40, 0, 0, 0);
@@ -173,6 +181,15 @@ CGFloat headerHeight = 40.f;
         icon1Btn.hidden = YES;
         commitBtn.hidden = YES;
     }
+//    icon1Btn.backgroundColor = kRandomColor;
+//    icon2Btn.backgroundColor = kRandomColor;
+//    icon3Btn.backgroundColor = kRandomColor;
+//    icon4Btn.backgroundColor = kRandomColor;
+//
+//    commitBtn.backgroundColor = kRandomColor;
+//    rightItemBtn.backgroundColor = kRandomColor;
+//    wrongItemBtn.backgroundColor = kRandomColor;
+//    currentItemBtn.backgroundColor = kRandomColor;
 }
 
 - (void)updateConstraints {

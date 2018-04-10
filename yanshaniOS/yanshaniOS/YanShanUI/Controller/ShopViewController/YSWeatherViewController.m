@@ -227,6 +227,13 @@
             make.width.mas_equalTo(bounds.size.width-40);
             make.height.mas_equalTo(20);
         }];
+        [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(self.view.mas_centerY).offset(70);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_lessThanOrEqualTo(220);
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom).offset(-20);
+        }];
     }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.mas_topLayoutGuide).offset(10);
@@ -239,6 +246,13 @@
             make.centerX.equalTo(self.view.mas_centerX);
             make.width.mas_equalTo(bounds.size.width-40);
             make.height.mas_equalTo(20);
+        }];
+        [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(self.view.mas_centerY).offset(70);
+            make.width.mas_equalTo(bounds.size.width-40);
+            make.height.mas_lessThanOrEqualTo(200);
+            make.bottom.equalTo(self.mas_bottomLayoutGuideBottom).offset(-20);
         }];
     }
     [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -275,14 +289,6 @@
             make.height.mas_equalTo(100);
         }];
     }
-    
-    [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view.mas_centerY).offset(70);
-        make.width.mas_equalTo(bounds.size.width-40);
-        make.height.mas_equalTo(220);
-    }];
-    
 }
 
 @end

@@ -27,6 +27,7 @@
     NSInteger rightCount;
     NSInteger timeCount;
     CGFloat safeAreaHeight;
+    NSDictionary *roleDic;
 }
 @end
 
@@ -89,11 +90,28 @@
     examDic = [[NSArray arrayWithArray:dic[@"exams"]] lastObject];
     NSString *examDuration = [NSString stringWithFormat:@"%@分钟",examDic[@"examDuration"]];
     NSString *standard = [NSString stringWithFormat:@"%@",examDic[@"standard"]];
+
+    NSString *Str = examDic[@"role"];
+    Str = [Str stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
+    NSData *Data = [Str dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    roleDic = [NSJSONSerialization JSONObjectWithData:Data options:NSJSONReadingMutableContainers error:&err];
+    
+    NSString *itemCount = @"0";
+    if (roleDic) {
+        NSDictionary *questionTypeDic = roleDic[@"questionType"];
+        if (questionTypeDic) {
+            NSString *tf = questionTypeDic[@"tf"] ? questionTypeDic[@"tf"] : @"0";
+            NSString *sc = questionTypeDic[@"sc"] ? questionTypeDic[@"sc"] : @"0";
+            NSString *mc = questionTypeDic[@"mc"] ? questionTypeDic[@"mc"] : @"0";
+            itemCount = [NSString stringWithFormat:@"%ld",([tf integerValue]+[sc integerValue]+[mc integerValue])];
+        }
+    }
     NSArray *titles = @[
   @{@"title1":@"考试类型",@"title2":examDic[@"examType"]},
   @{@"title1":@"考试时间",@"title2":examDuration},
   @{@"title1":@"合格标准",@"title2":standard},
-  @{@"title1":@"出题标准",@"title2":standard}];
+  @{@"title1":@"出题标准",@"title2":itemCount}];
     
     for (int i = 0; i < titles.count; i++) {
         NSDictionary *dic = titles[i];
@@ -190,11 +208,6 @@
             [testItems addObjectsFromArray:mcArrary];
         }
     }
-    NSString *Str = examDic[@"role"];
-    Str = [Str stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
-    NSData *Data = [Str dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    NSDictionary *roleDic = [NSJSONSerialization JSONObjectWithData:Data options:NSJSONReadingMutableContainers error:&err];
     NSMutableDictionary *ajTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"ajType"]];
     NSMutableDictionary *questionTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"questionType"]];
     NSMutableDictionary *difficultyDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"difficulty"]];

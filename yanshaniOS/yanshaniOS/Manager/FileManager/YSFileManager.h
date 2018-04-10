@@ -30,4 +30,7 @@
 
 - (BOOL)documentPathIsExecutableFile:(NSString *)fileName;
 
+- (NSString *)createFileAtDocumentDirectoryPath:(NSString *)fileName;
+
+
 @end

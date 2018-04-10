@@ -129,6 +129,16 @@
 }
 
 - (NSArray *)allWrongItems {
+    if (wrongItems.count) {
+        return wrongItems;
+    }
+    [wrongItems removeAllObjects];
+    for (YSCourseItemModel *m in _items) {
+        if ([m.doROW isEqualToString:@"y"]) {
+            continue;
+        }
+        [wrongItems addObject:m];
+    }
     return wrongItems;
 }
 - (void)saveRightItem:(YSCourseItemModel *)model {

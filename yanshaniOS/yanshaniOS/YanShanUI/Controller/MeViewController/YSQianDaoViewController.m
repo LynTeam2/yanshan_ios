@@ -8,15 +8,19 @@
 
 #import "YSQianDaoViewController.h"
 
-static NSString *qiandao = @"qiandao";
-
 @interface YSQianDaoViewController ()
+
 @property (strong, nonatomic) IBOutlet UILabel *qiandaoLabel;
 
 @end
 
 @implementation YSQianDaoViewController
-
+{
+    UIButton *qiandaoBtn;
+    UIButton *todayBtn;
+    NSMutableDictionary *qiandaoDic;
+    NSString *qiandaoKey;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -31,19 +35,28 @@ static NSString *qiandao = @"qiandao";
 #pragma mark - config view controller
 
 - (void)configViewControllerParameter {
-    
+    NSString *path = [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile];
+    qiandaoDic = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+    if (!qiandaoDic) {
+        qiandaoDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    }
+    qiandaoKey = [YSCommonHelper timeFromNowWithTimeInterval:0 dateFormat:@"yyyyMMdd"];
 }
 
 - (void)configView {
     
-    NSString *btnTitle = [[NSUserDefaults standardUserDefaults] objectForKey:qiandao] ? @"已签到": @"签到";
-    UIButton *qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [qiandaoBtn setTitle:btnTitle forState:UIControlStateNormal];
+    NSString *btnTitle = @"签到";
+  
+    qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [qiandaoBtn setBackgroundImage:[UIImage imageNamed:@"qiandaobgicon"] forState:UIControlStateNormal];
     [qiandaoBtn addTarget:self action:@selector(qiandao:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:qiandaoBtn];
-    qiandaoBtn.enabled = [[NSUserDefaults standardUserDefaults] objectForKey:qiandao] ? NO : YES;
-    
+    if (qiandaoDic) {
+        btnTitle = [qiandaoDic objectForKey:qiandaoKey] ? @"已签到": @"签到";
+        qiandaoBtn.enabled = [qiandaoDic objectForKey:qiandaoKey] ? NO : YES;
+    }
+    [qiandaoBtn setTitle:btnTitle forState:UIControlStateNormal];
+
     [qiandaoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.top.equalTo(self.view).offset(20);
@@ -117,18 +130,17 @@ static NSString *qiandao = @"qiandao";
 #pragma mark - UIButton action
 
 - (IBAction)userQiandao:(UIButton *)sender {
-//    if ([[sender currentTitle] isEqualToString:@"签到"]) {
-//        [sender setTitle:@"已签到" forState:UIControlStateNormal];
-//    }else{
-//        [sender setTitle:@"签到" forState:UIControlStateNormal];
-//    }
+    [sender setTitle:@"签到" forState:UIControlStateNormal];
+    [self qiandao:qiandaoBtn];
 }
 
 - (void)qiandao:(UIButton *)sender {
+    [todayBtn setTitle:@"已签到" forState:UIControlStateNormal];
     [sender setTitle:@"已签到" forState:UIControlStateNormal];
     sender.enabled = NO;
-    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:qiandao];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [qiandaoDic setObject:@"1" forKey:qiandaoKey];
+    [qiandaoDic writeToFile:[[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile] atomically:YES];
 }
 
 #pragma mark - custom view
@@ -155,10 +167,18 @@ static NSString *qiandao = @"qiandao";
     dayLabel.textAlignment = NSTextAlignmentCenter;
     [dateBGV addSubview:dayLabel];
     
+    NSString *date = [YSCommonHelper timeFromNowWithTimeInterval:(60*60*24*interval) dateFormat:@"yyyyMMdd"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-    [button setTitle:@"已结束" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(userQiandao:) forControlEvents:UIControlEventTouchUpInside];
+    if (interval == 0 && ![qiandaoDic objectForKey:qiandaoKey]) {
+        todayBtn = button;
+        [button setTitle:@"签到" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(userQiandao:) forControlEvents:UIControlEventTouchUpInside];
+    }else if([qiandaoDic objectForKey:date]){
+        [button setTitle:@"已签到" forState:UIControlStateNormal];
+    }else{
+        [button setTitle:@"未签到" forState:UIControlStateNormal];
+    }
     button.frame = CGRectMake(15, CGRectGetMaxY(dayLabel.frame)+15, frame.size.width-30, 25);
     button.layer.cornerRadius = button.frame.size.height/2;
     button.layer.masksToBounds = YES;
