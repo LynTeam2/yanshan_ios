@@ -8,8 +8,12 @@
 
 #import "YSBaseViewController.h"
 #import "YSBaseView.h"
+#import "YSExamModel.h"
 
 @interface YSExaminationViewController : YSBaseViewController
+
+@property (nonatomic, strong) YSExamModel *examModel;
+
 
 @end
 

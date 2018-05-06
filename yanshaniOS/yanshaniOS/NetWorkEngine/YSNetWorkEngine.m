@@ -60,7 +60,9 @@ static YSNetWorkEngine *netWorkEngine = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:@"http://39.104.118.75/login" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0|1 error:nil];
-        handler(nil,dic);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            handler(nil,dic);
+        });
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败--%@",error);
         handler(error,nil);
@@ -100,6 +102,70 @@ static YSNetWorkEngine *netWorkEngine = nil;
     NSDictionary *parameters = @{@"username":userName,@"password":pw};
     [[YSNetWorkEngine sharedInstance] getRequestWithURLString:@"" parameters:parameters responseHandler:^(NSError *error, NSDictionary *data) {
         handler(error,data);
+    }];
+}
+
+- (void)modifyUserInformationWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler {
+    if (!param) {
+        return;
+    }
+    NSString *path = [NSString stringWithFormat:@"http://39.104.118.75/api/user/%@",param.allKeys[0]];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"PUT";
+
+    NSData *data = [NSJSONSerialization dataWithJSONObject:param options:0|1 error:nil];
+    request.HTTPBody = data;
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:1|0 error:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            handler(error,dic);
+        });
+    }] resume];
+}
+
+- (void)modifyUserHeaderWithImage:(UIImage *)headerIcon responseHandler:(NetWorkResponse)handler {
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:@"http://39.104.118.75/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSData *data = UIImageJPEGRepresentation(headerIcon, 1.0);
+        [formData appendPartWithFileData:data name:@"file" fileName:@"filename.jpg" mimeType:@"image/jpeg"];
+    } error:nil];
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURLSessionUploadTask *uploadTask;
+    uploadTask = [manager
+                  uploadTaskWithStreamedRequest:request
+                  progress:^(NSProgress * _Nonnull uploadProgress) {
+
+                  }
+                  completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                      if (error) {
+                          handler(error,nil);
+                      } else if([responseObject isKindOfClass:[NSDictionary class]]) {
+                          NSDictionary *dic = (NSDictionary *)responseObject;
+                          if (dic[@"results"]) {
+                              NSDictionary *resultsDic = dic[@"results"];
+                              [YSUserModel shareInstance].userIcon = resultsDic[@"path"];
+                              [self modifyUserInformationWithParam:@{@"icon":resultsDic[@"path"]} responseHandler:^(NSError *error, id data) {
+                                  handler(error,data);
+                              }];
+                          }
+                      }
+                  }];
+    
+    [uploadTask resume];
+}
+
+- (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:@"http://39.104.118.75/api/law" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        handler(nil,responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"请求失败--%@",error);
+        handler(error,nil);
     }];
 }
 

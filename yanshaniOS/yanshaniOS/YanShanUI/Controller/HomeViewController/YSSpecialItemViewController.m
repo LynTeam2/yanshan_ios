@@ -18,6 +18,7 @@
     UICollectionView *_collectionView;
     NSArray *cellTitleArray;
     NSArray *sectionTitleArray;
+    NSMutableDictionary *catogaryDic;
 }
 
 @end
@@ -60,10 +61,11 @@
 }
 
 - (void)configViewControllerParameter {
-    cellTitleArray = @[@[@"危险化学品",@"企业行业",@"运输",@"建筑施工",@"人员密集场所",@"特种设备",@"消防"],
+    cellTitleArray = @[@[@"危险化学品",@"工业企业",@"交通运输",@"建筑施工",@"人员密集场所",@"特种设备",@"消防"],
                    @[@"单选",@"多选",@"判断"],
                    @[@"初级",@"中级",@"高级"]];
     sectionTitleArray = @[@"类型一",@"类型二",@"类型三"];
+    catogaryDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
 
@@ -107,7 +109,12 @@
     if (indexPath.section == 0 || indexPath.section == 2) {
         [self sectionCourseItems:0];
         YSCourseDetailViewController *classVC = [[YSCourseDetailViewController alloc] init];
-        [classVC setCoursesData:_allArray];
+        NSArray *keys = [cellTitleArray objectAtIndex:indexPath.section];
+        NSString *key = [keys objectAtIndex:indexPath.row];
+        if (indexPath.section == 2) {
+            key = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+        }
+        [classVC setCoursesData:catogaryDic[key]];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:classVC animated:YES];
     }else if(indexPath.section == 1){
@@ -128,6 +135,23 @@
         NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:arr[i] atDocumentName:@"question"];
         if ([dic objectForKey:@"questions"]) {
            NSArray *classesArray = [YSCourseItemModel arrayOfModelsFromDictionaries:dic[@"questions"] error:nil];
+            for (YSCourseItemModel *model in classesArray) {
+                
+                if (catogaryDic[model.ajType]) {
+                    NSMutableArray *arr = [NSMutableArray arrayWithArray:catogaryDic[model.ajType]];
+                    [arr addObject:model];
+                    [catogaryDic setObject:arr forKey:model.ajType];
+                }else{
+                    [catogaryDic setObject:@[model] forKey:model.ajType];
+                }
+                if (catogaryDic[model.difficulty]) {
+                    NSMutableArray *arr = [NSMutableArray arrayWithArray:catogaryDic[model.difficulty]];
+                    [arr addObject:model];
+                    [catogaryDic setObject:arr forKey:model.difficulty];
+                }else{
+                    [catogaryDic setObject:@[model] forKey:model.difficulty];
+                }
+            }
             if (classesArray.count) {
                 [_allArray addObjectsFromArray:classesArray];
             }

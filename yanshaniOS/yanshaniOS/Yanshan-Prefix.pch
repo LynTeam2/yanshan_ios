@@ -16,5 +16,6 @@
 #import "BaseView-Header.h"
 #import "Header-Header.h"
 #import "Toast+UIView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #endif
 #endif /* Yanshan_Prefix_pch */

@@ -8,8 +8,9 @@
 
 #import "YSUserSettingViewController.h"
 #import "UITableViewCell+YSCustomCell.h"
+#import "YSUserInformationEditorViewController.h"
 
-@interface YSUserSettingViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface YSUserSettingViewController ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate>
 {
     YSBaseTableView *_userSettingTableView;
     NSArray *_settings;
@@ -18,6 +19,11 @@
 @end
 
 @implementation YSUserSettingViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [_userSettingTableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -89,8 +95,9 @@
         cell.accessoryView = accessView;
         cell.accessoryType = UITableViewCellAccessoryNone;
         [cell addSeparatorLineWithLeftSpace:20];
-        [self addCustomViewForCell:cell atIndexPath:indexPath];
     }
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self addCustomViewForCell:cell atIndexPath:indexPath];
     cell.textLabel.text = _settings[indexPath.row];
     return cell;
 }
@@ -99,7 +106,7 @@
     switch (indexPath.row) {
         case 0:{
             UIImageView *icon = [[UIImageView alloc] init];
-            icon.image = [UIImage imageNamed:@"headericon"];
+            [icon sd_setImageWithURL:[NSURL URLWithString:[YSUserModel shareInstance].userIcon] placeholderImage:[UIImage imageNamed:@"headericon"]];
             icon.layer.cornerRadius = 15;
             icon.layer.masksToBounds = YES;
             [cell.contentView addSubview:icon];
@@ -114,7 +121,7 @@
             UILabel *label = [[UILabel alloc] init];
             label.textAlignment = NSTextAlignmentRight;
             label.textColor = [UIColor grayColor];
-            label.text = @"闪乱神乐";
+            label.text = [YSUserModel shareInstance].nickName;
             [cell.contentView addSubview:label];
             [label mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(cell.contentView).offset(-20);
@@ -130,7 +137,39 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if(1 == indexPath.row) {
+        YSUserInformationEditorViewController *edVC = [[YSUserInformationEditorViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:edVC animated:YES];
+    }else if (0 == indexPath.row){
+        UIImagePickerController *imPC = [[UIImagePickerController alloc] init];
+        imPC.delegate = self;
+        [self presentViewController:imPC animated:YES completion:^{
+            
+        }];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    NSLog(@"%@",info);
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    if ([info objectForKey:@"UIImagePickerControllerOriginalImage"]) {
+        UIImage *img = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [[YSNetWorkEngine sharedInstance] modifyUserHeaderWithImage:img responseHandler:^(NSError *error, id data) {
+            if (nil == error) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [self.view makeToast:@"头像修改成功" duration:2.0 position:@"center"];
+            }
+            [_userSettingTableView reloadData];
+        }];
+        
+    }
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [self.view makeToast:@"头像修改失败" duration:2.0 position:@"center"];
 }
 
 #pragma mark - Button action
@@ -144,14 +183,5 @@
     }];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

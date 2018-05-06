@@ -19,10 +19,15 @@
     YSBaseTableView *_loginView;
     NSArray *titles;
     NSArray *icons;
+    UILabel *balanceLabel;
 }
 @end
 
 @implementation YSMeViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [_loginView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,6 +59,13 @@
     }];
 }
 
+- (void)updateUserBalanceInformation {
+    
+    NSInteger beanCount = [YSUserModel shareInstance].beanCount;
+    NSString *balance = [NSString stringWithFormat:@"财富值:%ld安全豆",beanCount];
+    balanceLabel.text = balance;
+}
+
 #pragma mark - UITableView delegate - datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -69,6 +81,7 @@
     if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self initCell:cell indexPath:indexPath];
     return cell;
 }
@@ -118,17 +131,21 @@
     
     UILabel *nickNameLabel = [[UILabel alloc] init];
     nickNameLabel.textAlignment = NSTextAlignmentCenter;
-    nickNameLabel.text = [YSUserModel shareInstance].userName;
+    nickNameLabel.text = [YSUserModel shareInstance].nickName;
     [headerView addSubview:nickNameLabel];
     
-    UILabel *balanceLabel = [[UILabel alloc] init];
+    balanceLabel = [[UILabel alloc] init];
     balanceLabel.textAlignment = NSTextAlignmentCenter;
-//    balanceLabel.text = @"财富值:100安全豆";
     [headerView addSubview:balanceLabel];
+    
+    [self updateUserBalanceInformation];
     
     UIView *line = [[UIView alloc] init];
     line.backgroundColor = kLightGray;
     [headerView addSubview:line];
+    
+    headerIcon.layer.cornerRadius = 40;
+    headerIcon.layer.masksToBounds = YES;
     
     [headerIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headerView);
@@ -167,7 +184,11 @@
         }
             break;
         case 1:{
+            __weak YSMeViewController *weakSelf = self;
             YSQianDaoViewController *qiandaoVC = [[YSQianDaoViewController alloc] init];
+            qiandaoVC.QDBlock = ^(BOOL success) {
+                [weakSelf updateUserBalanceInformation];
+            };
             [self.navigationController pushViewController:qiandaoVC animated:YES];
         }
             break;

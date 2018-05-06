@@ -8,6 +8,11 @@
 
 #import "YSBaseViewController.h"
 
+typedef void(^QianDaoBlock)(BOOL success);
+
 @interface YSQianDaoViewController : YSBaseViewController
+
+@property (nonatomic, copy) QianDaoBlock QDBlock;
+
 
 @end

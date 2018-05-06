@@ -9,6 +9,7 @@
 #import "YSNewsViewCell.h"
 
 #import "YSCourseCategoryModel.h"
+#import "YSLawModel.h"
 
 @implementation YSNewsViewCell
 
@@ -99,13 +100,13 @@
 
 - (void)updateClassInformation:(id)model {
     _data = model;
-    NSArray *images = @[@"dianyuan",@"gongyepin",@"jiaotongyunshu",@"renyuanmiji",@"shigongjihua"];
-    NSInteger index = arc4random() % images.count;
     if ([model isKindOfClass:[NSDictionary class]]) {
         _titleLable.text = [model objectForKey:@"title"];
         _subTitleLabel.text = [model objectForKey:@"introduction"];
+        if ([model objectForKey:@"imagePath"]) {
+            [_coverImgView sd_setImageWithURL:[NSURL URLWithString:[model objectForKey:@"imagePath"]] placeholderImage:[UIImage imageNamed:@"dianyuan"]];
+        }
     }
-    _coverImgView.image = [UIImage imageNamed:images[index]];
 }
 
 

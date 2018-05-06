@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSString *userIcon;
 @property (nonatomic, strong) NSString *userId;
 @property (nonatomic, strong) NSString *userRealName;
+@property (nonatomic, strong) NSString *nickName;
+@property (nonatomic, assign) NSInteger beanCount;
 
 
 + (instancetype)shareInstance;

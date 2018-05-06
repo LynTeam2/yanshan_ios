@@ -24,4 +24,10 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
 
 - (void)userLoginWithUseName:(NSString *)userName password:(NSString *)pw responseHandler:(NetWorkResponse)handler;
 
+- (void)modifyUserInformationWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler;
+
+- (void)modifyUserHeaderWithImage:(UIImage *)headerIcon responseHandler:(NetWorkResponse)handler;
+
+- (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler;
+
 @end

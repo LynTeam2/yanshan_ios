@@ -8,6 +8,8 @@
 
 #import "YSClassCatogaryCell.h"
 #import "YSCourseCategoryModel.h"
+#import "YSExamModel.h"
+#import "YSLawModel.h"
 
 @implementation YSClassCatogaryCell
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -69,6 +71,17 @@
         _titleLable.text = obj.categoryName;
         _subTitleLabel.text = obj.introduction;
         return;
+    }else if ([model isKindOfClass:[YSExamModel class]]) {
+        YSExamModel *obj = (YSExamModel *)model;
+        _coverImgView.image = nil;
+        _titleLable.text = obj.examName;
+        _subTitleLabel.text = obj.introduction;
+        return;
+    }else if ([model isKindOfClass:[YSLawModel class]]) {
+        YSLawModel *law = (YSLawModel *)model;
+        _titleLable.text = law.lawName;
+        _subTitleLabel.text = law.createTime;
+        [_coverImgView sd_setImageWithURL:[NSURL URLWithString:law.iconPath] placeholderImage:[UIImage imageNamed:@"dianyuan"]];
     }
 }
 

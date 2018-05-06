@@ -20,6 +20,8 @@
 #define kLightGray             kRGBColor(231,231,231,1)
 #define kLineHeight            0.5
 
+#define kBalaceKey             @"anquandou"
+
 #pragma mark - url macro
 
 #define kZipFileUrl            @"http://39.104.118.75/api/upgrade"

@@ -22,4 +22,6 @@
 
 @property (nonatomic, weak) id<YSHomeReusableViewDelegate>delegate;
 
+- (void)updateBanners:(NSArray *)banners;
+
 @end

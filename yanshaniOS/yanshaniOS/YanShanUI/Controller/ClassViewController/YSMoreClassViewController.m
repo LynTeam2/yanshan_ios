@@ -10,7 +10,11 @@
 
 #import "YSClassDetailViewController.h"
 
+#import "YSExaminationViewController.h"
+
 #import "YSCourseCategoryModel.h"
+
+#import "YSExamModel.h"
 
 #import "YSClassCatogaryCell.h"
 
@@ -64,14 +68,22 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    YSCourseCategoryModel *model = _categoryCoursesArray[indexPath.row];
-    YSClassDetailViewController *detailVC = [[YSClassDetailViewController alloc] init];
-    if (![model.categoryName isEmptyString]) {
-        detailVC.title = model.categoryName;
+    id data = _categoryCoursesArray[indexPath.row];
+    if ([data isKindOfClass:[YSCourseCategoryModel class]]) {
+        YSCourseCategoryModel *model = (YSCourseCategoryModel *)data;
+        YSClassDetailViewController *detailVC = [[YSClassDetailViewController alloc] init];
+        if (![model.categoryName isEmptyString]) {
+            detailVC.title = model.categoryName;
+        }
+        detailVC.jsonFileName = [NSString stringWithFormat:@"%@.json",model.jsonName];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }else if ([data isKindOfClass:[YSExamModel class]]) {
+        YSExaminationViewController *examinationVC = [[YSExaminationViewController alloc] init];
+        examinationVC.examModel = (YSExamModel *)data;
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:examinationVC animated:YES];
     }
-    detailVC.jsonFileName = [NSString stringWithFormat:@"%@.json",model.jsonName];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

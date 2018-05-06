@@ -23,6 +23,8 @@ static YSUserModel *model = nil;
     _userIcon = [data objectForKey:@"icon"];
     _userName = [data objectForKey:@"userName"];
     _userRealName = [data objectForKey:@"realName"];
+    _nickName = data[@"nickname"];
+    _beanCount = [data[@"beanCount"] integerValue];
 }
 
 @end

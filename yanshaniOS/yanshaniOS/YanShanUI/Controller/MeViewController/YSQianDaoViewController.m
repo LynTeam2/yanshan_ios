@@ -141,6 +141,16 @@
     
     [qiandaoDic setObject:@"1" forKey:qiandaoKey];
     [qiandaoDic writeToFile:[[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile] atomically:YES];
+    
+    [[YSNetWorkEngine sharedInstance] modifyUserInformationWithParam:@{@"beanCount":@10} responseHandler:^(NSError *error, id data) {
+        if (data) {
+            [YSUserModel shareInstance].beanCount += 10;
+            if (_QDBlock) {
+                _QDBlock(YES);
+            }
+        }
+    }];
+    
 }
 
 #pragma mark - custom view

@@ -17,13 +17,17 @@
 #import "YSSpecialItemViewController.h"
 #import "YSNewsViewController.h"
 #import "YSCourseDetailViewController.h"
+#import "YSLawViewController.h"
+
 #import "YSCourseModel.h"
 #import "YSCourseCategoryModel.h"
+#import "YSExamModel.h"
 
 @interface YSHomeViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,YSHomeReusableViewDelegate>
 {
     YSBaseCollectionView *_collectionView;
     NSArray *lastestCourses;
+    NSArray *banners;
     NSMutableArray *newsList;
     UICollectionViewFlowLayout *flowLayout;
 }
@@ -97,6 +101,7 @@
 - (void)configViewControllerParameter {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unzipFileSuccess:) name:@"unzipFileSuccess" object:nil];
     [self handleZipFileData];
+    [self handleBannerData];
 }
 
 - (void)unzipFileSuccess:(NSNotification *)noti {
@@ -110,6 +115,14 @@
     if ([jsonDic objectForKey:@"courses"]) {
         NSArray *courses = [jsonDic objectForKey:@"courses"];
         lastestCourses = [NSArray arrayWithArray:[YSCourseModel arrayOfModelsFromDictionaries:courses error:nil]];
+    }
+}
+
+- (void)handleBannerData {
+    NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"banner.json" atDocumentName:@"banner"];
+    if (dic) {
+        banners = [dic objectForKey:@"banners"];
+        [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     }
 }
 
@@ -213,6 +226,7 @@
             case 0: {
                 YSHomeReusableView *reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"homeHeader" forIndexPath:indexPath];
                 reusableView.delegate = self;
+                [reusableView updateBanners:banners];
                 return reusableView;
             }
             case 1:
@@ -339,33 +353,46 @@
 #pragma mark - YSHomeReusableView delegate
 
 - (void)clickMenuButton:(UIButton *)button {
-    
-    if ([[button currentTitle] isEqualToString:@"测评考试"]) {
-        YSExaminationViewController *examinationVC = [[YSExaminationViewController alloc] init];
+    if ([[button currentTitle] isEqualToString:@"法律法规"]) {
+        YSLawViewController *lawVC = [[YSLawViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:examinationVC animated:YES];
+        [self.navigationController pushViewController:lawVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
-        return;
-    }
-    NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"category.json" atDocumentName:@"course"];
-    NSArray *courses = [YSCourseCategoryModel arrayOfModelsFromDictionaries:dic[@"categories"] error:nil];
-    if ([[button currentTitle] isEqualToString:@"专项练习"]) {
-        NSArray *specialCoursesArray = [NSArray arrayWithArray:courses];
-        YSSpecialItemViewController *moreVC = [[YSSpecialItemViewController alloc] init];
-        moreVC.title = @"专项练习";
-        moreVC.leixingoneArray = [NSArray arrayWithArray:specialCoursesArray];
+    }else if ([[button currentTitle] isEqualToString:@"测评考试"]) {
+        NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"exam.json" atDocumentName:@"exam"];
+        if (![dic objectForKey:@"exams"]) {
+            return;
+        }
+        NSError *err;
+        NSArray *exams = [YSExamModel arrayOfModelsFromDictionaries:dic[@"exams"] error:&err];
+        YSMoreClassViewController *moreVC = [[YSMoreClassViewController alloc] init];
+        moreVC.title = [button currentTitle];
+        moreVC.categoryCoursesArray = [exams copy];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:moreVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
         return;
+    }else{
+        NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"category.json" atDocumentName:@"course"];
+        NSArray *courses = [YSCourseCategoryModel arrayOfModelsFromDictionaries:dic[@"categories"] error:nil];
+        if ([[button currentTitle] isEqualToString:@"专项练习"]) {
+            NSArray *specialCoursesArray = [NSArray arrayWithArray:courses];
+            YSSpecialItemViewController *moreVC = [[YSSpecialItemViewController alloc] init];
+            moreVC.title = @"专项练习";
+            moreVC.leixingoneArray = [NSArray arrayWithArray:specialCoursesArray];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:moreVC animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
+            return;
+        }
+        NSArray *coursesArray = [NSArray arrayWithArray:courses];
+        YSMoreClassViewController *moreVC = [[YSMoreClassViewController alloc] init];
+        moreVC.title = [button currentTitle];
+        moreVC.categoryCoursesArray = [NSArray arrayWithArray:coursesArray];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:moreVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
     }
-    NSArray *coursesArray = [NSArray arrayWithArray:courses];
-    YSMoreClassViewController *moreVC = [[YSMoreClassViewController alloc] init];
-    moreVC.title = [button currentTitle];
-    moreVC.categoryCoursesArray = [NSArray arrayWithArray:coursesArray];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:moreVC animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
 }
 
 - (void)clickBannerAtIndex:(NSInteger)index with:(id)model {

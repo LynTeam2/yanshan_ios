@@ -19,7 +19,7 @@
     NSMutableArray *testItems;
     YSExamToolView *toolView;
     YSExaminationResultView *resultView;
-    YSExaminationItemModel *examModel;
+    YSExaminationItemModel *examItemModel;
     NSTimer *examTimer;
     NSDictionary *examDic;
     BOOL beginExam;
@@ -48,7 +48,7 @@
 #pragma mark - config view controller
 
 - (void)configViewControllerParameter {
-    self.title = @"模拟考试";
+    self.title = @"测评考试";
     self.view.backgroundColor = [UIColor whiteColor];
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
@@ -82,21 +82,15 @@
         make.top.equalTo(iconView.mas_bottom).offset(15);
         make.size.mas_equalTo(CGSizeMake(160, 20));
     }];
+    NSString *examDuration = [NSString stringWithFormat:@"%ld分钟",_examModel.examDuration];
     
-    NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"exam.json" atDocumentName:@"exam"];
-    if (![dic objectForKey:@"exams"]) {
-        return;
-    }
-    examDic = [[NSArray arrayWithArray:dic[@"exams"]] lastObject];
-    NSString *examDuration = [NSString stringWithFormat:@"%@分钟",examDic[@"examDuration"]];
-    NSString *standard = [NSString stringWithFormat:@"%@",examDic[@"standard"]];
+    NSString *standard = [NSString stringWithFormat:@"%ld",_examModel.standard];
 
-    NSString *Str = examDic[@"role"];
-    Str = [Str stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
-    NSData *Data = [Str dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *role = _examModel.role;
+    role = [role stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
+    NSData *roleData = [role dataUsingEncoding:NSUTF8StringEncoding];
     NSError *err;
-    roleDic = [NSJSONSerialization JSONObjectWithData:Data options:NSJSONReadingMutableContainers error:&err];
-    
+    roleDic = [NSJSONSerialization JSONObjectWithData:roleData options:NSJSONReadingMutableContainers error:&err];
     NSString *itemCount = @"0";
     if (roleDic) {
         NSDictionary *questionTypeDic = roleDic[@"questionType"];
@@ -108,7 +102,7 @@
         }
     }
     NSArray *titles = @[
-  @{@"title1":@"考试类型",@"title2":examDic[@"examType"]},
+  @{@"title1":@"考试类型",@"title2":_examModel.examType},
   @{@"title1":@"考试时间",@"title2":examDuration},
   @{@"title1":@"合格标准",@"title2":standard},
   @{@"title1":@"出题标准",@"title2":itemCount}];
@@ -138,7 +132,7 @@
     }
    
     UILabel *notiLabel = [[UILabel alloc] init];
-    notiLabel.text = [NSString stringWithFormat:@"温馨提示:%@",examDic[@"introduction"]];
+    notiLabel.text = [NSString stringWithFormat:@"温馨提示:%@",_examModel.introduction];
     notiLabel.numberOfLines = 3;
     notiLabel.textColor = [UIColor grayColor];
     notiLabel.adjustsFontSizeToFitWidth = YES;
@@ -189,11 +183,11 @@
 }
 
 - (void)beginTest:(UIButton *)sender {
-    self.title = [NSString stringWithFormat:@"倒计时 %@:00",examDic[@"examDuration"]];
+    self.title = [NSString stringWithFormat:@"倒计时 %ld:00",_examModel.examDuration];
     beginExam = YES;
-    examModel = [[YSExaminationItemModel alloc] init];
+    examItemModel = [[YSExaminationItemModel alloc] init];
     [examTimer invalidate];
-    timeCount = [examDic[@"examDuration"] integerValue]*60;
+    timeCount = _examModel.examDuration*60;
     examTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countTime:) userInfo:nil repeats:YES];
     
     testItems = [NSMutableArray arrayWithCapacity:0];
@@ -249,7 +243,7 @@
     [self addChildViewController:pageVC];
     [self.view addSubview:pageVC.view];
     [pageVC didMoveToParentViewController:self];
-    examModel.items = [testItems copy];
+    examItemModel.items = [testItems copy];
     for (int i = 0; i < testItems.count; i++) {
         YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];
         vc.index = i;
@@ -356,24 +350,24 @@
     [self.view addSubview:resultView];
     [examTimer invalidate];
     examTimer = nil;
-    NSString *examDuration = [NSString stringWithFormat:@"%@分钟",examDic[@"examDuration"]];
+    NSString *examDuration = [NSString stringWithFormat:@"%ld分钟",_examModel.examDuration];
     [resultView updateScoreValue:[NSString stringWithFormat:@"%ld",rightCount] costTime:examDuration];
-    if (rightCount >= [examDic[@"standard"] integerValue]) {
+    if (rightCount >= _examModel.standard) {
         [resultView userPassTheExam:YES];
-        examModel.examJudgement = @"成绩合格";
+        examItemModel.examJudgement = @"成绩合格";
     }else{
         [resultView userPassTheExam:NO];
-        examModel.examJudgement = @"成绩不合格";
+        examItemModel.examJudgement = @"成绩不合格";
     }
     NSDate *now = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy.MM.dd HH:mm"];
     NSString *current = [formatter stringFromDate:now];
-    examModel.rightItemCount = rightCount;
-    examModel.wrongItemCount = [examModel allWrongItems].count;
-    examModel.examScore = rightCount;
-    examModel.dateString = current;
-    [[YSExamManager sharedExamManager] saveCurrentExam:examModel];
+    examItemModel.rightItemCount = rightCount;
+    examItemModel.wrongItemCount = [examItemModel allWrongItems].count;
+    examItemModel.examScore = rightCount;
+    examItemModel.dateString = current;
+    [[YSExamManager sharedExamManager] saveCurrentExam:examItemModel];
 }
 
 - (void)showExamResult:(UIButton *)sender {
@@ -414,11 +408,11 @@
     NSLog(@"%ld -- %d", examinationItemController.index,examinationItemController.isRight);
     if (examinationItemController.isRight) {
         rightCount++;
-        [examModel saveRightItem:examinationItemController.itemModel];
+        [examItemModel saveRightItem:examinationItemController.itemModel];
         [toolView updateRightChoiceCount:rightCount];
     }else{
         wrongCount++;
-        [examModel saveWrongItem:examinationItemController.itemModel];
+        [examItemModel saveWrongItem:examinationItemController.itemModel];
         [toolView updateWrongChoiceCount:wrongCount];
     }
 }
