@@ -10,12 +10,15 @@
 #import "YSClassCatogaryCell.h"
 #import "YSLawModel.h"
 #import "YSLawInformationViewController.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
-@interface YSLawListViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface YSLawListViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UICollectionView *listView;
 
 @property (nonatomic, strong) NSMutableArray *laws;
+
+@property (nonatomic, assign) BOOL showEmpty;
 
 @end
 
@@ -44,6 +47,8 @@
     _listView.backgroundColor = [UIColor whiteColor];
     _listView.delegate = self;
     _listView.dataSource = self;
+    _listView.emptyDataSetSource = self;
+    _listView.emptyDataSetDelegate = self;
     [self.view addSubview:_listView];
     [_listView registerClass:[YSClassCatogaryCell class] forCellWithReuseIdentifier:@"lawcell"];
     [_listView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -59,6 +64,10 @@
             NSDictionary *resDic = [dic objectForKey:@"laws"];
             _laws = [[YSLawModel arrayOfModelsFromDictionaries:resDic[@"content"] error:nil] copy];
             [_listView reloadData];
+            if (_laws.count == 0) {
+                _showEmpty = YES;
+                [_listView reloadEmptyDataSet];
+            }
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
@@ -109,6 +118,14 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
+}
+
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return _showEmpty;
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    return [[NSAttributedString alloc] initWithString:@"没有数据..."];
 }
 
 @end
