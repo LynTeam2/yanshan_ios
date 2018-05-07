@@ -32,5 +32,8 @@
 
 - (NSString *)createFileAtDocumentDirectoryPath:(NSString *)fileName;
 
+- (void)deleteFile:(NSString *)fileName atPath:(NSString *)filePath;
+
+//- ()
 
 @end

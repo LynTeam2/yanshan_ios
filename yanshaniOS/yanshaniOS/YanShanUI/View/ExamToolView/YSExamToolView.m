@@ -7,6 +7,7 @@
 //
 
 #import "YSExamToolView.h"
+#import "YSCourseItemModel.h"
 
 CGFloat headerHeight = 40.f;
 
@@ -18,6 +19,7 @@ CGFloat headerHeight = 40.f;
     ExamToolViewType toolViewType;
     UIView *backgroundView;
     CGFloat topSpace;
+    CGFloat iPhoneXSpace;
 }
 - (instancetype)init {
     self = [super init];
@@ -113,6 +115,11 @@ CGFloat headerHeight = 40.f;
 }
 
 - (void)layoutSubviews {
+    if ([self respondsToSelector:@selector(safeAreaLayoutGuide)]) {
+        iPhoneXSpace = [self safeAreaInsets].bottom;
+    }else{
+        iPhoneXSpace = 0;
+    }
     CGFloat space = 0;
     [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
@@ -172,7 +179,7 @@ CGFloat headerHeight = 40.f;
     
     //    UIEdgeInsets insets = UIEdgeInsetsMake(40, 0, 0, 0);
     [examView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_bottom);
+        make.top.equalTo(headerView.mas_bottom).offset(iPhoneXSpace);
         make.left.equalTo(self);
         make.right.equalTo(self);
         make.bottom.equalTo(self);
@@ -201,7 +208,11 @@ CGFloat headerHeight = 40.f;
         topSpace = 80;
         backgroundView.hidden = NO;
     }
-
+    if (topSpace == 80) {
+        iPhoneXSpace = 0;
+    }else{
+        iPhoneXSpace = [self respondsToSelector:@selector(safeAreaLayoutGuide)] ? self.safeAreaInsets.bottom : 0;
+    }
     [headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(topSpace);
         make.left.equalTo(self);
@@ -210,7 +221,7 @@ CGFloat headerHeight = 40.f;
     }];
     
     [examView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView.mas_bottom);
+        make.top.equalTo(headerView.mas_bottom).offset(iPhoneXSpace);
         make.left.equalTo(self);
         make.right.equalTo(self);
         make.bottom.equalTo(self);
@@ -232,13 +243,8 @@ CGFloat headerHeight = 40.f;
 
 - (void)showItems:(UIButton *)sender {
     CGRect frame = self.frame;
-//    if (topSpace == 80) {
-        frame.origin.y = frame.size.height - headerHeight;
+    frame.origin.y = frame.size.height - headerHeight-iPhoneXSpace;
     icon4Btn.selected = NO;
-//    }else{
-//        topSpace = 80;
-//        backgroundView.hidden = NO;
-//    }
     self.frame = frame;
     [self setNeedsUpdateConstraints];
 }
@@ -250,15 +256,17 @@ CGFloat headerHeight = 40.f;
 }
 
 - (void)currentItemIndex:(NSInteger)index {
-    [currentItemBtn setTitle:[NSString stringWithFormat:@"%ld",index] forState:UIControlStateNormal];
+    [currentItemBtn setTitle:[NSString stringWithFormat:@"%ld/%ld",index,_itemsCount] forState:UIControlStateNormal];
 }
 
 - (void)updateWrongChoiceCount:(NSInteger)count {
     [wrongItemBtn setTitle:[NSString stringWithFormat:@"%ld",count] forState:UIControlStateNormal];
+    [examView reloadData];
 }
 
 - (void)updateRightChoiceCount:(NSInteger)count {
     [rightItemBtn setTitle:[NSString stringWithFormat:@"%ld",count] forState:UIControlStateNormal];
+    [examView reloadData];
 }
 
 - (void)updateCurrentItemIndex:(NSString *)index {
@@ -287,7 +295,10 @@ CGFloat headerHeight = 40.f;
     label.text = [NSString stringWithFormat:@"%ld",indexPath.row+1];
     label.textAlignment = NSTextAlignmentCenter;
     label.frame = CGRectMake(0, 0, 30, 30);
+    label.userInteractionEnabled = YES;
     [cell addSubview:label];
+    YSCourseItemModel *model = _items[indexPath.row];
+    label.backgroundColor = model.hasDone ? kLightGray : [UIColor clearColor];
     return cell;
 }
 
@@ -305,6 +316,14 @@ CGFloat headerHeight = 40.f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(30, 30);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    __weak YSExamToolView *wkSelf = self;
+    if (_rollBackBolck) {
+        [wkSelf currentItemIndex:indexPath.row+1];
+        _rollBackBolck(indexPath.row);
+    }
 }
 
 @end

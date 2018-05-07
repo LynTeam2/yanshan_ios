@@ -26,13 +26,13 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,6 +68,8 @@
                 _showEmpty = YES;
                 [_listView reloadEmptyDataSet];
             }
+        }else if (error){
+            [_listView reloadEmptyDataSet];
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];

@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, ExamToolViewType) {
     ExamToolViewTypeWrongItem,
 };
 
+typedef void(^RollBackItem)(NSInteger itemIndex);
 
 @interface YSExamToolView : YSBaseView <UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -30,6 +31,11 @@ typedef NS_ENUM(NSUInteger, ExamToolViewType) {
 }
 
 @property (nonatomic, assign) NSInteger itemsCount;
+
+@property (nonatomic, strong) NSArray *items;
+
+@property (nonatomic, copy) RollBackItem rollBackBolck;
+
 
 - (instancetype)initWithFrame:(CGRect)frame withType:(ExamToolViewType)viewType;
 

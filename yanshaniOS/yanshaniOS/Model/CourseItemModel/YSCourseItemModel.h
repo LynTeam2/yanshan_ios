@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSString <Optional>*choiceC;
 @property (nonatomic, strong) NSString <Optional>*choiceD;
 @property (nonatomic, strong) NSString <Optional>*doROW;
+@property (nonatomic, assign) BOOL hasDone;//是否已经作答
 
 
 - (NSArray *)getItemChoices;

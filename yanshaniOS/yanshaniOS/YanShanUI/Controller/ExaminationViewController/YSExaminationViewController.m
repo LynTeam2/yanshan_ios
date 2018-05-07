@@ -38,6 +38,7 @@
     // Do any additional setup after loading the view.
     wrongCount = 0;
     rightCount = 0;
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -272,6 +273,12 @@
     [self.view addSubview:toolView];
     [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,testItems.count]];
     toolView.itemsCount = testItems.count;
+    toolView.items = testItems;
+    __weak UIPageViewController *wkPageVC = pageVC;
+    __weak NSArray *wkvcs = vcs;
+    toolView.rollBackBolck = ^(NSInteger itemIndex) {
+        [wkPageVC setViewControllers:@[wkvcs[itemIndex]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    };
 }
 
 
@@ -406,6 +413,11 @@
 
 - (void)selectAnwser:(YSExaminationItemViewController *)examinationItemController {
     NSLog(@"%ld -- %d", examinationItemController.index,examinationItemController.isRight);
+    for (YSCourseItemModel *item in testItems) {
+        if ([item.question isEqual:examinationItemController.itemModel.question]) {
+            item.hasDone = YES;
+        }
+    }
     if (examinationItemController.isRight) {
         rightCount++;
         [examItemModel saveRightItem:examinationItemController.itemModel];

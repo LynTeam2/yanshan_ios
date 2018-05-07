@@ -20,6 +20,7 @@
     YSExamToolView *toolView;
     NSInteger wrongCount;
     NSInteger rightCount;
+    NSArray *wrongItems;
 
 }
 @end
@@ -53,6 +54,12 @@
         [self.view addSubview:toolView];
         [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,vcs.count]];
         toolView.itemsCount = vcs.count;
+        toolView.items = wrongItems;
+        __weak UIPageViewController *wkPVC = pageVC;
+        __weak NSArray *wkvcs = vcs;
+        toolView.rollBackBolck = ^(NSInteger itemIndex) {
+            [wkPVC setViewControllers:@[wkvcs[itemIndex]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+        };
     }
 }
 
@@ -76,6 +83,9 @@
 #pragma mark - class method
 
 - (void)jiaojuan:(UIButton *)sender {
+    if (!vcs.count) {
+        return;
+    }
     if(sender.tag == kTiMuTag){
         CGRect toolFrame = self.view.bounds;
         if (sender.selected) {
@@ -95,7 +105,7 @@
 
 
 - (void)setWrongItemsData:(NSArray *)items {
-    
+    wrongItems = [items copy];
     vcs = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < items.count; i++) {
         YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];

@@ -39,6 +39,10 @@
 
 @property(nonatomic, strong) QLPreviewController *QLPC;
 
+@property(nonatomic, strong) MBProgressHUD *hub;
+
+@property(nonatomic, strong) NSString *fileName;
+
 @end
 
 @implementation YSLawInformationViewController
@@ -48,6 +52,13 @@
     // Do any additional setup after loading the view.
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
     self.title = [_model.fileName stringByReplacingOccurrencesOfString:@".pdf" withString:@""];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    NSString *filePath = [[YSFileManager sharedFileManager] getDocumentDirectoryPath];
+    filePath = [filePath stringByAppendingPathComponent:_fileName];
+    [[YSFileManager sharedFileManager] deleteFile:_fileName atPath:filePath];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,7 +92,8 @@
         make.edges.equalTo(self.view);
     }];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_model.filePath]]];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hub.label.text = @"正在加载...";
 }
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
@@ -100,9 +112,17 @@
     NSURL *URL = req.URL;
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _hub.label.text = downloadProgress.localizedDescription;
+        });
+        NSLog(@"%@",downloadProgress.localizedDescription);
+    } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL *documentsDirectoryPath = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]];
+        NSLog(@"%@",[response suggestedFilename]);
+        NSString *documentPath = [[YSFileManager sharedFileManager] createFileName:@"" atFilePath:@""];
         NSURL *fileURLPath = [documentsDirectoryPath URLByAppendingPathComponent:[response suggestedFilename]];
+        _fileName = [response suggestedFilename];
         return fileURLPath;
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [self.view sendSubviewToBack:theWebView];

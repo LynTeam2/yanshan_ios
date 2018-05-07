@@ -34,6 +34,13 @@
             }];
 }
 
++ (BOOL)propertyIsOptional:(NSString *)propertyName {
+    if ([propertyName isEqualToString:@"hasDone"]) {
+        return YES;
+    }
+    return NO;
+}
+
 - (NSArray *)getItemChoices {
     if ([_questionType isEqualToString:@"mc"]) {
         return @[[NSString stringWithFormat:@" %@",_choiceA],

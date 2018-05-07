@@ -139,6 +139,14 @@
     [self.view addSubview:toolView];
     [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%d/%ld",1,courseItems.count]];
     toolView.itemsCount = courseItems.count;
+    toolView.items = courseItems;
+    __weak UIPageViewController *wkPVC = pageVC;
+    __weak NSArray *wkVCS = vcs;
+    toolView.rollBackBolck = ^(NSInteger itemIndex) {
+        [wkPVC setViewControllers:@[wkVCS[itemIndex]]
+                        direction:(UIPageViewControllerNavigationDirectionForward)
+                         animated:YES completion:nil];
+    };
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
@@ -168,6 +176,11 @@
 }
 
 - (void)selectAnwser:(YSExaminationItemViewController *)examinationItemController {
+    for (YSCourseItemModel *item in courseItems) {
+        if ([item.question isEqual:examinationItemController.itemModel.question]) {
+            item.hasDone = YES;
+        }
+    }
     if (examinationItemController.itemType == RightItemTypeFinished) {
         return;
     }

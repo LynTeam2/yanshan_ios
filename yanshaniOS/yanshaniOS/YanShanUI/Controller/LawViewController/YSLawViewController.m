@@ -110,6 +110,8 @@
         make.width.equalTo(cell);
         make.height.mas_equalTo(20);
     }];
+    im.userInteractionEnabled = YES;
+    label.userInteractionEnabled = YES;
     return cell;
 }
 

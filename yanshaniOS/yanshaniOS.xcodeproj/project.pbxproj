@@ -579,17 +579,17 @@
 		641B3FE41F83381900BF029E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				64B5C071208339C0007F611B /* LawViewController */,
 				641B3FE61F850ED100BF029E /* BaseViewController */,
 				6403AEBA1FF88A4500E06D71 /* ClassViewController */,
 				6403AEA61FF7F25C00E06D71 /* ExaminationItemViewController */,
 				6403AEA21FF76C5700E06D71 /* ExaminationViewController */,
-				64BDEAAD1FC110020036CD8E /* LoginViewController */,
 				641B3FEA1F850F5300BF029E /* HomeViewControllers */,
+				64B5C071208339C0007F611B /* LawViewController */,
+				64BDEAAD1FC110020036CD8E /* LoginViewController */,
 				6403AEB61FF887D600E06D71 /* NewsViewController */,
 				641B3FF11F8510FA00BF029E /* RecordViewControllers */,
-				641B3FF21F8510FA00BF029E /* WeatherViewControllers */,
 				641B3FF01F8510FA00BF029E /* UserInformationViewControllers */,
+				641B3FF21F8510FA00BF029E /* WeatherViewControllers */,
 				64572EEB2042EC5B003F3B05 /* WrongItemViewController */,
 			);
 			path = Controller;

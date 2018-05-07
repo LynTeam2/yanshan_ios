@@ -110,4 +110,13 @@ static YSFileManager *fileManager = nil;
     return fullFilePath;
 }
 
+- (void)deleteFile:(NSString *)fileName atPath:(NSString *)filePath {
+    if (!fileName || !filePath) {
+        return;
+    }
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+    }
+}
+
 @end
