@@ -56,9 +56,11 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    NSString *filePath = [[YSFileManager sharedFileManager] getDocumentDirectoryPath];
-    filePath = [filePath stringByAppendingPathComponent:_fileName];
-    [[YSFileManager sharedFileManager] deleteFile:_fileName atPath:filePath];
+    if (_fileName) {
+        NSString *filePath = [[YSFileManager sharedFileManager] getDocumentDirectoryPath];
+        filePath = [filePath stringByAppendingPathComponent:_fileName];
+        [[YSFileManager sharedFileManager] deleteFile:_fileName atPath:filePath];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,7 +122,6 @@
     } destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL *documentsDirectoryPath = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]];
         NSLog(@"%@",[response suggestedFilename]);
-        NSString *documentPath = [[YSFileManager sharedFileManager] createFileName:@"" atFilePath:@""];
         NSURL *fileURLPath = [documentsDirectoryPath URLByAppendingPathComponent:[response suggestedFilename]];
         _fileName = [response suggestedFilename];
         return fileURLPath;
