@@ -42,7 +42,7 @@
     if ([model isMemberOfClass:[YSCourseModel class]]) {
         YSCourseModel *obj = (YSCourseModel *)model;
         _inforLabel.text = obj.courseName;
-        _coverImgView.image = [UIImage imageNamed:images[index]];
+        [_coverImgView sd_setImageWithURL:[NSURL URLWithString:obj.icon] placeholderImage:[UIImage imageNamed:@"classplaceholder"]];
         return;
     }
     NSArray *titles = @[@"安全生产教育培训",@"工业企业标准知识讲座"];

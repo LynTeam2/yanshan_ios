@@ -64,9 +64,15 @@
 - (void)configView {
     CGRect frame = self.view.bounds;
     frame.size.height = 300;
-    if (_htmlStr) {
-        [webView loadHTMLString:_htmlStr baseURL:nil];
+    if (_model.courseType == CourseContentTypeVideo) {
+        NSString *url = [[NSBundle mainBundle] pathForResource:@"video" ofType:@"html"];
+        url = [NSString stringWithFormat:@"%@?url=%@",url,_model.video];
+        [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }else if (_model.courseType == CourseContentTypeArtical) {
+        [webView loadHTMLString:_model.content baseURL:nil];
+    }else{
+        [webView loadHTMLString:@"<h3>点击下方按钮,开始专项练习答题练习</h3>" baseURL:nil];
     }
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -90,6 +96,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [self.view makeToast:@"数据加载失败" duration:2.0 position:@"center"];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 

@@ -12,11 +12,13 @@
 #import "YSClassViewCell.h"
 #import "YSCourseModel.h"
 #import "YSCourseItemModel.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
-@interface YSClassDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface YSClassDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 {
     UICollectionView *_collectionView;
     NSArray *classesArray;
+    BOOL emptyDisplay;
 }
 @end
 
@@ -40,6 +42,9 @@
             classesArray = [YSCourseModel arrayOfModelsFromDictionaries:dic[@"courses"] error:nil];
         }
     }
+    if (classesArray.count == 0) {
+        emptyDisplay = YES;
+    }
 }
 
 - (void)configView {
@@ -50,6 +55,8 @@
     _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:flowLayout];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
+    _collectionView.emptyDataSetSource = self;
+    _collectionView.emptyDataSetDelegate = self;
     _collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_collectionView];
     
@@ -78,7 +85,7 @@
     [itemsList addObjectsFromArray:mcArrary];
     [itemsList addObjectsFromArray:tfArrary];
     [classVC setCoursesData:itemsList];
-    classVC.htmlStr = model.content;
+    classVC.model = model;
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:classVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
@@ -105,5 +112,12 @@
     return 0;
 }
 
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return emptyDisplay;
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    return [[NSAttributedString alloc] initWithString:@"没有相关课程信息"];
+}
 
 @end

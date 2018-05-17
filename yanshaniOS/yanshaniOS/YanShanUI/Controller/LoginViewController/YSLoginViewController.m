@@ -63,5 +63,8 @@
     }];
 
 }
+- (IBAction)endEditor:(UITapGestureRecognizer *)sender {
+    [self.view endEditing:YES];
+}
 
 @end

@@ -51,6 +51,7 @@ static YSUserLoginModel *loginModel = nil;
 
 - (void)userLogout:(UserLoginCallBack)handler {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+    _userPassWord = nil;
     handler(YES);
 }
 

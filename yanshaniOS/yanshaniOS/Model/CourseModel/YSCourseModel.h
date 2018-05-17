@@ -7,8 +7,12 @@
 //
 
 #import <JSONModel/JSONModel.h>
-
 #import "YSCourseItemModel.h"
+
+typedef NS_ENUM(NSInteger, CourseContentType) {
+    CourseContentTypeArtical = 1,
+    CourseContentTypeVideo,
+};
 
 @interface YSCourseModel : JSONModel
 
@@ -16,7 +20,7 @@
 @property (nonatomic, strong) NSArray <Optional>*bfList;
 @property (nonatomic, strong) NSString <Optional>*content;
 @property (nonatomic, strong) NSString <Optional>*courseName;
-@property (nonatomic, strong) NSNumber <Optional>*courseType;
+@property (nonatomic, assign) NSInteger courseType;
 @property (nonatomic, strong) NSString <Optional>*createTime;
 @property (nonatomic, strong) NSString <Optional>*homePage;
 @property (nonatomic, strong) NSString <Optional>*icon;
@@ -26,5 +30,8 @@
 @property (nonatomic, strong) NSArray <YSCourseItemModel *><Optional>*scList;
 @property (nonatomic, strong) NSArray <YSCourseItemModel *><Optional>*tfList;
 @property (nonatomic, strong) NSString <Optional>*updateTime;
+@property (nonatomic, strong) NSString *video;
+@property (nonatomic, strong) NSString <Optional>*courseContent;
+
 
 @end

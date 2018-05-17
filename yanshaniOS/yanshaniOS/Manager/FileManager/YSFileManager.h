@@ -8,13 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^DownloadResultBlock)(BOOL success);
+
 @interface YSFileManager : NSObject
 
 @property (nonatomic, assign) BOOL zipUpdate;
 
+@property (nonatomic, copy) DownloadResultBlock downloadBlock;
+
+
 + (instancetype)sharedFileManager;
 
-- (void)zipDoUpdate;
+- (void)zipDoUpdate:(DownloadResultBlock)block;
 
 - (void)unzipFileAtPath:(NSString *)unzipPath toDestination:(NSString *)zipPath;
 

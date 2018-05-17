@@ -38,7 +38,7 @@
 #pragma mark - config view controller
 
 - (void)configViewControllerParameter {
-    _settings = @[@"头像",@"昵称"/*,@"其他"*/];
+    _settings = @[@"头像",@"昵称",@"更新题库"];
 }
 
 - (void)configView {
@@ -146,6 +146,12 @@
         imPC.delegate = self;
         [self presentViewController:imPC animated:YES completion:^{
             
+        }];
+    }else if (2 == indexPath.row) {
+        [[YSFileManager sharedFileManager] zipDoUpdate:^(BOOL success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication].keyWindow makeToast:@"更新成功" duration:2.0 position:@"center"];
+            });
         }];
     }
 }

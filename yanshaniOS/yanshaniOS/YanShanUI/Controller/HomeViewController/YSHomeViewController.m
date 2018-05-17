@@ -47,7 +47,9 @@
         [self requestNews];
     }
     if (![[YSFileManager sharedFileManager] zipUpdate]) {
-        [[YSFileManager sharedFileManager] zipDoUpdate];
+        [[YSFileManager sharedFileManager] zipDoUpdate:^(BOOL success) {
+            
+        }];
     }
 }
 
@@ -161,7 +163,7 @@
         [itemsList addObjectsFromArray:mcArrary];
         [itemsList addObjectsFromArray:tfArrary];
         [classVC setCoursesData:itemsList];
-        classVC.htmlStr = model.content;
+        classVC.model = model;
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:classVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;

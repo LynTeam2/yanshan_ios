@@ -7,10 +7,11 @@
 //
 
 #import "YSBaseViewController.h"
+#import "YSCourseModel.h"
 
 @interface YSCourseDetailViewController : YSBaseViewController
 
-@property (nonatomic, strong) NSString *htmlStr;
+@property (nonatomic, strong) YSCourseModel *model;
 
 - (void)setCoursesData:(NSArray *)datas;
 

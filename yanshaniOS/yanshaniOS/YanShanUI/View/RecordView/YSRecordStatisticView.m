@@ -130,21 +130,41 @@
     UILabel *subLabel;
 }
 
-- (instancetype)initWithButtonType:(UIButtonType)type {
+- (instancetype)initWithStatisticButtonType:(StatisticButtonType)type {
     self = [super init];
     if (self) {
-        button = [UIButton buttonWithType:type];
+        button = [UIButton buttonWithType:UIButtonTypeCustom];
         [self addSubview:button];
         [self initSubViews];
+        [self setImageIcon:type];
     }
     return self;
 }
 
+- (void)setImageIcon:(StatisticButtonType)type {
+    NSString *imageName = @"newwrong";
+    switch (type) {
+        case StatisticButtonTypeDefault:
+            
+            break;
+        case StatisticButtonTypeSC:
+            imageName = @"newsc";
+            break;
+        case StatisticButtonTypeMC:
+            imageName = @"newmc";
+            break;
+        case StatisticButtonTypeTF:
+            imageName = @"newtf";
+            break;
+        default:
+            break;
+    }
+    imageView.image = [UIImage imageNamed:imageName];
+}
+
 - (void)initSubViews {
     
-    
     imageView = [[UIImageView alloc] init];
-//    imageView.backgroundColor = [UIColor redColor];
     [self addSubview:imageView];
     
     titleLabel = [[UILabel alloc] init];
@@ -156,9 +176,6 @@
     subLabel.textColor = [UIColor grayColor];
     subLabel.font = [UIFont systemFontOfSize:11.f];
     [self addSubview:subLabel];
-    
-//    titleLabel.backgroundColor = kRandomColor;
-//    subLabel.backgroundColor = kRandomColor;
 }
 
 - (void)updateButtonContentWithData:(NSDictionary *)dic {
@@ -187,14 +204,14 @@
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(imageView.mas_right).offset(10);
         make.right.equalTo(self).offset(-10);
-        make.top.equalTo(self);
+        make.bottom.equalTo(self.mas_centerY).offset(-5);
         make.height.equalTo(subLabel);
     }];
     
     [subLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(imageView.mas_right).offset(10);
         make.right.equalTo(self).offset(-10);
-        make.bottom.equalTo(self);
+        make.top.equalTo(self.mas_centerY).offset(5);
         make.height.equalTo(titleLabel);
     }];
 }

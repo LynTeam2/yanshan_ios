@@ -25,10 +25,16 @@ typedef NS_ENUM(NSUInteger, YSRecordStatisticViewType) {
 
 @end
 
+typedef NS_ENUM(NSUInteger, StatisticButtonType) {
+    StatisticButtonTypeDefault = 0,
+    StatisticButtonTypeSC,
+    StatisticButtonTypeMC,
+    StatisticButtonTypeTF,
+};
 
 @interface YSRecordStatisticButton : YSBaseView
 
-- (instancetype)initWithButtonType:(UIButtonType)type;
+- (instancetype)initWithStatisticButtonType:(StatisticButtonType)type;
 
 - (void)updateButtonContentWithData:(NSDictionary *)dic;
 

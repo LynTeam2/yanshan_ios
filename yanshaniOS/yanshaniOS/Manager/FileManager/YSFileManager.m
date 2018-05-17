@@ -21,12 +21,15 @@ static YSFileManager *fileManager = nil;
     return fileManager;
 }
 
-- (void)zipDoUpdate {
+- (void)zipDoUpdate:(DownloadResultBlock)block{
     [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:kZipFileUrl toFilePath:@"zip" responseHandler:^(NSError *error, id data) {
         if (error) {
             [[UIApplication sharedApplication].keyWindow makeToast:@"题库更新失败" duration:2.0 position:@"center"];
         }else{
             self.zipUpdate = YES;
+            if (block) {
+                block(YES);
+            }
         }
     }];
 }

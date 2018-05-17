@@ -21,12 +21,47 @@
             @"homePage":@"homePage",
             @"icon":@"icon",
             @"iconName":@"iconName",
-            @"id":@"courseId",
+            @"courseId":@"id",
             @"mcList":@"mcList",
             @"scList":@"scList",
             @"tfList":@"tfList",
-            @"updateTime":@"updateTime",           
-            }];
+            @"updateTime":@"updateTime",
+            @"video":@"video"}];
+}
+
+- (NSString<Optional> *)courseContent {
+    if (_courseType == 1) {
+        return self.content;
+    }else{
+        return self.video;
+    }
+}
+
+- (NSArray<YSCourseItemModel *><Optional> *)scList {
+    if (_courseId) {
+        NSDictionary *dic =  [[[YSFileManager sharedFileManager] JSONSerializationJsonFile:[NSString stringWithFormat:@"%@.json",_courseId] atDocumentName:@"course"] objectForKey:@"course"];
+        NSArray *arr = dic[@"scList"];
+        return arr;
+    }
+    return nil;
+}
+
+- (NSArray<YSCourseItemModel *><Optional> *)mcList {
+    if (_courseId) {
+        NSDictionary *dic =  [[[YSFileManager sharedFileManager] JSONSerializationJsonFile:[NSString stringWithFormat:@"%@.json",_courseId] atDocumentName:@"course"] objectForKey:@"course"];
+        NSArray *arr = dic[@"mcList"];
+        return arr;
+    }
+    return nil;
+}
+
+- (NSArray<YSCourseItemModel *><Optional> *)tfList {
+    if (_courseId) {
+        NSDictionary *dic =  [[[YSFileManager sharedFileManager] JSONSerializationJsonFile:[NSString stringWithFormat:@"%@.json",_courseId] atDocumentName:@"course"] objectForKey:@"course"];
+        NSArray *arr = dic[@"tfList"];
+        return arr;
+    }
+    return nil;
 }
 
 @end

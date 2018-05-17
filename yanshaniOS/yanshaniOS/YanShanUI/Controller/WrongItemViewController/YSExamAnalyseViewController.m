@@ -167,16 +167,16 @@ static NSString *blueString    = @"6490ff";
     CGFloat btnSpace = 20;
     CGFloat btnWidth = (self.view.frame.size.width-btnSpace*3)/2;
     CGFloat btnHeight = 60;
-    btn1 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    btn1 = [[YSRecordStatisticButton alloc] initWithStatisticButtonType:StatisticButtonTypeDefault];
     [secondSectionView addSubview:btn1];
 
-    btn2 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    btn2 = [[YSRecordStatisticButton alloc] initWithStatisticButtonType:StatisticButtonTypeSC];
     [secondSectionView addSubview:btn2];
     
-    btn3 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    btn3 = [[YSRecordStatisticButton alloc] initWithStatisticButtonType:StatisticButtonTypeMC];
     [secondSectionView addSubview:btn3];
     
-    btn4 = [[YSRecordStatisticButton alloc] initWithButtonType:UIButtonTypeCustom];
+    btn4 = [[YSRecordStatisticButton alloc] initWithStatisticButtonType:StatisticButtonTypeTF];
     [secondSectionView addSubview:btn4];
     
     [btn1 mas_makeConstraints:^(MASConstraintMaker *make) {

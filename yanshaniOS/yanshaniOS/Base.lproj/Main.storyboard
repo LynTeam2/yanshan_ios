@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C7A-Ej-Xgc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C7A-Ej-Xgc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -211,6 +211,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="e0O-C2-8el" firstAttribute="top" secondItem="Fqq-cu-Ds6" secondAttribute="bottom" constant="80" id="2Bh-2F-f2b"/>
                             <constraint firstItem="Fqq-cu-Ds6" firstAttribute="trailing" secondItem="7G6-9Z-bWF" secondAttribute="trailing" id="2el-P2-z4n"/>
@@ -234,6 +235,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Fqq-cu-Ds6" secondAttribute="trailing" constant="27" id="x6u-dj-nNz"/>
                             <constraint firstItem="Fqq-cu-Ds6" firstAttribute="leading" secondItem="H5f-8s-Jp5" secondAttribute="leadingMargin" constant="33" id="y5S-NX-FHf"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="3JU-jd-oPQ" appends="YES" id="03X-TL-7MY"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="password" destination="Fqq-cu-Ds6" id="41e-IS-fwa"/>
@@ -241,6 +245,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eqQ-s7-xfP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="3JU-jd-oPQ">
+                    <connections>
+                        <action selector="endEditor:" destination="C7A-Ej-Xgc" id="k4M-0E-mD4"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1001" y="139"/>
         </scene>

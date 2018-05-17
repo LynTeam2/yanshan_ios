@@ -9,18 +9,16 @@
 #import "YSMoreClassViewController.h"
 
 #import "YSClassDetailViewController.h"
-
 #import "YSExaminationViewController.h"
-
-#import "YSCourseCategoryModel.h"
-
 #import "YSExamModel.h"
-
+#import "YSCourseCategoryModel.h"
 #import "YSClassCatogaryCell.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
-@interface YSMoreClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface YSMoreClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 {
     UICollectionView *_collectionView;
+    BOOL emptyData;
 }
 
 @end
@@ -42,6 +40,7 @@
 }
 
 - (void)configView {
+    emptyData = _categoryCoursesArray.count == 0;
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     CGRect frame = self.view.bounds;
@@ -49,6 +48,8 @@
     _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:flowLayout];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
+    _collectionView.emptyDataSetSource = self;
+    _collectionView.emptyDataSetDelegate = self;
     _collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_collectionView];
     
@@ -98,6 +99,14 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
+}
+
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return emptyData;
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    return [[NSAttributedString alloc] initWithString:@"暂无考题"];
 }
 
 @end
