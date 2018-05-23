@@ -23,6 +23,7 @@
     YSExamToolView *toolView;
     NSInteger rightCount;
     NSInteger wrongCount;
+    UIButton *beginTestBtn;
 }
 @end
 
@@ -40,9 +41,33 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_model) {
+        [self beginTest:beginTestBtn];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[YSCourseManager sharedCourseManager] mergeCourseItem];
+    
+    if (_model) {
+        BOOL hasDone = YES;
+        for (YSCourseItemModel *tmp in courseItems) {
+            if (tmp.hasDone == NO) {
+                hasDone = NO;
+            }
+        }
+        if (hasDone) {
+            [[YSCourseManager sharedCourseManager] saveHasDoneCourseId:[_model toDictionary]];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,7 +83,11 @@
 
 - (void)configViewControllerParameter {
     vcs = [NSMutableArray arrayWithCapacity:0];
-    self.title = @"课程练习";
+    if (_model) {
+        self.title = @"课程练习";
+    }else{
+        self.title = @"专项练习";
+    }
 }
 
 - (void)configView {
@@ -72,23 +101,27 @@
     }else if (_model.courseType == CourseContentTypeArtical) {
         [webView loadHTMLString:_model.content baseURL:nil];
     }else{
-        [webView loadHTMLString:@"<h3>点击下方按钮,开始专项练习答题练习</h3>" baseURL:nil];
+//        [webView loadHTMLString:@"" baseURL:nil];
     }
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"开始答题" forState:UIControlStateNormal];
-    [btn setBackgroundColor:kBlueColor];
-    [self.view addSubview:btn];
+    beginTestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [beginTestBtn setTitle:@"开始答题" forState:UIControlStateNormal];
+    [beginTestBtn setBackgroundColor:kBlueColor];
+    [self.view addSubview:beginTestBtn];
     
-    [btn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
+    if (!_model) {
+        beginTestBtn.hidden = YES;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
     
-    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [beginTestBtn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [beginTestBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view).offset(-170);
         make.left.equalTo(self.view).offset(30);
         make.right.equalTo(self.view).offset(-30);
         make.height.mas_equalTo(40);
     }];
-    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -188,6 +221,15 @@
             item.hasDone = YES;
         }
     }
+    if (examinationItemController.isRight) {
+        rightCount++;
+        //        [examModel saveRightItem:examinationItemController.itemModel];
+        [toolView updateRightChoiceCount:rightCount];
+    }else{
+        wrongCount++;
+        //        [examModel saveWrongItem:examinationItemController.itemModel];
+        [toolView updateWrongChoiceCount:wrongCount];
+    }
     if (examinationItemController.itemType == RightItemTypeFinished) {
         return;
     }
@@ -195,16 +237,9 @@
         [pageVC setViewControllers:@[vcs[examinationItemController.index+1]]
                          direction:UIPageViewControllerNavigationDirectionForward
                           animated:YES completion:nil];
+        [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",examinationItemController.index+2,courseItems.count]];
     }
-    if (examinationItemController.isRight) {
-        rightCount++;
-//        [examModel saveRightItem:examinationItemController.itemModel];
-        [toolView updateRightChoiceCount:rightCount];
-    }else{
-        wrongCount++;
-//        [examModel saveWrongItem:examinationItemController.itemModel];
-        [toolView updateWrongChoiceCount:wrongCount];
-    }
+   
 }
 
 - (void)addNavigationItems {

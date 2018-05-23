@@ -24,4 +24,10 @@
 
 - (void)deleteCourseItem:(YSCourseItemModel *)model;
 
+- (NSArray *)getLocalHasDoneCourseId;
+
+- (void)saveHasDoneCourseId:(NSDictionary *)courseInfo;
+
+- (BOOL)queryCourseIsHasDoneWithId:(NSString *)courseId;
+
 @end

@@ -40,4 +40,7 @@
 
 @property (nonatomic, strong) NSArray <Optional>*tfList;
 
+@property (nonatomic, strong) NSArray <Optional>*courseList;
+
+
 @end

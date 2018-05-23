@@ -31,5 +31,6 @@
 
 #define kQianDaoFile           @"qiandao.plist"
 
+#define kCourseFiles           @"courseid.plist"
 
 #endif /* CommonMacro_h */

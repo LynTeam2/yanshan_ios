@@ -87,20 +87,9 @@
     
     NSString *standard = [NSString stringWithFormat:@"%ld",_examModel.standard];
 
-    NSString *role = _examModel.role;
-    role = [role stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
-    NSData *roleData = [role dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    roleDic = [NSJSONSerialization JSONObjectWithData:roleData options:NSJSONReadingMutableContainers error:&err];
     NSString *itemCount = @"0";
-    if (roleDic) {
-        NSDictionary *questionTypeDic = roleDic[@"questionType"];
-        if (questionTypeDic) {
-            NSString *tf = questionTypeDic[@"tf"] ? questionTypeDic[@"tf"] : @"0";
-            NSString *sc = questionTypeDic[@"sc"] ? questionTypeDic[@"sc"] : @"0";
-            NSString *mc = questionTypeDic[@"mc"] ? questionTypeDic[@"mc"] : @"0";
-            itemCount = [NSString stringWithFormat:@"%ld",([tf integerValue]+[sc integerValue]+[mc integerValue])];
-        }
+    if (_examModel) {
+        itemCount = [NSString stringWithFormat:@"%ld",(_examModel.scList.count+_examModel.mcList.count+_examModel.tfList.count)];
     }
     NSArray *titles = @[
   @{@"title1":@"考试类型",@"title2":_examModel.examType},
@@ -171,6 +160,12 @@
     
 }
 
+#pragma mark - creat examination paper
+
+//- (NSArray *)selectExaminationPaperItems:(YSExamModel *)model {
+//
+//}
+
 #pragma mark - class method
 
 - (void)countTime:(NSTimer *)timer {
@@ -184,6 +179,30 @@
 }
 
 - (void)beginTest:(UIButton *)sender {
+    
+    NSString *warnText = @"";
+    for (NSDictionary *dic in _examModel.courseList) {
+        NSString *courseId = dic[@"id"];
+        BOOL hasDone = [[YSCourseManager sharedCourseManager] queryCourseIsHasDoneWithId:courseId];
+        if (!hasDone) {
+            if (warnText.length == 0) {
+                
+                warnText = [NSString stringWithFormat:@"你还有\n%@:%@",dic[@"ajType"],dic[@"courseName"]];
+            }else{
+                warnText = [NSString stringWithFormat:@"%@,\n%@:%@",warnText,dic[@"ajType"],dic[@"courseName"]];
+            }
+        }
+    }
+    if(warnText.length){
+        warnText = [warnText stringByAppendingString:@"\n课时未完成"];
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:warnText preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alertC addAction:action];
+        [self.navigationController presentViewController:alertC animated:YES completion:nil];
+        return;
+    }
     self.title = [NSString stringWithFormat:@"倒计时 %ld:00",_examModel.examDuration];
     beginExam = YES;
     examItemModel = [[YSExaminationItemModel alloc] init];
@@ -194,48 +213,108 @@
     testItems = [NSMutableArray arrayWithCapacity:0];
     vcs = [NSMutableArray arrayWithCapacity:0];
     
-    NSArray *jsonArray = @[@"simplechoice.json",@"multiplechoice.json",@"truefalse.json"];
+//    NSArray *jsonArray = @[_examModel.scList,_examModel.mcList,_examModel.tfList];
+//
+//    for (int i = 0; i < jsonArray.count; i++) {
+//        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:jsonArray[i] error:nil]];
+//        if (mcArrary.count) {
+//            [testItems addObjectsFromArray:mcArrary];
+//        }
+//    }
     
-    for (int i = 0; i < jsonArray.count; i++) {
-        NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:jsonArray[i] atDocumentName:@"question"];
-        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:[jsonDic objectForKey:@"questions"] error:nil]];
-        if (mcArrary.count) {
-            [testItems addObjectsFromArray:mcArrary];
+    NSInteger sumCount = _examModel.scList.count+_examModel.mcList.count+_examModel.tfList.count;
+    
+    int tfCount = _examModel.tfList.count;
+    int scCount = _examModel.scList.count;
+    int mcCount = _examModel.mcList.count;
+    
+    NSMutableArray *mTFArray = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *mSCArray = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *mMCArray = [NSMutableArray arrayWithCapacity:0];
+    
+    int mTFCount, mSCCount, mMCCount, mSumCount = 0;
+    BOOL flag = false;
+    
+    if (20 >= sumCount) {
+        [mTFArray addObjectsFromArray:_examModel.tfList];
+        [mSCArray addObjectsFromArray:_examModel.scList];
+        [mMCArray addObjectsFromArray:_examModel.mcList];
+    }else{
+        
+        if (20 <= sumCount && sumCount <= 40) {
+            mSumCount = 20;
+        }else if (40 < sumCount && sumCount < 100){
+            mSumCount = (int)ceilf(sumCount/2);
+        }else if (100 < sumCount) {
+            mSumCount = 50;
         }
+        
+        if (0 != _examModel.tfList.count && 0 == sumCount%_examModel.tfList.count) {
+            mTFCount = tfCount/sumCount * mSumCount;
+        }else{
+            mTFCount = (int)(floorf(tfCount/(float)sumCount*mSumCount));
+            flag = !flag;
+        }
+        
+        if (0 != _examModel.scList.count && 0 == sumCount%_examModel.scList.count) {
+            mSCCount = scCount/sumCount * mSumCount;
+        }else{
+            mSCCount = flag ? (int)(ceilf((scCount/(float)sumCount)*mSumCount)): (int)(floorf(scCount/(float)sumCount*mSumCount));
+            flag = !flag;
+        }
+        
+        if (0 != _examModel.mcList.count && 0 == sumCount%_examModel.mcList.count) {
+            mMCCount = mcCount/sumCount * mSumCount;
+        }else{
+            mMCCount = flag ? (int)(ceilf((mcCount/(float)sumCount)*mSumCount)): ((int)floorf(mcCount/(float)sumCount*mSumCount));
+        }
+        
+        NSArray *tfItems = [self randomArray:_examModel.tfList withCount:tfCount];
+        NSArray *scItems = [self randomArray:_examModel.scList withCount:scCount];
+        NSArray *mcItems = [self randomArray:_examModel.mcList withCount:mcCount];
+        
+        [mTFArray addObjectsFromArray:[tfItems subarrayWithRange:NSMakeRange(0, mTFCount)]];
+        [mSCArray addObjectsFromArray:[scItems subarrayWithRange:NSMakeRange(0, mSCCount)]];
+        [mMCArray addObjectsFromArray:[mcItems subarrayWithRange:NSMakeRange(0, mMCCount)]];
+        
+        [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mTFArray error:nil]];
+        [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mSCArray error:nil]];
+        [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mMCArray error:nil]];
+
     }
-    NSMutableDictionary *ajTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"ajType"]];
-    NSMutableDictionary *questionTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"questionType"]];
-    NSMutableDictionary *difficultyDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"difficulty"]];
-    NSArray *arr = [self randomArray:testItems withCount:testItems.count];
-    for (int i = 0; i < arr.count; i++) {
-        YSCourseItemModel *model = arr[i];
-        NSString *aj = model.ajType;
-        NSString *di = model.difficulty;
-        NSString *qu = model.questionType;
-        //试题抽取的算法
-        if (ajTypeDic.allKeys.count == 0 || difficultyDic.allKeys.count == 0 || questionTypeDic.allKeys.count == 0) {
-            break;
-        }
-        if ([ajTypeDic objectForKey:aj] && [difficultyDic objectForKey:di] && [questionTypeDic objectForKey:qu]) {
-            
-            [testItems addObject:model];
-            if ([[ajTypeDic objectForKey:aj] intValue] == 1) {
-                [ajTypeDic removeObjectForKey:aj];
-            }else{
-                [ajTypeDic setObject:[NSString stringWithFormat:@"%d",[[ajTypeDic objectForKey:aj] intValue]-1] forKey:aj];
-            }
-            if ([[difficultyDic objectForKey:di] intValue] == 1) {
-                [difficultyDic removeObjectForKey:di];
-            }else{
-                [difficultyDic setObject:[NSString stringWithFormat:@"%d",[[difficultyDic objectForKey:di] intValue]-1] forKey:di];
-            }
-            if ([[questionTypeDic objectForKey:qu] intValue] == 1) {
-                [questionTypeDic removeObjectForKey:qu];
-            }else{
-                [questionTypeDic setObject:[NSString stringWithFormat:@"%d",[[questionTypeDic objectForKey:qu] intValue]-1] forKey:qu];
-            }
-        }
-    }
+//    NSMutableDictionary *ajTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"ajType"]];
+//    NSMutableDictionary *questionTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"questionType"]];
+//    NSMutableDictionary *difficultyDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"difficulty"]];
+//    NSArray *arr = [self randomArray:testItems withCount:testItems.count];
+//    for (int i = 0; i < arr.count; i++) {
+//        YSCourseItemModel *model = arr[i];
+//        NSString *aj = model.ajType;
+//        NSString *di = model.difficulty;
+//        NSString *qu = model.questionType;
+//        //试题抽取的算法
+//        if (ajTypeDic.allKeys.count == 0 || difficultyDic.allKeys.count == 0 || questionTypeDic.allKeys.count == 0) {
+//            break;
+//        }
+//        if ([ajTypeDic objectForKey:aj] && [difficultyDic objectForKey:di] && [questionTypeDic objectForKey:qu]) {
+//
+//            [testItems addObject:model];
+//            if ([[ajTypeDic objectForKey:aj] intValue] == 1) {
+//                [ajTypeDic removeObjectForKey:aj];
+//            }else{
+//                [ajTypeDic setObject:[NSString stringWithFormat:@"%d",[[ajTypeDic objectForKey:aj] intValue]-1] forKey:aj];
+//            }
+//            if ([[difficultyDic objectForKey:di] intValue] == 1) {
+//                [difficultyDic removeObjectForKey:di];
+//            }else{
+//                [difficultyDic setObject:[NSString stringWithFormat:@"%d",[[difficultyDic objectForKey:di] intValue]-1] forKey:di];
+//            }
+//            if ([[questionTypeDic objectForKey:qu] intValue] == 1) {
+//                [questionTypeDic removeObjectForKey:qu];
+//            }else{
+//                [questionTypeDic setObject:[NSString stringWithFormat:@"%d",[[questionTypeDic objectForKey:qu] intValue]-1] forKey:qu];
+//            }
+//        }
+//    }
     if (testItems.count == 0) {
         return;
     }

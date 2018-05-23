@@ -16,6 +16,7 @@ static  NSString *allCourseFile = @"allcourses.plist";
 {
     NSMutableArray *recentCourses;
     NSMutableArray *allCourses;
+    NSMutableArray *allIds;
 }
 
 + (instancetype)sharedCourseManager {
@@ -37,6 +38,7 @@ static  NSString *allCourseFile = @"allcourses.plist";
         }
         recentCourses = [NSMutableArray arrayWithCapacity:0];
         allCourses = [NSMutableArray arrayWithCapacity:0];
+        allIds = [NSMutableArray arrayWithCapacity:0];
     }
     return self;
 }
@@ -87,6 +89,41 @@ static  NSString *allCourseFile = @"allcourses.plist";
     }
     NSArray *models = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:allArr error:nil]];
     return models;
+}
+
+- (NSArray *)getLocalHasDoneCourseId {
+    if (allIds.count) {
+        return allIds;
+    }
+    NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:kCourseFiles andDocumentName:nil];
+    NSArray *ids = [NSArray arrayWithContentsOfFile:filePath];
+    [allIds addObjectsFromArray:ids];
+    return ids;
+}
+
+- (void)saveHasDoneCourseId:(NSDictionary *)courseInfo {
+//    BOOL haveId = NO;
+//    for (NSDictionary *tmp in allIds) {
+//        if ([[tmp objectForKey:@"id"] isEqualToString:[courseInfo objectForKey:@"id"]]) {
+//            haveId = YES;
+//        }
+//    }
+    BOOL haveId = [self queryCourseIsHasDoneWithId:courseInfo[@"id"]];
+    if (!haveId) {
+        NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:kCourseFiles andDocumentName:nil];
+        [allIds addObject:courseInfo];
+        [allIds writeToFile:filePath atomically:YES];
+    }
+}
+
+- (BOOL)queryCourseIsHasDoneWithId:(NSString *)courseId {
+    [self getLocalHasDoneCourseId];
+    for (NSDictionary *tmp in allIds) {
+        if ([[tmp objectForKey:@"id"] integerValue] == [courseId integerValue]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, YSExaminationItemType) {
 
 @property (nonatomic, assign) NSInteger rightTFItemCount;
 
+
 - (NSInteger)undoItem;
 
 - (NSArray *)getSCItem;

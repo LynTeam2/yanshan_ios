@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, CourseContentType) {
     CourseContentTypeArtical = 1,
     CourseContentTypeVideo,
+    CourseContentTypeZhuanXiang,
 };
 
 @interface YSCourseModel : JSONModel
