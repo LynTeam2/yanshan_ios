@@ -15,35 +15,38 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - DZNEmptyDataSet (1.8.1)
+  - Inlineobjc (1.0.5)
   - JSONModel (1.7.0)
+  - LzmaSDK-ObjC (2.0.13):
+    - Inlineobjc
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
-  - SSZipArchive (1.8.1)
   - SVPullToRefresh (0.4.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - DZNEmptyDataSet
   - JSONModel
+  - LzmaSDK-ObjC
   - Masonry
   - MBProgressHUD (~> 1.0.0)
   - SDWebImage (~> 4.0)
-  - SSZipArchive
   - SVPullToRefresh
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  Inlineobjc: 421a4302ac39cbd4a1a60983eec9b3a3ea84d444
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
+  LzmaSDK-ObjC: 1cb5ea5827ed76f1367296d1f51d5e7fb84ce3f5
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
 
-PODFILE CHECKSUM: 77bf8e3a8dc3e4cc6cc62c582b27ab8548b28a1b
+PODFILE CHECKSUM: d718361ffd4a05ea104d1586495716f6aae467b6
 
 COCOAPODS: 1.4.0

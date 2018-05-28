@@ -213,15 +213,6 @@
     testItems = [NSMutableArray arrayWithCapacity:0];
     vcs = [NSMutableArray arrayWithCapacity:0];
     
-//    NSArray *jsonArray = @[_examModel.scList,_examModel.mcList,_examModel.tfList];
-//
-//    for (int i = 0; i < jsonArray.count; i++) {
-//        NSArray *mcArrary = [NSArray arrayWithArray:[YSCourseItemModel arrayOfModelsFromDictionaries:jsonArray[i] error:nil]];
-//        if (mcArrary.count) {
-//            [testItems addObjectsFromArray:mcArrary];
-//        }
-//    }
-    
     NSInteger sumCount = _examModel.scList.count+_examModel.mcList.count+_examModel.tfList.count;
     
     int tfCount = _examModel.tfList.count;
@@ -232,89 +223,18 @@
     NSMutableArray *mSCArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *mMCArray = [NSMutableArray arrayWithCapacity:0];
     
-    int mTFCount, mSCCount, mMCCount, mSumCount = 0;
-    BOOL flag = false;
+    NSArray *tfItems = [self randomArray:_examModel.tfList withCount:tfCount];
+    NSArray *scItems = [self randomArray:_examModel.scList withCount:scCount];
+    NSArray *mcItems = [self randomArray:_examModel.mcList withCount:mcCount];
     
-    if (20 >= sumCount) {
-        [mTFArray addObjectsFromArray:_examModel.tfList];
-        [mSCArray addObjectsFromArray:_examModel.scList];
-        [mMCArray addObjectsFromArray:_examModel.mcList];
-    }else{
-        
-        if (20 <= sumCount && sumCount <= 40) {
-            mSumCount = 20;
-        }else if (40 < sumCount && sumCount < 100){
-            mSumCount = (int)ceilf(sumCount/2);
-        }else if (100 < sumCount) {
-            mSumCount = 50;
-        }
-        
-        if (0 != _examModel.tfList.count && 0 == sumCount%_examModel.tfList.count) {
-            mTFCount = tfCount/sumCount * mSumCount;
-        }else{
-            mTFCount = (int)(floorf(tfCount/(float)sumCount*mSumCount));
-            flag = !flag;
-        }
-        
-        if (0 != _examModel.scList.count && 0 == sumCount%_examModel.scList.count) {
-            mSCCount = scCount/sumCount * mSumCount;
-        }else{
-            mSCCount = flag ? (int)(ceilf((scCount/(float)sumCount)*mSumCount)): (int)(floorf(scCount/(float)sumCount*mSumCount));
-            flag = !flag;
-        }
-        
-        if (0 != _examModel.mcList.count && 0 == sumCount%_examModel.mcList.count) {
-            mMCCount = mcCount/sumCount * mSumCount;
-        }else{
-            mMCCount = flag ? (int)(ceilf((mcCount/(float)sumCount)*mSumCount)): ((int)floorf(mcCount/(float)sumCount*mSumCount));
-        }
-        
-        NSArray *tfItems = [self randomArray:_examModel.tfList withCount:tfCount];
-        NSArray *scItems = [self randomArray:_examModel.scList withCount:scCount];
-        NSArray *mcItems = [self randomArray:_examModel.mcList withCount:mcCount];
-        
-        [mTFArray addObjectsFromArray:[tfItems subarrayWithRange:NSMakeRange(0, mTFCount)]];
-        [mSCArray addObjectsFromArray:[scItems subarrayWithRange:NSMakeRange(0, mSCCount)]];
-        [mMCArray addObjectsFromArray:[mcItems subarrayWithRange:NSMakeRange(0, mMCCount)]];
-        
-        [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mTFArray error:nil]];
-        [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mSCArray error:nil]];
-        [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mMCArray error:nil]];
+    [mTFArray addObjectsFromArray:[tfItems subarrayWithRange:NSMakeRange(0, _examModel.examTfCount)]];
+    [mSCArray addObjectsFromArray:[scItems subarrayWithRange:NSMakeRange(0, _examModel.examScCount)]];
+    [mMCArray addObjectsFromArray:[mcItems subarrayWithRange:NSMakeRange(0, _examModel.examMcCount)]];
+    
+    [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mTFArray error:nil]];
+    [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mSCArray error:nil]];
+    [testItems addObjectsFromArray:[YSCourseItemModel arrayOfModelsFromDictionaries:mMCArray error:nil]];
 
-    }
-//    NSMutableDictionary *ajTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"ajType"]];
-//    NSMutableDictionary *questionTypeDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"questionType"]];
-//    NSMutableDictionary *difficultyDic = [NSMutableDictionary dictionaryWithDictionary:roleDic[@"difficulty"]];
-//    NSArray *arr = [self randomArray:testItems withCount:testItems.count];
-//    for (int i = 0; i < arr.count; i++) {
-//        YSCourseItemModel *model = arr[i];
-//        NSString *aj = model.ajType;
-//        NSString *di = model.difficulty;
-//        NSString *qu = model.questionType;
-//        //试题抽取的算法
-//        if (ajTypeDic.allKeys.count == 0 || difficultyDic.allKeys.count == 0 || questionTypeDic.allKeys.count == 0) {
-//            break;
-//        }
-//        if ([ajTypeDic objectForKey:aj] && [difficultyDic objectForKey:di] && [questionTypeDic objectForKey:qu]) {
-//
-//            [testItems addObject:model];
-//            if ([[ajTypeDic objectForKey:aj] intValue] == 1) {
-//                [ajTypeDic removeObjectForKey:aj];
-//            }else{
-//                [ajTypeDic setObject:[NSString stringWithFormat:@"%d",[[ajTypeDic objectForKey:aj] intValue]-1] forKey:aj];
-//            }
-//            if ([[difficultyDic objectForKey:di] intValue] == 1) {
-//                [difficultyDic removeObjectForKey:di];
-//            }else{
-//                [difficultyDic setObject:[NSString stringWithFormat:@"%d",[[difficultyDic objectForKey:di] intValue]-1] forKey:di];
-//            }
-//            if ([[questionTypeDic objectForKey:qu] intValue] == 1) {
-//                [questionTypeDic removeObjectForKey:qu];
-//            }else{
-//                [questionTypeDic setObject:[NSString stringWithFormat:@"%d",[[questionTypeDic objectForKey:qu] intValue]-1] forKey:qu];
-//            }
-//        }
-//    }
     if (testItems.count == 0) {
         return;
     }

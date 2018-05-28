@@ -32,7 +32,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
 - (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath responseHandler:(NetWorkResponse)handler{
     
     NSString *unzipPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    [YSCommonHelper deleteFileByName:@"upgrade.zip"];
+    [YSCommonHelper deleteFileByName:@"upgrade.7z"];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     NSURL *url = [NSURL URLWithString:downloadUrl];
@@ -43,7 +43,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
         handler(error,response.URL.absoluteString);
         NSLog(@"File downloaded to: %@", filePath.absoluteString);
-        [[YSFileManager sharedFileManager] unzipFileAtPath:[NSString stringWithFormat:@"%@/upgrade.zip",unzipPath] toDestination:unzipPath];
+        [[YSFileManager sharedFileManager] unzipFileAtPath:[NSString stringWithFormat:@"%@/upgrade.7z",unzipPath] toDestination:unzipPath];
     }];
     [downloadTask resume];
 }

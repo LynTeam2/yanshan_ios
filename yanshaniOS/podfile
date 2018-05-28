@@ -12,8 +12,9 @@ target 'yanshaniOS' do
   pod 'SDWebImage', '~> 4.0'
   pod 'MBProgressHUD', '~> 1.0.0'
   pod 'DZNEmptyDataSet’
-  pod 'SSZipArchive'
   pod 'SVPullToRefresh'
+  pod 'LzmaSDK-ObjC', :inhibit_warnings => true
+
   target 'yanshaniOSTests' do
     inherit! :search_paths
     # Pods for testing

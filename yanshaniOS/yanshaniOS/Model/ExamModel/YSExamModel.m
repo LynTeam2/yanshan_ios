@@ -26,7 +26,11 @@
                                         @"scList":@"scList",
                                         @"mcList":@"mcList",
                                         @"bfList":@"bfList",
-                                          @"tfList":@"tfList",@"courseList":@"courseList"}];
+                                          @"tfList":@"tfList",@"courseList":@"courseList",
+                                          @"examScCount":@"examScCount",
+                                          @"examMcCount":@"examMcCount",
+                                          @"examTfCount":@"examTfCount"
+                                          }];
 }
 
 + (BOOL)propertyIsOptional:(NSString *)propertyName {

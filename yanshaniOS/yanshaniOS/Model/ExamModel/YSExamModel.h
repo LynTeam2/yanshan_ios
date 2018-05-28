@@ -42,5 +42,10 @@
 
 @property (nonatomic, strong) NSArray <Optional>*courseList;
 
+@property (nonatomic, assign) NSInteger examScCount;
+
+@property (nonatomic, assign) NSInteger examMcCount;
+
+@property (nonatomic, assign) NSInteger examTfCount;
 
 @end
