@@ -130,47 +130,11 @@
     return nil;
 }
 
-- (void)confirmChoice:(UIButton *)sender {
-    UITableViewCell *cell = [mainView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-    cell.userInteractionEnabled = NO;
-    sender.hidden = YES;
-    showAWS = YES;
-    [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
-    if (mcChoices.count != [_itemModel getMCAnswer].count) {
-        self.isRight = NO;
-        [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
-        if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
-            [self.delegate selectAnwser:self];
-        }
-        return;
-    }
-    for (int i = 0; i < mcChoices.count; i++) {
-        UIButton *btn = mcChoices[i];
-        BOOL rightBtn = NO;
-        for (int j = 0; j < [_itemModel getMCAnswer].count; j++) {
-            NSString *answers = [_itemModel getMCAnswer][j];
-            if ([[btn currentTitle] containsString:answers]) {
-                rightBtn = YES;
-            }
-        }
-        if (!rightBtn) {
-            self.isRight = NO;
-            [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
-            if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
-                [self.delegate selectAnwser:self];
-            }
-            return;
-        }
-    }
-    self.isRight = YES;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
-        [self.delegate selectAnwser:self];
-    }
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+#pragma mark - resultCell delegate
 
 - (void)selectChoice:(NSInteger)selectIndex isRight:(BOOL)right {
     self.selectChoice = selectIndex;
@@ -190,8 +154,47 @@
 }
 
 - (void)selectChoice:(NSArray *)selectIndexs {
-//    [mcChoices removeAllObjects];
     [mcChoices addObjectsFromArray:selectIndexs];
+}
+
+- (void)confirmChoice:(UIButton *)sender {
+    UITableViewCell *cell = [mainView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    cell.userInteractionEnabled = NO;
+    sender.hidden = YES;
+    showAWS = YES;
+    [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
+    //选择选项和正确选项数目不相等
+    if (mcChoices.count != [_itemModel getMCAnswer].count) {
+        self.isRight = NO;
+        [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
+            [self.delegate selectAnwser:self];
+        }
+        return;
+    }
+    //选择选项==争取选项
+    BOOL rightBtn = NO;
+    for (int i = 0; i < mcChoices.count; i++) {
+        UIButton *btn = mcChoices[i];
+        for (int j = 0; j < [_itemModel getMCAnswer].count; j++) {
+            NSString *answers = [_itemModel getMCAnswer][j];
+            if ([[btn currentTitle] containsString:answers]) {
+                rightBtn = YES;
+            }
+        }
+    }
+    if (!rightBtn) {
+        self.isRight = NO;
+        [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
+            [self.delegate selectAnwser:self];
+        }
+        return;
+    }
+    self.isRight = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
+        [self.delegate selectAnwser:self];
+    }
 }
 
 @end
@@ -271,7 +274,6 @@
                 }
                 self.userInteractionEnabled = NO;
             }
-            
         }
     }else{
         if (_rightChoices.count) {
@@ -281,10 +283,10 @@
                 NSString *str2 = [[sender currentTitle] stringByReplacingOccurrencesOfString:@" " withString:@""];
                 if ([str2 containsString:str1]) {
                     imageName = @"right";
-                    //TODO:
-                    if (self.delegate && [self.delegate respondsToSelector:@selector(selectChoice:)]) {
-                        [self.delegate selectChoice:@[sender]];
-                    }
+//                    //TODO:
+//                    if (self.delegate && [self.delegate respondsToSelector:@selector(selectChoice:)]) {
+//                        [self.delegate selectChoice:@[sender]];
+//                    }
                 }
             }
             for (int i = 0; i < choiceButtons.count; i++) {
@@ -293,6 +295,10 @@
                     [iconButtons[i] setTitle:@" " forState:UIControlStateNormal];
                     [_selectChoices addObject:choiceButtons[i]];
                 }
+            }
+            //TODO:
+            if (self.delegate && [self.delegate respondsToSelector:@selector(selectChoice:)]) {
+                [self.delegate selectChoice:@[sender]];
             }
         }
     }

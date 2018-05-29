@@ -65,6 +65,7 @@ static  NSString *allCourseFile = @"allcourses.plist";
     if (allCourses.count) {
         NSArray *mArr = [YSCourseItemModel arrayOfDictionariesFromModels:allCourses];
         [mArr writeToFile:filePath atomically:YES];
+        [recentCourses removeAllObjects];
     }
 }
 

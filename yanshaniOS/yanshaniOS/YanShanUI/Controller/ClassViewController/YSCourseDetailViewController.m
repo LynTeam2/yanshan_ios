@@ -124,6 +124,42 @@
     }];
 }
 
+- (void)backViewController:(UIButton *)sender {
+    if (vcs.count == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
+    NSMutableArray *undoArray = [NSMutableArray arrayWithCapacity:0];
+    for (int i = 0; i < courseItems.count; i++) {
+        YSCourseItemModel *tmp = courseItems[i];
+        if (tmp.hasDone == NO) {
+            [undoArray addObject:[NSString stringWithFormat:@"%d",i+1]];
+        }
+    }
+    if (undoArray.count) {
+        __block NSString *undoIndex;
+        [undoArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            undoIndex = idx == 0 ? obj : [NSString stringWithFormat:@"%@,%@",undoIndex,obj];
+        }];
+        undoIndex = [NSString stringWithFormat:@"您还有第%@题目未做,确认退出当前课程学习吗?",undoIndex];
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:undoIndex preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+
+        }];
+        [alertC addAction:action];
+        [alertC addAction:cancelAction];
+        [self.navigationController presentViewController:alertC animated:YES completion:nil];
+        return;
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - webview delegate
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
