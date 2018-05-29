@@ -169,4 +169,17 @@ static YSNetWorkEngine *netWorkEngine = nil;
     }];
 }
 
+- (void)searchInformationWithParam:(NSString *)keyWords responseHandler:(NetWorkResponse)handler {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSDictionary *param = @{@"query":keyWords};
+    [manager GET:@"http://39.104.118.75/api/search" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        handler(nil,responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"请求失败--%@",error);
+        handler(error,nil);
+    }];
+}
+
 @end

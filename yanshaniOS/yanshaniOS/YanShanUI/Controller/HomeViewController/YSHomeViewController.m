@@ -18,6 +18,7 @@
 #import "YSNewsViewController.h"
 #import "YSCourseDetailViewController.h"
 #import "YSLawViewController.h"
+#import "YSSearchViewController.h"
 
 #import "YSCourseModel.h"
 #import "YSCourseCategoryModel.h"
@@ -98,6 +99,14 @@
     searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:searchBtn];
     self.navigationItem.leftBarButtonItem = item;
+    [searchBtn addTarget:self action:@selector(searchInformation:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)searchInformation:(UIButton *)sender {
+    YSSearchViewController *searchVC = [[YSSearchViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:searchVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 - (void)configViewControllerParameter {

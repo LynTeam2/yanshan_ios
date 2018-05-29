@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, CourseContentType) {
 @property (nonatomic, strong) NSArray <YSCourseItemModel *><Optional>*scList;
 @property (nonatomic, strong) NSArray <YSCourseItemModel *><Optional>*tfList;
 @property (nonatomic, strong) NSString <Optional>*updateTime;
-@property (nonatomic, strong) NSString *video;
+@property (nonatomic, strong) NSString <Optional>*video;
 @property (nonatomic, strong) NSString <Optional>*courseContent;
 
 

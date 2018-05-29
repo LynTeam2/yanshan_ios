@@ -78,7 +78,6 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.backgroundColor = kRandomColor;
     [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     NSDictionary *dic = [laws objectAtIndex:indexPath.row];
@@ -89,10 +88,6 @@
     [im sd_setImageWithURL:[NSURL URLWithString:dic[@"icon"]] placeholderImage:[UIImage imageNamed:@"law1"]];
     [cell addSubview:im];
     
-//    UIView *bgView = [[UIView alloc] init];
-//    bgView.backgroundColor = kRGBColor(0, 0, 0, 0.6);
-//    [cell addSubview:bgView];
-    
     UILabel *label = [[UILabel alloc] init];
     label.text = dic[@"name"];
     label.textColor = [UIColor whiteColor];
@@ -102,9 +97,7 @@
     [im mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(cell);
     }];
-//    [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(cell);
-//    }];
+
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(cell);
         make.width.equalTo(cell);

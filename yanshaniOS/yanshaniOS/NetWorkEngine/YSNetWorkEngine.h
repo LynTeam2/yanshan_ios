@@ -30,4 +30,6 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
 
 - (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler;
 
+- (void)searchInformationWithParam:(NSString *)keyWords responseHandler:(NetWorkResponse)handler;
+
 @end

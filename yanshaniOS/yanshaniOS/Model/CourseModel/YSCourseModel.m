@@ -29,6 +29,13 @@
             @"video":@"video"}];
 }
 
++ (BOOL)propertyIsOptional:(NSString *)propertyName {
+    if ([propertyName isEqualToString:@"courseType"]) {
+        return YES;
+    }
+    return NO;
+}
+
 - (NSString<Optional> *)courseContent {
     if (_courseType == 1) {
         return self.content;
