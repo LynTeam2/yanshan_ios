@@ -249,7 +249,7 @@
                 titleLabel.textAlignment = NSTextAlignmentCenter;
                 [reusableView addSubview:titleLabel];
                 titleLabel.frame = reusableView.bounds;
-                NSArray *titles = @[@"课程学习", @"安监动态"];
+                NSArray *titles = @[@"必考课程", @"安监动态"];
                 titleLabel.text = titles[indexPath.section - 1];
                 return reusableView;
             }

@@ -24,13 +24,16 @@ static YSNetWorkEngine *netWorkEngine = nil;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        
+        _downloadSuccess = NO;
     }
     return self;
 }
 
 - (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath responseHandler:(NetWorkResponse)handler{
-    
+    if (_downloadSuccess) {
+        handler(nil,nil);
+        return;
+    }
     NSString *unzipPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     [YSCommonHelper deleteFileByName:@"upgrade.7z"];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -41,6 +44,9 @@ static YSNetWorkEngine *netWorkEngine = nil;
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        if (!error) {
+            _downloadSuccess = YES;
+        }
         handler(error,response.URL.absoluteString);
         NSLog(@"File downloaded to: %@", filePath.absoluteString);
         [[YSFileManager sharedFileManager] unzipFileAtPath:[NSString stringWithFormat:@"%@/upgrade.7z",unzipPath] toDestination:unzipPath];

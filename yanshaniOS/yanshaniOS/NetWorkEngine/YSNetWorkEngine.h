@@ -14,6 +14,9 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
 
 + (instancetype)sharedInstance;
 
+@property (nonatomic, assign) BOOL downloadSuccess;
+
+
 - (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath responseHandler:(NetWorkResponse)handler;
 
 - (void)getRequestWithURLString:(NSString *)URLString parameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler;

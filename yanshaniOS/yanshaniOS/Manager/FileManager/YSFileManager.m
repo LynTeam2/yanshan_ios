@@ -25,13 +25,17 @@ static YSFileManager *fileManager = nil;
     [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:kZipFileUrl toFilePath:@"zip" responseHandler:^(NSError *error, id data) {
         if (error) {
             [[UIApplication sharedApplication].keyWindow makeToast:@"题库更新失败" duration:2.0 position:@"center"];
-        }else{
-            self.zipUpdate = YES;
-            if (block) {
-                block(YES);
-            }
+        }
+        BOOL success = error ? NO : YES;
+        if (block) {
+            block(success);
         }
     }];
+}
+
+- (void)zipDoUpdateByHand:(DownloadResultBlock)block {
+    self.zipUpdate = NO;
+    [self zipDoUpdate:block];
 }
 
 - (void)unzipFileAtPath:(NSString *)unzipPath toDestination:(NSString *)zipPath {
@@ -39,9 +43,12 @@ static YSFileManager *fileManager = nil;
         NSLog(@"zip文件不存在！！！");
         return;
     }
+    if (self.zipUpdate) {
+        return;
+    }
     [YSCommonHelper deleteFileByName:@"upgrade"];
     // select full path to archive file with 7z extension
-    NSString * archivePath = unzipPath;
+    NSString *archivePath = unzipPath;
     
     // 1.1 Create and hold strongly reader object.
     LzmaSDKObjCReader *reader = [[LzmaSDKObjCReader alloc] initWithFileURL:[NSURL fileURLWithPath:archivePath]];
@@ -83,6 +90,7 @@ static YSFileManager *fileManager = nil;
     
     if (!reader.lastError) {
         NSLog(@"zip文件解压成功^-^");
+        self.zipUpdate = YES;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"unzipFileSuccess" object:nil];
     }else{
         NSLog(@"zip文件解压错误！！！");

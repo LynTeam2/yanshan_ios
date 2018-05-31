@@ -21,6 +21,8 @@ typedef void(^DownloadResultBlock)(BOOL success);
 
 - (void)zipDoUpdate:(DownloadResultBlock)block;
 
+- (void)zipDoUpdateByHand:(DownloadResultBlock)block;
+
 - (void)unzipFileAtPath:(NSString *)unzipPath toDestination:(NSString *)zipPath;
 
 - (NSString *)getDocumentDirectoryPath;
@@ -38,7 +40,5 @@ typedef void(^DownloadResultBlock)(BOOL success);
 - (NSString *)createFileAtDocumentDirectoryPath:(NSString *)fileName;
 
 - (void)deleteFile:(NSString *)fileName atPath:(NSString *)filePath;
-
-//- ()
 
 @end

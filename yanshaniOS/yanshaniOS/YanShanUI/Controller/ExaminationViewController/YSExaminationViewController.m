@@ -89,7 +89,7 @@
 
     NSString *itemCount = @"0";
     if (_examModel) {
-        itemCount = [NSString stringWithFormat:@"%ld",(_examModel.scList.count+_examModel.mcList.count+_examModel.tfList.count)];
+        itemCount = [NSString stringWithFormat:@"%ld",(_examModel.examScCount+_examModel.examMcCount+_examModel.examTfCount)];
     }
     NSArray *titles = @[
   @{@"title1":@"考试类型",@"title2":_examModel.examType},

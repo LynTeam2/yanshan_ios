@@ -26,7 +26,9 @@
     NSString *unzipPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *err;
-    [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",unzipPath,name] error:&err];
+    if ([fileManager isExecutableFileAtPath:[NSString stringWithFormat:@"%@/%@",unzipPath,name]]) {
+        [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",unzipPath,name] error:&err];
+    }
     if (err) {
         NSLog(@"文件删除失败");
         return NO;

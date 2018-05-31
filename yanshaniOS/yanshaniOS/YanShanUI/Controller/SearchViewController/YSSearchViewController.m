@@ -13,12 +13,15 @@
 #import "YSLawModel.h"
 #import "YSCourseDetailViewController.h"
 #import "YSLawInformationViewController.h"
+#import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
-@interface YSSearchViewController ()<UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface YSSearchViewController ()<UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
 
 @property (nonatomic, strong) UICollectionView *resultsView;
 
 @property (nonatomic, strong) NSMutableArray *results;
+
+@property (nonatomic, assign) BOOL emptyDatas;
 
 @end
 
@@ -66,6 +69,8 @@
     _resultsView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:collectionFL];
     _resultsView.delegate = self;
     _resultsView.dataSource = self;
+    _resultsView.emptyDataSetSource = self;
+    _resultsView.emptyDataSetDelegate = self;
     _resultsView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_resultsView];
     [_resultsView registerClass:[YSClassCatogaryCell class] forCellWithReuseIdentifier:@"resultscell"];
@@ -112,15 +117,22 @@
     }
 }
 
-
 #pragma mark - DZNEmptyDataSetDelegate
 
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return _emptyDatas;
+}
 
 #pragma mark - DZNEmptyDataSetSource
 
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    return [[NSAttributedString alloc] initWithString:@"暂无数据"];
+}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[YSNetWorkEngine sharedInstance] searchInformationWithParam:searchText responseHandler:^(NSError *error, id data) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (data) {
             NSDictionary *dic = (NSDictionary *)data;
             NSInteger code = [[dic objectForKey:@"code"] integerValue];
@@ -128,6 +140,7 @@
             if (code) {
                 if (dic[@"results"]) {
                     NSArray *arr = [dic[@"results"] objectForKey:@"items"];
+                    _emptyDatas = arr.count ? NO : YES;
                     for (NSDictionary *dic in arr) {
                         if ([dic[@"type"] isEqualToString:@"law"]) {
                             YSLawModel *model = [[YSLawModel alloc] initWithDictionary:dic[@"item"] error:nil];
@@ -139,15 +152,13 @@
                                 YSCourseModel *model = [[YSCourseModel alloc] initWithDictionary:dic[@"course"] error:nil];
                                 [_results addObject:model];
                             }
-                            
                         }
                     }
-                    
                 }
-                
             }
         }
         [_resultsView reloadData];
+        [_resultsView reloadEmptyDataSet];
     }];
 }
 

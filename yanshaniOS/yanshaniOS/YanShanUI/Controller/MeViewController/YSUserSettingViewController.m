@@ -148,10 +148,12 @@
             
         }];
     }else if (2 == indexPath.row) {
-        [[YSFileManager sharedFileManager] zipDoUpdate:^(BOOL success) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [[YSFileManager sharedFileManager] zipDoUpdateByHand:^(BOOL success) {
+            if (success) {
                 [[UIApplication sharedApplication].keyWindow makeToast:@"更新成功" duration:2.0 position:@"center"];
-            });
+            }
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     }
 }
