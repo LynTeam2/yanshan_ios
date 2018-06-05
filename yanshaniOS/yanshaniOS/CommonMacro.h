@@ -18,6 +18,7 @@
 
 #define kBlueColor             [YSCommonHelper getUIColorFromHexString:@"6490ff"]
 #define kLightGray             kRGBColor(231,231,231,1)
+#define kWhiteColor            kRGBColor(255,255,255,1)
 #define kLineHeight            0.5
 
 #define kBalaceKey             @"anquandou"

@@ -31,6 +31,7 @@
     NSArray *banners;
     NSMutableArray *newsList;
     UICollectionViewFlowLayout *flowLayout;
+    NewsRequestStatue newsStatus;
 }
 @end
 
@@ -45,7 +46,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (0 == newsList.count) {
-        [self requestNews];
+        [self requestNews:nil];
     }
     if (![[YSFileManager sharedFileManager] zipUpdate]) {
         [[YSFileManager sharedFileManager] zipDoUpdate:^(BOOL success) {
@@ -137,10 +138,12 @@
     }
 }
 
-- (void)requestNews {
-    
+- (void)requestNews:(UIButton *)sender {
+    if (newsStatus == NewsRequestStatueFinished) return;
+    if(sender) [sender setTitle:@"正在加载中..." forState:UIControlStateNormal];
+    NSInteger count = newsList.count + 5;
     NSDictionary *parameters = @{@"page":@"0",
-                                 @"size":@"5"};
+                                 @"size":[NSString stringWithFormat:@"%ld",count]};
     [[YSNetWorkEngine sharedInstance] getRequestNewWithparameters:parameters responseHandler:^(NSError *error, id data) {
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)data;
@@ -149,6 +152,7 @@
                 NSDictionary *res = [dic objectForKey:@"results"];
                 NSDictionary *list = [res objectForKey:@"newsList"];
                 NSArray *arr = [list objectForKey:@"content"];
+                newsStatus = arr.count < count ? NewsRequestStatueFinished : NewsRequestStatueDone;
                 if (arr.count) {
                     [newsList removeAllObjects];
                     [newsList addObjectsFromArray:arr];
@@ -259,11 +263,20 @@
         reusableView.backgroundColor = kLightGray;
         [reusableView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         if (indexPath.section == 2) {
-            UILabel *label = [[UILabel alloc] init];
-            label.frame = reusableView.bounds;
-            label.textAlignment = NSTextAlignmentCenter;
-            label.text = @"查看更多";
-            [reusableView addSubview:label];
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.frame = reusableView.bounds;
+            NSString *title;
+            if(newsStatus == NewsRequestStatueLoading){
+                title = @"正在加载中...";
+            }else if (newsStatus == NewsRequestStatueDone){
+                title = @"查看更多";
+            }else {
+                title = @"没有更多资讯内容";
+            }
+            [btn setTitle:title forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [reusableView addSubview:btn];
+            [btn addTarget:self action:@selector(requestNews:) forControlEvents:UIControlEventTouchUpInside];
             reusableView.backgroundColor = [UIColor whiteColor];
         }
         return reusableView;

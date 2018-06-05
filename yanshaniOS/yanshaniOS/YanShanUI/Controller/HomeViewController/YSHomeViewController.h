@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "YSBaseViewController.h"
 
+typedef NS_ENUM(NSUInteger, NewsRequestStatue) {
+    NewsRequestStatueLoading = 0,
+    NewsRequestStatueDone,
+    NewsRequestStatueFinished,
+};
+
 @interface YSHomeViewController : YSBaseViewController
 
 

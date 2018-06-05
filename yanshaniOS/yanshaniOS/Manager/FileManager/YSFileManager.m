@@ -46,56 +46,60 @@ static YSFileManager *fileManager = nil;
     if (self.zipUpdate) {
         return;
     }
-    [YSCommonHelper deleteFileByName:@"upgrade"];
-    // select full path to archive file with 7z extension
-    NSString *archivePath = unzipPath;
     
-    // 1.1 Create and hold strongly reader object.
-    LzmaSDKObjCReader *reader = [[LzmaSDKObjCReader alloc] initWithFileURL:[NSURL fileURLWithPath:archivePath]];
-    // 1.2 Or create with predefined archive type if path doesn't containes suitable extension
-    reader = [[LzmaSDKObjCReader alloc] initWithFileURL:[NSURL fileURLWithPath:archivePath]
-                                                     andType:LzmaSDKObjCFileType7z];
-    
-    // Optionaly: assign weak delegate for tracking extract progress.
-    reader.delegate = self;
-    
-    // If achive encrypted - define password getter handler.
-    // NOTES:
-    // - Encrypted file needs password for extract process.
-    // - Encrypted file with encrypted header needs password for list(iterate) and extract archive items.
-    reader.passwordGetter = ^NSString*(void){
-        return @"password to my achive";
-    };
-    NSError * error = nil;
-    if (![reader open:&error]) {
-        NSLog(@"Open error: %@", error);
-    }
-    NSLog(@"Open error: %@", reader.lastError);
-    
-    NSMutableArray * items = [NSMutableArray array]; // Array with selected items.
-    // Iterate all archive items, track what items do you need & hold them in array.
-    [reader iterateWithHandler:^BOOL(LzmaSDKObjCItem * item, NSError * error){
-        if (item) [items addObject:item]; // if needs this item - store to array.
-        return YES; // YES - continue iterate, NO - stop iteration
-    }];
-    NSLog(@"Iteration error: %@", reader.lastError);
-    [reader extract:items
-              toPath:zipPath
-       withFullPaths:YES];
-    NSLog(@"Extract error: %@", reader.lastError);
-    
-    // Test selected items from prev. step.
-    [reader test:items];
-    NSLog(@"test error: %@", reader.lastError);
-    
-    if (!reader.lastError) {
-        NSLog(@"zip文件解压成功^-^");
-        self.zipUpdate = YES;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"unzipFileSuccess" object:nil];
-    }else{
-        NSLog(@"zip文件解压错误！！！");
-    }
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [YSCommonHelper deleteFileByName:@"upgrade"];
+        // select full path to archive file with 7z extension
+        NSString *archivePath = unzipPath;
+        
+        // 1.1 Create and hold strongly reader object.
+        LzmaSDKObjCReader *reader = [[LzmaSDKObjCReader alloc] initWithFileURL:[NSURL fileURLWithPath:archivePath]];
+        // 1.2 Or create with predefined archive type if path doesn't containes suitable extension
+        reader = [[LzmaSDKObjCReader alloc] initWithFileURL:[NSURL fileURLWithPath:archivePath]
+                                                    andType:LzmaSDKObjCFileType7z];
+        
+        // Optionaly: assign weak delegate for tracking extract progress.
+        reader.delegate = self;
+        
+        // If achive encrypted - define password getter handler.
+        // NOTES:
+        // - Encrypted file needs password for extract process.
+        // - Encrypted file with encrypted header needs password for list(iterate) and extract archive items.
+        reader.passwordGetter = ^NSString*(void){
+            return @"password to my achive";
+        };
+        NSError * error = nil;
+        if (![reader open:&error]) {
+            NSLog(@"Open error: %@", error);
+        }
+        NSLog(@"Open error: %@", reader.lastError);
+        
+        NSMutableArray * items = [NSMutableArray array]; // Array with selected items.
+        // Iterate all archive items, track what items do you need & hold them in array.
+        [reader iterateWithHandler:^BOOL(LzmaSDKObjCItem * item, NSError * error){
+            if (item) [items addObject:item]; // if needs this item - store to array.
+            return YES; // YES - continue iterate, NO - stop iteration
+        }];
+        NSLog(@"Iteration error: %@", reader.lastError);
+        [reader extract:items
+                 toPath:zipPath
+          withFullPaths:YES];
+        NSLog(@"Extract error: %@", reader.lastError);
+        
+        // Test selected items from prev. step.
+        [reader test:items];
+        NSLog(@"test error: %@", reader.lastError);
+        
+        if (!reader.lastError) {
+            NSLog(@"zip文件解压成功^-^");
+            self.zipUpdate = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"unzipFileSuccess" object:nil];
+            });
+        }else{
+            NSLog(@"zip文件解压错误！！！");
+        }
+    });
 }
 
 - (NSString *)getDocumentDirectoryPath {

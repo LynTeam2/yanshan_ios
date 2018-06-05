@@ -24,12 +24,14 @@
         _titleLable = [[UILabel alloc] init];
         _titleLable.userInteractionEnabled = YES;
         _titleLable.numberOfLines = 2;
+        _titleLable.font = kDefaultFont;
         [self addSubview:_titleLable];
         
         _subTitleLabel = [[UILabel alloc] init];
         _subTitleLabel.numberOfLines = 2;
         _subTitleLabel.font = [UIFont systemFontOfSize:13];
         _subTitleLabel.userInteractionEnabled = YES;
+        _subTitleLabel.textColor = [UIColor grayColor];
         [self addSubview:_subTitleLabel];
         
         _seperateLine = [[UIView alloc] init];

@@ -173,14 +173,18 @@
         return;
     }
     //选择选项==争取选项
-    BOOL rightBtn = NO;
+    BOOL rightBtn = YES;
     for (int i = 0; i < mcChoices.count; i++) {
-        UIButton *btn = mcChoices[i];
-        for (int j = 0; j < [_itemModel getMCAnswer].count; j++) {
-            NSString *answers = [_itemModel getMCAnswer][j];
-            if ([[btn currentTitle] containsString:answers]) {
-                rightBtn = YES;
-            }
+//        UIButton *btn = mcChoices[i];
+//        for (int j = 0; j < [_itemModel getMCAnswer].count; j++) {
+//            NSString *answers = [_itemModel getMCAnswer][j];
+//            if ([[btn currentTitle] containsString:answers]) {
+//                rightBtn = YES;
+//            }
+//        }
+        if (![mcChoices[i] boolValue]) {
+            rightBtn = NO;
+            break;
         }
     }
     if (!rightBtn) {
@@ -298,7 +302,8 @@
             }
             //TODO:
             if (self.delegate && [self.delegate respondsToSelector:@selector(selectChoice:)]) {
-                [self.delegate selectChoice:@[sender]];
+                BOOL selectValue = [imageName isEqualToString:@"right"] ? YES : NO;
+                [self.delegate selectChoice:@[@(selectValue)]];
             }
         }
     }

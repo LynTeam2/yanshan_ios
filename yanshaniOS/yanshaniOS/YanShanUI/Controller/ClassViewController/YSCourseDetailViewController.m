@@ -24,17 +24,11 @@
     NSInteger rightCount;
     NSInteger wrongCount;
     UIButton *beginTestBtn;
+    
 }
 @end
 
 @implementation YSCourseDetailViewController
-
-- (void)loadView {
-//    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-    webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-    webView.delegate = self;
-    self.view = webView;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,21 +87,58 @@
 - (void)configView {
     CGRect frame = self.view.bounds;
     frame.size.height = 300;
+    CGFloat height = 200;
+    webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    webView.delegate = self;
+    webView.backgroundColor = kWhiteColor;
+    [self.view addSubview:webView];
+    [webView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.and.right.equalTo(self.view);
+        make.bottom.equalTo(self.view).offset(-height);
+    }];
     if (_model.courseType == CourseContentTypeVideo) {
         NSString *url = [[NSBundle mainBundle] pathForResource:@"video" ofType:@"html"];
         url = [NSString stringWithFormat:@"%@?url=%@",url,_model.video];
         [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }else if (_model.courseType == CourseContentTypeArtical) {
-        [webView loadHTMLString:_model.content baseURL:nil];
+        NSString *content = [NSString stringWithFormat:@"<div>%@</div>",_model.content];
+        
+    content = [content stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
+
+        [webView loadHTMLString:content baseURL:nil];
     }else{
-//        [webView loadHTMLString:@"" baseURL:nil];
+        return;
+    }
+    
+    UIView *coverView = [[UIView alloc] init];
+    coverView.backgroundColor = kLightGray;
+    [self.view addSubview:coverView];
+    
+    UILabel *catogaryLabel = [[UILabel alloc] init];
+    catogaryLabel.textAlignment = NSTextAlignmentCenter;
+    catogaryLabel.backgroundColor = kBlueColor;
+    catogaryLabel.textColor = kWhiteColor;
+    catogaryLabel.font = kDefaultFont;
+    [coverView addSubview:catogaryLabel];
+    
+    UILabel *docLabel = [[UILabel alloc] init];
+    docLabel.font = kDefaultFont;
+    docLabel.adjustsFontSizeToFitWidth = YES;
+    [coverView addSubview:docLabel];
+
+    if(_model.courseType == CourseContentTypeVideo){
+        catogaryLabel.text = @"视频";
+        docLabel.text = @"请仔细观看以上视频,观看完后完成相关试题";
+    }else if (_model.courseType == CourseContentTypeArtical){
+        catogaryLabel.text = @"文章";
+        docLabel.text = @"请仔细观看阅读以上文章,然后完成相关试题";
     }
     
     beginTestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [beginTestBtn setTitle:@"开始答题" forState:UIControlStateNormal];
     [beginTestBtn setBackgroundColor:kBlueColor];
-    [self.view addSubview:beginTestBtn];
+    [coverView addSubview:beginTestBtn];
     
     if (!_model) {
         beginTestBtn.hidden = YES;
@@ -116,10 +147,28 @@
     
     [beginTestBtn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
     
+    [coverView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.height.mas_equalTo(200);
+    }];
+    
+    [catogaryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(coverView).offset(40);
+        make.left.equalTo(coverView).offset(20);
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(20);
+    }];
+    [docLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(coverView).offset(40);
+        make.left.equalTo(catogaryLabel.mas_right).offset(5);
+        make.right.equalTo(coverView).offset(-20);
+        make.height.mas_equalTo(20);
+    }];
     [beginTestBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(-170);
-        make.left.equalTo(self.view).offset(30);
-        make.right.equalTo(self.view).offset(-30);
+        make.centerY.equalTo(coverView);
+        make.left.equalTo(coverView).offset(30);
+        make.right.equalTo(coverView).offset(-30);
         make.height.mas_equalTo(40);
     }];
 }
