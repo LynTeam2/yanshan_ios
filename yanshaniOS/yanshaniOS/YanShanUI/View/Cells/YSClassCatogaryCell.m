@@ -74,7 +74,7 @@
         return;
     }else if ([model isKindOfClass:[YSExamModel class]]) {
         YSExamModel *obj = (YSExamModel *)model;
-        _coverImgView.image = [UIImage imageNamed:@"classplaceholder"];
+        _coverImgView.image = [UIImage imageNamed:@"examplaceholder.jpg"];
         _titleLable.text = obj.examName;
         _subTitleLabel.text = obj.introduction;
         return;
