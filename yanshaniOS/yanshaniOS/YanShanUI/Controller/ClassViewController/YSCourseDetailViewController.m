@@ -185,7 +185,7 @@
             [undoArray addObject:[NSString stringWithFormat:@"%d",i+1]];
         }
     }
-    if (undoArray.count) {
+    if (undoArray.count && _model.courseType != CourseContentTypeZhuanXiang) {
         __block NSString *undoIndex;
         [undoArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             undoIndex = idx == 0 ? obj : [NSString stringWithFormat:@"%@,%@",undoIndex,obj];

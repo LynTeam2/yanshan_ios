@@ -1720,6 +1720,8 @@
 				GCC_PREFIX_HEADER = "yanshaniOS/Yanshan-Prefix.pch";
 				INFOPLIST_FILE = yanshaniOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_GENERATE_MAP_FILE = NO;
+				LD_MAP_FILE_PATH = "/Users/daijian/Desktop/燕山app-LinkMap-$(CURRENT_VARIANT)-$(CURRENT_ARCH).txt";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jia.dai.yanshaniOS;
@@ -1747,6 +1749,7 @@
 				GCC_PREFIX_HEADER = "yanshaniOS/Yanshan-Prefix.pch";
 				INFOPLIST_FILE = yanshaniOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jia.dai.yanshaniOS;
