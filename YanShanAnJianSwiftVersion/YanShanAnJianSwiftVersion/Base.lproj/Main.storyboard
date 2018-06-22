@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Z3r-kM-N8V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MgE-nb-30r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -58,26 +58,45 @@
             </objects>
             <point key="canvasLocation" x="2124" y="1625.9370314842579"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="c2c-ay-vtr">
+        <!--Homepage View Controller-->
+        <scene sceneID="Had-Ac-Qod">
             <objects>
-                <viewController id="DBW-gw-JxC" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Dji-1d-1YL">
+                <collectionViewController id="AYI-J9-bxg" customClass="YSHomepageViewController" customModule="YanShanAnJianSwiftVersion" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ede-Z7-1zz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="QNe-Ai-ihm"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="JMg-OK-IUf"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2IX-Af-LZz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="n9Y-4z-HFK">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="h9g-hl-cmJ">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="AYI-J9-bxg" id="til-h4-3EY"/>
+                            <outlet property="delegate" destination="AYI-J9-bxg" id="VV7-rc-2Gt"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="1rh-0p-jsW"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xrf-6Q-YYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2124" y="-386.35682158920542"/>
+            <point key="canvasLocation" x="2142" y="-386"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="zuc-49-wx3">
             <objects>
-                <tabBarController id="MgE-nb-30r" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="mainTabbar" id="MgE-nb-30r" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tBD-xi-d2o">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -106,7 +125,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="DBW-gw-JxC" kind="relationship" relationship="rootViewController" id="MN8-xo-GrS"/>
+                        <segue destination="AYI-J9-bxg" kind="relationship" relationship="rootViewController" id="rx1-UX-Ybi"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xxr-38-cvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -170,10 +189,10 @@
             </objects>
             <point key="canvasLocation" x="1184.8" y="1625.9370314842579"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="5YQ-4I-8JU">
             <objects>
-                <viewController id="Z3r-kM-N8V" sceneMemberID="viewController">
+                <viewController id="Z3r-kM-N8V" customClass="YSLoginViewController" customModule="YanShanAnJianSwiftVersion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zsZ-Ol-n18">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -187,7 +206,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的用户名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qXt-Jr-kXm">
+                            <textField opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的用户名" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qXt-Jr-kXm">
                                 <rect key="frame" x="65" y="168" width="245" height="27"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -207,7 +226,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b1n-bU-SGS">
+                            <textField opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的密码" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b1n-bU-SGS">
                                 <rect key="frame" x="65" y="255.5" width="245" height="40"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -215,7 +234,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFk-hf-acf">
                                 <rect key="frame" x="65" y="295.5" width="245" height="1"/>
@@ -231,6 +250,9 @@
                                     <constraint firstAttribute="height" constant="40" id="gAb-20-X7M"/>
                                 </constraints>
                                 <state key="normal" title="登录"/>
+                                <connections>
+                                    <action selector="userLoginAction:" destination="Z3r-kM-N8V" eventType="touchUpInside" id="Gqg-AE-ZaR"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -263,15 +285,18 @@
                             <constraint firstItem="c6F-r3-OTc" firstAttribute="leading" secondItem="FTM-pG-wWZ" secondAttribute="leading" constant="65" id="wTr-l5-hM7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FTM-pG-wWZ"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="kmi-1p-At6" appends="YES" id="aZR-41-tj1"/>
-                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="passwordTF" destination="b1n-bU-SGS" id="6dZ-TB-dh3"/>
+                        <outlet property="tapGesture" destination="kmi-1p-At6" id="v7z-Xz-24H"/>
+                        <outlet property="userNameTF" destination="qXt-Jr-kXm" id="zpH-3t-reF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13c-zn-2Tz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="kmi-1p-At6">
                     <connections>
-                        <outlet property="delegate" destination="zsZ-Ol-n18" id="6Mk-aU-6cq"/>
+                        <action selector="loginViewEndEditing:" destination="Z3r-kM-N8V" id="jD7-Z7-jxN"/>
+                        <outlet property="delegate" destination="zsZ-Ol-n18" id="lD4-Lx-aMR"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

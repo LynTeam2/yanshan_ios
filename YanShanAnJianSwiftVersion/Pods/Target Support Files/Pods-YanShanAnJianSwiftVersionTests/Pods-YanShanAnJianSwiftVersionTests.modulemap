@@ -1,0 +1,6 @@
+framework module Pods_YanShanAnJianSwiftVersionTests {
+  umbrella header "Pods-YanShanAnJianSwiftVersionTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
