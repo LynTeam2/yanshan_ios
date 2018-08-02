@@ -64,7 +64,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];//响应
     [manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Accept"];
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:@"http://39.104.118.75/login" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:@"http://39.105.27.225/login" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0|1 error:nil];
         dispatch_async(dispatch_get_main_queue(), ^{
             handler(nil,dic);
@@ -77,7 +77,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
 
 - (void)getRequestNewWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:@"http://39.104.118.75/api/news" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:@"http://39.105.27.225/api/news" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
@@ -115,7 +115,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
     if (!param) {
         return;
     }
-    NSString *path = [NSString stringWithFormat:@"http://39.104.118.75/api/user/%@",param.allKeys[0]];
+    NSString *path = [NSString stringWithFormat:@"http://39.105.27.225/api/user/%@",param.allKeys[0]];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"PUT";
@@ -133,7 +133,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
 
 - (void)modifyUserHeaderWithImage:(UIImage *)headerIcon responseHandler:(NetWorkResponse)handler {
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:@"http://39.104.118.75/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:@"http://39.105.27.225/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         NSData *data = UIImageJPEGRepresentation(headerIcon, 1.0);
         [formData appendPartWithFileData:data name:@"file" fileName:@"filename.jpg" mimeType:@"image/jpeg"];
     } error:nil];
@@ -165,7 +165,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
 
 - (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:@"http://39.104.118.75/api/law" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:@"http://39.105.27.225/api/law" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
@@ -178,7 +178,7 @@ static YSNetWorkEngine *netWorkEngine = nil;
 - (void)searchInformationWithParam:(NSString *)keyWords responseHandler:(NetWorkResponse)handler {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSDictionary *param = @{@"query":keyWords};
-    [manager GET:@"http://39.104.118.75/api/search" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:@"http://39.105.27.225/api/search" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);

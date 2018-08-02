@@ -24,8 +24,8 @@
 #define kBalaceKey             @"anquandou"
 
 #pragma mark - url macro
-
-#define kZipFileUrl            @"http://39.104.118.75/api/upgrade"
+// 
+#define kZipFileUrl            @"http://c/api/upgrade"
 
 
 #pragma mark - file name
