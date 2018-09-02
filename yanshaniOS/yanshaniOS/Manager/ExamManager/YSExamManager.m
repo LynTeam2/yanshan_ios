@@ -7,6 +7,7 @@
 //
 
 #import "YSExamManager.h"
+#import "YSExamModel.h"
 
 static YSExamManager *manager = nil;
 
@@ -107,6 +108,28 @@ static NSString *examplist = @"exam.plist";
         return maxValue;
     }
     return 0;
+}
+
+- (BOOL)syncrosizeUserExamHistory:(NSArray *)datas {
+    BOOL success = [[YSFileManager sharedFileManager] documentPathIsExecutableFile:@"upgrade"];
+    if (success) {
+        // exam.json no exist
+        NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"exam.json" atDocumentName:@"exam"];
+        if (![dic objectForKey:@"exams"]) {
+            return NO;
+        }
+        NSArray *exams = [YSExamModel arrayOfModelsFromDictionaries:dic[@"exams"] error:nil];
+        for (int i = 0; i < datas.count; i++) {
+            NSDictionary *tmpDic = datas[i];
+            for (int j = 0; j < exams.count; j++) {
+                YSExamModel *model = exams[j];
+                if ([tmpDic[@"examId"] integerValue] == model.examId) {
+                    
+                }
+            }
+        }
+    }
+    return success;
 }
 
 @end

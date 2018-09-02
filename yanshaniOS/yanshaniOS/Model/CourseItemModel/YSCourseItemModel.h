@@ -23,7 +23,7 @@
 @property (nonatomic, strong) NSString <Optional>*choiceB;
 @property (nonatomic, strong) NSString <Optional>*choiceC;
 @property (nonatomic, strong) NSString <Optional>*choiceD;
-@property (nonatomic, strong) NSString <Optional>*doROW;
+@property (nonatomic, strong) NSString <Optional>*doROW;    //对或错
 @property (nonatomic, assign) BOOL hasDone;//是否已经作答
 
 

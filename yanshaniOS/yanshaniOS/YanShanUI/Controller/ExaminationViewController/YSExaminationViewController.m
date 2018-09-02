@@ -166,6 +166,18 @@
 //
 //}
 
+- (NSString *)currentTime {
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.locale = [NSLocale currentLocale];
+    formatter.timeZone = [NSTimeZone systemTimeZone];
+    formatter.dateFormat = @"hh:mm:ss";
+    
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSString *time = [formatter stringFromDate:date];
+    return [NSString stringWithFormat:@"%ld",date.timeIntervalSince1970*1000];
+}
+
 #pragma mark - class method
 
 - (void)countTime:(NSTimer *)timer {
@@ -186,7 +198,6 @@
         BOOL hasDone = [[YSCourseManager sharedCourseManager] queryCourseIsHasDoneWithId:courseId];
         if (!hasDone) {
             if (warnText.length == 0) {
-                
                 warnText = [NSString stringWithFormat:@"你还有\n%@:%@",dic[@"ajType"],dic[@"courseName"]];
             }else{
                 warnText = [NSString stringWithFormat:@"%@,\n%@:%@",warnText,dic[@"ajType"],dic[@"courseName"]];
@@ -206,6 +217,10 @@
     self.title = [NSString stringWithFormat:@"倒计时 %ld:00",_examModel.examDuration];
     beginExam = YES;
     examItemModel = [[YSExaminationItemModel alloc] init];
+    examItemModel.examID = _examModel.examId;
+    examItemModel.examName = _examModel.examName;
+    examItemModel.makeupFlag = self.examCount;
+    examItemModel.startTime = [self currentTime];
     [examTimer invalidate];
     timeCount = _examModel.examDuration*60;
     examTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countTime:) userInfo:nil repeats:YES];
@@ -373,7 +388,11 @@
     examItemModel.wrongItemCount = [examItemModel allWrongItems].count;
     examItemModel.examScore = rightCount;
     examItemModel.dateString = current;
+    examItemModel.endTime = [self currentTime];
     [[YSExamManager sharedExamManager] saveCurrentExam:examItemModel];
+    [[YSNetWorkEngine sharedInstance] uploadUserExamResultsWith:examItemModel responseHandler:^(NSError *error, id data) {
+        NSLog(@"======");
+    }];
 }
 
 - (void)showExamResult:(UIButton *)sender {

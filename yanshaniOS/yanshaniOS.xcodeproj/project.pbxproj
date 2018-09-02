@@ -1730,7 +1730,7 @@
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jia.dai.yanshaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f0936fbe-d4d2-47f0-9ea5-80fad0feb2eb";
+				PROVISIONING_PROFILE = "cdb4d67d-6438-4c34-b76b-3ef72fbd0cc9";
 				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

@@ -25,6 +25,33 @@
     }
     return self;
 }
+
+- (instancetype)initWithDictionary:(NSDictionary *)dic {
+    self = [self init];
+    if (dic[@"examId"]) {
+        
+    }
+    if (dic[@"examName"]) {
+        
+    }
+    if (dic[@"examScore"]) {
+        
+    }
+    if (dic[@"makeupFlag"]) {
+        
+    }
+    if (dic[@""]) {
+        
+    }
+    if (dic[@""]) {
+        
+    }
+    if (dic[@""]) {
+        
+    }
+    return self;
+}
+
 - (NSArray *)getSCItem {
     NSMutableArray *mArr = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < _items.count; i++) {
@@ -141,6 +168,7 @@
     }
     return wrongItems;
 }
+
 - (void)saveRightItem:(YSCourseItemModel *)model {
     for (YSCourseItemModel *m in _items) {
         if ([model.question isEqual:m.question]) {
@@ -157,8 +185,6 @@
     }
     [rightItems addObject:model];
 }
-
-
 
 - (NSInteger)undoItem {
     return ([self getAllUndoMCItem].count+[self getAllUndoSCItem].count+[self getAllUndoTFItem].count);

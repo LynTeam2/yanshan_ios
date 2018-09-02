@@ -15,6 +15,8 @@
 #import "YSClassCatogaryCell.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
+static NSInteger maxExamCount = 1;
+
 @interface YSMoreClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 {
     UICollectionView *_collectionView;
@@ -80,10 +82,20 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:detailVC animated:YES];
     }else if ([data isKindOfClass:[YSExamModel class]]) {
-        YSExaminationViewController *examinationVC = [[YSExaminationViewController alloc] init];
-        examinationVC.examModel = (YSExamModel *)data;
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:examinationVC animated:YES];
+        YSExamModel *model = (YSExamModel *)data;
+        [[YSNetWorkEngine sharedInstance] queryUserExamCountWith:model.examId responseHandler:^(NSError *error, id data) {
+            NSLog(@"%@",data);
+            NSDictionary *results = [data objectForKey:@"results"];
+            NSInteger examCount = [results[@"examCount"] integerValue];
+            if (examCount <= maxExamCount) {
+                YSExaminationViewController *examinationVC = [[YSExaminationViewController alloc] init];
+                examinationVC.examModel = model;
+                examinationVC.examCount = examCount;
+                self.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:examinationVC animated:YES];
+            }
+
+        }];
     }
 }
 

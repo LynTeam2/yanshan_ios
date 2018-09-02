@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString *userRealName;
 @property (nonatomic, strong) NSString *nickName;
 @property (nonatomic, assign) NSInteger beanCount;
+@property (nonatomic, strong) NSString *roleName;
+@property (nonatomic, strong) NSArray *courseProcessList;
 
 
 + (instancetype)shareInstance;

@@ -25,8 +25,9 @@
 
 #pragma mark - url macro
 // 
-#define kZipFileUrl            @"http://c/api/upgrade"
+#define kZipFileUrl            @"http://39.105.27.225/api/upgrade"
 
+#define kHostURL               @"http://39.105.27.225/api/"
 
 #pragma mark - file name
 

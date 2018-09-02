@@ -22,8 +22,14 @@ static YSFileManager *fileManager = nil;
 }
 
 - (void)zipDoUpdate:(DownloadResultBlock)block{
+    if (self.zipUpdate && !self.forceUpdate) {
+        return;
+    }
+    self.zipUpdate = YES;
+    self.forceUpdate = NO;
     [[YSNetWorkEngine sharedInstance] downloadFileWithUrl:kZipFileUrl toFilePath:@"zip" responseHandler:^(NSError *error, id data) {
         if (error) {
+            self.zipUpdate = NO;
             [[UIApplication sharedApplication].keyWindow makeToast:@"题库更新失败" duration:2.0 position:@"center"];
         }
         BOOL success = error ? NO : YES;
@@ -34,7 +40,7 @@ static YSFileManager *fileManager = nil;
 }
 
 - (void)zipDoUpdateByHand:(DownloadResultBlock)block {
-    self.zipUpdate = NO;
+    self.forceUpdate = YES;
     [self zipDoUpdate:block];
 }
 
@@ -43,10 +49,10 @@ static YSFileManager *fileManager = nil;
         NSLog(@"zip文件不存在！！！");
         return;
     }
-    if (self.zipUpdate) {
-        return;
-    }
     
+//    if (self.zipUpdate) {
+//        return;
+//    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [YSCommonHelper deleteFileByName:@"upgrade"];
         // select full path to archive file with 7z extension
@@ -137,6 +143,25 @@ static YSFileManager *fileManager = nil;
         return nil;
     }
     NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:0|1 error:nil];
+    if (jsonDic[@"courses"]) {
+        NSMutableArray *courses = [NSMutableArray array];
+        for (NSDictionary *dic in jsonDic[@"courses"]) {
+            NSString *role = dic[@"role"];
+            if ([role containsString:[YSUserModel shareInstance].roleName]) {
+                [courses addObject:dic];
+            }
+        }
+        return @{@"courses":courses};
+    }else if (jsonDic[@"exams"]){
+        NSMutableArray *exams = [NSMutableArray array];
+        for (NSDictionary *dic in jsonDic[@"exams"]) {
+            NSString *role = dic[@"role"];
+            if ([role containsString:[YSUserModel shareInstance].roleName]) {
+                [exams addObject:dic];
+            }
+        }
+        return @{@"exams":exams};
+    }
     return jsonDic;
 }
 

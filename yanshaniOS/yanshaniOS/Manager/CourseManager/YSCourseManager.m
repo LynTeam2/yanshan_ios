@@ -103,12 +103,7 @@ static  NSString *allCourseFile = @"allcourses.plist";
 }
 
 - (void)saveHasDoneCourseId:(NSDictionary *)courseInfo {
-//    BOOL haveId = NO;
-//    for (NSDictionary *tmp in allIds) {
-//        if ([[tmp objectForKey:@"id"] isEqualToString:[courseInfo objectForKey:@"id"]]) {
-//            haveId = YES;
-//        }
-//    }
+
     BOOL haveId = [self queryCourseIsHasDoneWithId:courseInfo[@"id"]];
     if (!haveId) {
         NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:kCourseFiles andDocumentName:nil];
@@ -125,6 +120,12 @@ static  NSString *allCourseFile = @"allcourses.plist";
         }
     }
     return NO;
+}
+
+- (BOOL)syncronizeSerVerCourseProcessData:(NSArray *)datas {
+    [allIds addObjectsFromArray:datas];
+    NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:kCourseFiles andDocumentName:nil];
+    return [allIds writeToFile:filePath atomically:YES];
 }
 
 @end

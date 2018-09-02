@@ -21,6 +21,16 @@ typedef NS_ENUM(NSUInteger, YSExaminationItemType) {
 
 @property (nonatomic, strong) NSString *examJudgement;
 
+@property (nonatomic, assign) NSInteger examID;
+
+@property (nonatomic, strong) NSString *examName;
+
+@property (nonatomic, strong) NSString *startTime;
+
+@property (nonatomic, strong) NSString *endTime;
+
+@property (nonatomic, assign) NSInteger makeupFlag;
+
 @property (nonatomic, strong) NSArray <YSCourseItemModel *>*items;
 
 @property (nonatomic, strong) NSString *dateString;
@@ -34,7 +44,6 @@ typedef NS_ENUM(NSUInteger, YSExaminationItemType) {
 @property (nonatomic, assign) NSInteger rightMCItemCount;
 
 @property (nonatomic, assign) NSInteger rightTFItemCount;
-
 
 - (NSInteger)undoItem;
 
@@ -55,7 +64,6 @@ typedef NS_ENUM(NSUInteger, YSExaminationItemType) {
 - (NSArray *)getAllUndoMCItem;
 
 - (NSArray *)getAllUndoTFItem;
-
 
 - (void)saveWrongItem:(YSCourseItemModel *)model;
 

@@ -21,4 +21,6 @@
 
 - (NSInteger)getMaxScroce;
 
+- (BOOL)syncrosizeUserExamHistory:(NSArray *)datas;
+
 @end

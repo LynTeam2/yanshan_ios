@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) YSExamModel *examModel;
 
+@property (nonatomic, assign) NSInteger examCount;//是否考过
 
 @end
 

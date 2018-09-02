@@ -12,4 +12,6 @@
 
 - (BOOL)isEmptyString;
 
+- (NSString *)urlencode;
+
 @end

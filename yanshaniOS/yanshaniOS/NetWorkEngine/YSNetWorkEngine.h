@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YSExaminationItemModel.h"
 
 typedef void(^NetWorkResponse)(NSError *error, id data);
 
@@ -34,5 +35,15 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
 - (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler;
 
 - (void)searchInformationWithParam:(NSString *)keyWords responseHandler:(NetWorkResponse)handler;
+
+- (void)getUserCourseProcessWithResponceHandler:(NetWorkResponse)handler;
+
+- (void)uploadUserCourseProcessWithParam:(NSString *)courseID examDuration:(NSInteger)seconds responseHandler:(NetWorkResponse)handler;
+
+- (void)getExamHistoryRecordsWithResponseHandler:(NetWorkResponse)handler;
+
+- (void)uploadUserExamResultsWith:(YSExaminationItemModel *)data responseHandler:(NetWorkResponse)handler;
+
+- (void)queryUserExamCountWith:(NSInteger)examID responseHandler:(NetWorkResponse)handler;
 
 @end

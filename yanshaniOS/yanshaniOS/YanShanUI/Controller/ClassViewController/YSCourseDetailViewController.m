@@ -24,7 +24,7 @@
     NSInteger rightCount;
     NSInteger wrongCount;
     UIButton *beginTestBtn;
-    
+    NSDate *beginDate;
 }
 @end
 
@@ -60,6 +60,7 @@
         }
         if (hasDone) {
             [[YSCourseManager sharedCourseManager] saveHasDoneCourseId:[_model toDictionary]];
+            [self uploadCourseLearningProcess];
         }
     }
 }
@@ -207,6 +208,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)uploadCourseLearningProcess {
+    NSLog(@"%@",_model.courseId);
+    [[YSNetWorkEngine sharedInstance] uploadUserCourseProcessWithParam:self.model.courseId examDuration:beginDate.timeIntervalSinceNow responseHandler:^(NSError *error, id data) {
+        NSLog(@"%@",error);
+    }];
+}
+
 #pragma mark - webview delegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -272,6 +280,7 @@
                         direction:(UIPageViewControllerNavigationDirectionForward)
                          animated:YES completion:nil];
     };
+    beginDate = [NSDate dateWithTimeIntervalSinceNow:0];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController

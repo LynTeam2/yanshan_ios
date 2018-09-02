@@ -283,7 +283,7 @@
         if (_rightChoices.count) {
             NSString *imageName = @"wrong";
             for (int j = 0; j < _rightChoices.count; j++) {
-                NSString *str1 = _rightChoices[j];
+                NSString *str1 = [_rightChoices[j] stringByReplacingOccurrencesOfString:@" " withString:@""];
                 NSString *str2 = [[sender currentTitle] stringByReplacingOccurrencesOfString:@" " withString:@""];
                 if ([str2 containsString:str1]) {
                     imageName = @"right";

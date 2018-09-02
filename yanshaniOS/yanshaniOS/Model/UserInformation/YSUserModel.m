@@ -7,6 +7,8 @@
 //
 
 #import "YSUserModel.h"
+#import "YSExamManager.h"
+
 static YSUserModel *model = nil;
 @implementation YSUserModel
 
@@ -19,12 +21,23 @@ static YSUserModel *model = nil;
 }
 
 - (void)updateUserInformationWithData:(NSDictionary *)data {
-    _userId = [data objectForKey:@"id"];
-    _userIcon = [data objectForKey:@"icon"];
-    _userName = [data objectForKey:@"userName"];
+    _userId     = [data objectForKey:@"id"];
+    _userIcon   = [data objectForKey:@"icon"];
+    _userName   = [data objectForKey:@"userName"];
     _userRealName = [data objectForKey:@"realName"];
-    _nickName = data[@"nickname"];
-    _beanCount = [data[@"beanCount"] integerValue];
+    _nickName     = data[@"nickname"];
+    _beanCount    = [data[@"beanCount"] integerValue];
+    _roleName     = data[@"roleName"];
+    _courseProcessList = [NSArray arrayWithArray:data[@"courseProcessList"]];
+    NSMutableArray *ids = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *dic in _courseProcessList) {
+        [ids addObject:@{@"id":dic[@"courseId"]}];
+    }
+    [[YSCourseManager sharedCourseManager] syncronizeSerVerCourseProcessData:ids];
+    [[YSExamManager sharedExamManager] syncrosizeUserExamHistory:nil];
+    [[YSNetWorkEngine sharedInstance] getExamHistoryRecordsWithResponseHandler:^(NSError *error, id data) {
+        
+    }];
 }
 
 @end

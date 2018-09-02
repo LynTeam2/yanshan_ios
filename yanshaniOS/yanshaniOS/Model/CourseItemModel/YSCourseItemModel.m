@@ -23,7 +23,7 @@
             @"answer":@"answer",
             @"createTime":@"createTime",
             @"difficulty":@"difficulty",
-            @"id":@"itemId",
+            @"itemId":@"id",
             @"question":@"question",
             @"questionType":@"questionType",
             @"choiceA":@"choiceA",

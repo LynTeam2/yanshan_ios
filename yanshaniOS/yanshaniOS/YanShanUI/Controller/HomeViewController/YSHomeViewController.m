@@ -59,6 +59,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     newsList = [NSMutableArray arrayWithCapacity:0];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,8 +74,8 @@
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
-    _collectionView.emptyDataSetDelegate = self;
-    _collectionView.emptyDataSetSource = self;
+//    _collectionView.emptyDataSetDelegate = self;
+//    _collectionView.emptyDataSetSource = self;
     [_collectionView registerClass:[YSClassViewCell class] forCellWithReuseIdentifier:@"classCell"];
     [_collectionView registerClass:[YSNewsViewCell class] forCellWithReuseIdentifier:@"newsCell"];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
@@ -117,8 +118,9 @@
 }
 
 - (void)unzipFileSuccess:(NSNotification *)noti {
-    NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"category.json" atDocumentName:@"course"];
     [self handleZipFileData];
+    [self handleBannerData];
+    [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
 }
 
@@ -133,7 +135,7 @@
 - (void)handleBannerData {
     NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"banner.json" atDocumentName:@"banner"];
     if (dic) {
-        banners = [dic objectForKey:@"banners"];
+        banners = [[dic objectForKey:@"banners"] copy];
         [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     }
 }

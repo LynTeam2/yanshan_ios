@@ -30,4 +30,6 @@
 
 - (BOOL)queryCourseIsHasDoneWithId:(NSString *)courseId;
 
+- (BOOL)syncronizeSerVerCourseProcessData:(NSArray *)datas;
+
 @end

@@ -14,6 +14,9 @@ typedef void(^DownloadResultBlock)(BOOL success);
 
 @property (nonatomic, assign) BOOL zipUpdate;
 
+@property (nonatomic, assign) BOOL forceUpdate;
+
+
 @property (nonatomic, copy) DownloadResultBlock downloadBlock;
 
 
