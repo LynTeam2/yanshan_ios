@@ -43,12 +43,13 @@
     CGFloat height = 30.f;
     CGFloat width = self.view.frame.size.width;
 
-    UISearchBar *searchBar = [[UISearchBar alloc] init];
+    [[UISearchBar appearance] setFrame:CGRectMake(0, 0, width-80, height)];
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, width-80, height)];
     searchBar.placeholder = @"请输入想要搜索的内容";
     searchBar.barStyle = UIBarStyleDefault;
     searchBar.barTintColor = kLightGray;
     searchBar.delegate = self;
-    searchBar.frame = CGRectMake(0, 0, width-80, height);
+//    searchBar.frame = CGRectMake(0, 0, width-80, height);
     searchBar.returnKeyType = UIReturnKeySearch;
     [searchBar becomeFirstResponder];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
