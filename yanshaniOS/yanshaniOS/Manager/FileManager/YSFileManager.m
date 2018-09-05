@@ -100,7 +100,7 @@ static YSFileManager *fileManager = nil;
             NSLog(@"zip文件解压成功^-^");
             self.zipUpdate = YES;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"unzipFileSuccess" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUnzipSuccessNotification object:nil];
             });
         }else{
             NSLog(@"zip文件解压错误！！！");
