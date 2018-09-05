@@ -16,6 +16,7 @@ static YSUserModel *model = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         model = [[self alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:model selector:@selector(updateUserExaminationHistoryRecords:) name:kUnzipSuccessNotification object:nil];
     });
     return model;
 }
@@ -34,9 +35,18 @@ static YSUserModel *model = nil;
         [ids addObject:@{@"id":dic[@"courseId"]}];
     }
     [[YSCourseManager sharedCourseManager] syncronizeSerVerCourseProcessData:ids];
-    [[YSExamManager sharedExamManager] syncrosizeUserExamHistory:nil];
     [[YSNetWorkEngine sharedInstance] getExamHistoryRecordsWithResponseHandler:^(NSError *error, id data) {
-        
+        if (!error) {
+            [[YSExamManager sharedExamManager] syncrosizeUserExamHistory:[[data objectForKey:@"results"] objectForKey:@"examHistories"]];
+        }
+    }];
+}
+
+- (void)updateUserExaminationHistoryRecords:(NSNotification *)noti {
+    [[YSNetWorkEngine sharedInstance] getExamHistoryRecordsWithResponseHandler:^(NSError *error, id data) {
+        if (!error) {
+            [[YSExamManager sharedExamManager] syncrosizeUserExamHistory:[[data objectForKey:@"results"] objectForKey:@"examHistories"]];
+        }
     }];
 }
 
