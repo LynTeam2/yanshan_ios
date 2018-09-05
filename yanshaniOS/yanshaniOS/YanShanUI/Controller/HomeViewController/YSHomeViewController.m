@@ -49,9 +49,7 @@
         [self requestNews:nil];
     }
     if (![[YSFileManager sharedFileManager] zipUpdate]) {
-        [[YSFileManager sharedFileManager] zipDoUpdate:^(BOOL success) {
-            
-        }];
+        [[YSFileManager sharedFileManager] zipDoUpdate:nil];
     }
 }
 
@@ -59,7 +57,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     newsList = [NSMutableArray arrayWithCapacity:0];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unzipFileSuccess:) name:kUnzipSuccessNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,7 +93,7 @@
     [searchBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
     [searchBtn setImageEdgeInsets:UIEdgeInsetsMake(6, 10, 6, width-40-28)];
-    searchBtn.frame = CGRectMake(20, 0, width-40, 30);
+    searchBtn.frame = CGRectMake(20, 0, width-40, 36);
     searchBtn.layer.cornerRadius = 5;
     searchBtn.layer.masksToBounds = YES;
     searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -112,7 +110,6 @@
 }
 
 - (void)configViewControllerParameter {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(unzipFileSuccess:) name:@"unzipFileSuccess" object:nil];
     [self handleZipFileData];
     [self handleBannerData];
 }
@@ -120,7 +117,7 @@
 - (void)unzipFileSuccess:(NSNotification *)noti {
     [self handleZipFileData];
     [self handleBannerData];
-    [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    [self collectionView:_collectionView viewForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathWithIndex:0]];
     [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
 }
 
@@ -136,7 +133,6 @@
     NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"banner.json" atDocumentName:@"banner"];
     if (dic) {
         banners = [[dic objectForKey:@"banners"] copy];
-        [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
     }
 }
 
