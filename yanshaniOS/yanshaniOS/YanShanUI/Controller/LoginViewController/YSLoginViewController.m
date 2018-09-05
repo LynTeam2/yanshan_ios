@@ -22,6 +22,15 @@
     if ([[YSUserLoginModel shareInstance] userInformationComplete]) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
+    _username.layer.borderWidth = _password.layer.borderWidth = 1.0;
+    _username.layer.borderColor = _password.layer.borderColor = kRGBColor(229, 239, 235, 1).CGColor;
+    UIImageView *leftView1 = [[UIImageView alloc] init];
+    leftView1.frame = CGRectMake(0, 0, 20, 20);
+    UIImageView *leftView2 = [[UIImageView alloc] init];
+    leftView2.frame = CGRectMake(0, 0, 20, 20);
+    _username.leftView = leftView1;
+    _password.leftView = leftView2;
+    _username.leftViewMode = _password.leftViewMode = UITextFieldViewModeAlways;
     [[YSUserLoginModel shareInstance] userAutoLogin:^(BOOL success) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (success) {
@@ -46,8 +55,10 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
    
     [[YSNetWorkEngine sharedInstance] userLoginWithUseName:_username.text password:_password.text  responseHandler:^(NSError *error, NSDictionary *data) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (error) {
-            [self.view makeToast:@"用户名或密码错误" duration:2.0 position:@"center"];
+            NSString *msg = data[@"msg"] ? data[@"msg"] : @"用户名或密码错误";
+            [self.view makeToast:msg duration:2.0 position:@"center"];
             return ;
         }
         if ([[data objectForKey:@"code"] boolValue]) {
@@ -57,11 +68,10 @@
             [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"tabbarviewcontroller"];
             [[YSUserLoginModel shareInstance] saveUserLoginInformation:_username.text password:_password.text];
         }else{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self.view makeToast:@"用户名或密码错误" duration:2.0 position:@"center"];
+            NSString *msg = data[@"msg"] ? data[@"msg"] : @"用户名或密码错误";
+            [self.view makeToast:msg duration:2.0 position:@"center"];
         }
     }];
-
 }
 - (IBAction)endEditor:(UITapGestureRecognizer *)sender {
     [self.view endEditing:YES];
