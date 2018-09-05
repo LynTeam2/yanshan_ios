@@ -225,28 +225,58 @@ static NSString *blueString    = @"6490ff";
 }
 - (void)btn1:(UIButton *)sender {
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
-    [itemsVC setWrongItemsData:[examModel items]];
+    [itemsVC setWrongItemsData:[examModel allWrongItems]];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
 - (void)btn2:(UIButton *)sender {
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
+    if ([examModel getAllWrongSCItem].count) {
+        [arr addObjectsFromArray:[examModel getAllWrongSCItem]];
+    }
+    if ([examModel getAllUndoSCItem]) {
+        [arr addObjectsFromArray:[examModel getAllUndoSCItem]];
+    }
+    if (arr.count == 0) {
+        return;
+    }
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
-    [itemsVC setWrongItemsData:[examModel getSCItem]];
+    [itemsVC setWrongItemsData:arr];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
 - (void)btn3:(UIButton *)sender {
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
+    if ([examModel getAllWrongMCItem].count) {
+        [arr addObjectsFromArray:[examModel getAllWrongMCItem]];
+    }
+    if ([examModel getAllUndoMCItem]) {
+        [arr addObjectsFromArray:[examModel getAllUndoMCItem]];
+    }
+    if (arr.count == 0) {
+        return;
+    }
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
-    [itemsVC setWrongItemsData:[examModel getMCItem]];
+    [itemsVC setWrongItemsData:arr];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
 }
 - (void)btn4:(UIButton *)sender {
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
+    if ([examModel getAllWrongTFItem].count) {
+        [arr addObjectsFromArray:[examModel getAllWrongTFItem]];
+    }
+    if ([examModel getAllUndoTFItem]) {
+        [arr addObjectsFromArray:[examModel getAllUndoTFItem]];
+    }
+    if (arr.count == 0) {
+        return;
+    }
     YSWrongItemsViewController *itemsVC = [[YSWrongItemsViewController alloc] init];
-    [itemsVC setWrongItemsData:[examModel getTFItem]];
+    [itemsVC setWrongItemsData:arr];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:itemsVC animated:YES];
     self.hidesBottomBarWhenPushed = NO;
