@@ -255,7 +255,7 @@
         [self addChildViewController:pageVC];
         [self.view addSubview:pageVC.view];
         [pageVC didMoveToParentViewController:self];
-        pageVC.view.backgroundColor = [UIColor redColor];
+        pageVC.view.backgroundColor = [UIColor whiteColor];
         [pageVC setViewControllers:@[vcs[0]] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:^(BOOL finished) {
             
         }];

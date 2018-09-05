@@ -84,7 +84,6 @@ static NSInteger maxExamCount = 1;
     }else if ([data isKindOfClass:[YSExamModel class]]) {
         YSExamModel *model = (YSExamModel *)data;
         [[YSNetWorkEngine sharedInstance] queryUserExamCountWith:model.examId responseHandler:^(NSError *error, id data) {
-            NSLog(@"%@",data);
             NSDictionary *results = [data objectForKey:@"results"];
             NSInteger examCount = [results[@"examCount"] integerValue];
             if (examCount <= maxExamCount) {
@@ -93,6 +92,8 @@ static NSInteger maxExamCount = 1;
                 examinationVC.examCount = examCount;
                 self.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:examinationVC animated:YES];
+            }else{
+                [self.view makeToast:@"已超出限制考试次数" duration:2.0 position:@"center"];
             }
 
         }];
