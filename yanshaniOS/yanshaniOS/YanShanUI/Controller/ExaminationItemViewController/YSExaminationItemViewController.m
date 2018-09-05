@@ -224,13 +224,14 @@
 
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     NSArray *titles = @[@"A",@"B",@"C",@"D"];
+    CGFloat height = 0.0;
     for (int i = 0; i < choices.count; i++) {
-        CGFloat height = i == 0 ? 0 :  [_model getChoiceCellHeight:choices[i-1]];
+        height += i == 0 ? 0 : [_model getChoiceHeight:choices[i-1]];
         height += (i == 0 ? 0 : 5);
         UIButton *sender = [UIButton buttonWithType:UIButtonTypeCustom];
         [sender setTitle:choices[i] forState:UIControlStateNormal];
         [sender setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        sender.frame = CGRectMake(20, (height+5)*i, width-40, [_model getChoiceCellHeight:choices[i]]);
+        sender.frame = CGRectMake(20, height, width-40, [_model getChoiceHeight:choices[i]]);
         sender.titleLabel.font = [UIFont systemFontOfSize:16.f];
         sender.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         sender.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
