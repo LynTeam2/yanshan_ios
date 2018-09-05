@@ -41,6 +41,6 @@
 
 - (CGFloat)getAllChoiceHeight;
 
-- (CGFloat)getChoiceCellHeight:(NSString *)choice;
+- (CGFloat)getChoiceHeight:(NSString *)choice;
 
 @end

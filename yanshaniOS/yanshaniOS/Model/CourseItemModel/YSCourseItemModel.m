@@ -119,28 +119,16 @@
 }
 
 - (CGFloat)getAllChoiceHeight {
-    CGFloat height = [self heightForChoice:_choiceA] + [self heightForChoice:_choiceB] + [self heightForChoice:_choiceC] + [self heightForChoice:_choiceD];
+    CGFloat height = [self heightForChoice:_choiceA] +
+                     [self heightForChoice:_choiceB] +
+                     [self heightForChoice:_choiceC] +
+                     [self heightForChoice:_choiceD];
     return height == 0 ? 44*2 : height;
 }
 
-- (CGFloat)getChoiceCellHeight:(NSString *)choice {
+- (CGFloat)getChoiceHeight:(NSString *)choice {
     choice = [choice stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if ([choice isEqualToString:_choiceA]) {
-        if (choiceAHeight == 0) {
-            return [self heightForChoice:_choiceA];
-        }
-        return choiceAHeight;
-    }else if ([choice isEqualToString:_choiceB]) {
-        if (choiceBHeight == 0) {
-            return [self heightForChoice:_choiceB];
-        }
-        return choiceBHeight;
-    }else if ([choice isEqualToString:_choiceC]) {
-        if (choiceCHeight == 0) {
-            return [self heightForChoice:_choiceC];
-        }
-        return choiceCHeight;
-    }else if([choice isEqualToString:@"正确"]) {
+    if([choice isEqualToString:@"正确"]) {
         if (choiceAHeight == 0) {
             return [self heightForChoice:@"正确"];
         }
@@ -150,12 +138,8 @@
             return [self heightForChoice:@"错误"];
         }
         return choiceBHeight;
-    }else{
-        if (choiceDHeight == 0) {
-            return [self heightForChoice:_choiceD];
-        }
-        return choiceDHeight;
     }
+    return [self heightForChoice:choice];
 }
 
 - (CGFloat)heightForContent:(NSString *)content {
