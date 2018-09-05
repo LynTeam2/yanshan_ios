@@ -140,6 +140,7 @@
 		64BDEB041FC1C8A70036CD8E /* whitecircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEB011FC1C8A60036CD8E /* whitecircle.png */; };
 		64C7A8932074795A001C0666 /* YSExamToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C7A8922074795A001C0666 /* YSExamToolView.m */; };
 		64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C7F16C202C8C6E0017272A /* YSExamManager.m */; };
+		64DEF2CA213F7CB1002925A6 /* anjiandenglu.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */; };
 		64F41F321FD285F800FC636D /* UIView+YSCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F311FD285F800FC636D /* UIView+YSCustomView.m */; };
 		64F41F351FD28F1E00FC636D /* YSMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F341FD28F1E00FC636D /* YSMessageViewController.m */; };
 		64F41F3A1FD3BA2800FC636D /* YSMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F391FD3BA2800FC636D /* YSMessageModel.m */; };
@@ -376,6 +377,7 @@
 		64C7A8922074795A001C0666 /* YSExamToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamToolView.m; sourceTree = "<group>"; };
 		64C7F16B202C8C6E0017272A /* YSExamManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExamManager.h; sourceTree = "<group>"; };
 		64C7F16C202C8C6E0017272A /* YSExamManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamManager.m; sourceTree = "<group>"; };
+		64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anjiandenglu.png; sourceTree = "<group>"; };
 		64F41F301FD285F800FC636D /* UIView+YSCustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+YSCustomView.h"; sourceTree = "<group>"; };
 		64F41F311FD285F800FC636D /* UIView+YSCustomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+YSCustomView.m"; sourceTree = "<group>"; };
 		64F41F331FD28F1E00FC636D /* YSMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSMessageViewController.h; sourceTree = "<group>"; };
@@ -936,6 +938,7 @@
 		64BDEAA41FC10D9B0036CD8E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */,
 				64A46BCD20C133FD007210CC /* news.html */,
 				6449876720AAD5AC008B024C /* video.html */,
 				6449875620A9793E008B024C /* Record */,
@@ -1259,6 +1262,7 @@
 				64BDEAD31FC19EBF0036CD8E /* rightgraybackicon@2x.png in Resources */,
 				64B5C0852083429A007F611B /* law4.png in Resources */,
 				64BDEAC61FC156800036CD8E /* setting@2x.png in Resources */,
+				64DEF2CA213F7CB1002925A6 /* anjiandenglu.png in Resources */,
 				64BDEAF31FC1BDAB0036CD8E /* navbackicon@2x.png in Resources */,
 				64BDEB031FC1C8A70036CD8E /* whitecircle@2x.png in Resources */,
 				64F41F4A1FD3C31600FC636D /* jiaotongyunshu@3x.png in Resources */,

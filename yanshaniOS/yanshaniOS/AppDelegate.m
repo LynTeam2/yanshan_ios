@@ -17,11 +17,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
     [[YSFileManager sharedFileManager] zipDoUpdate:nil];
     [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile];
     [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kCourseFiles];
     [[UINavigationBar appearance] setBackgroundImage:[YSCommonHelper imageFromColor:kBlueColor withSize:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
     return YES;
 }
 
