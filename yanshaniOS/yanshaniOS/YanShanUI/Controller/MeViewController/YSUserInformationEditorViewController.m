@@ -37,12 +37,12 @@
     [self.view addSubview:_tf];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = kRandomColor;
+    line.backgroundColor = kLightGray;
     [self.view addSubview:line];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"确定" forState:UIControlStateNormal];
-    [btn setBackgroundColor:kRandomColor];
+    [btn setBackgroundColor:kBlueColor];
     [btn addTarget:self action:@selector(confirmModify:) forControlEvents:UIControlEventTouchUpInside];
     btn.layer.cornerRadius = 5;
     btn.layer.masksToBounds = YES;

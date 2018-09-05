@@ -60,6 +60,8 @@
     [logoutBtn setBackgroundColor:kBlueColor];
     [logoutBtn addTarget:self action:@selector(userLogout:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logoutBtn];
+    logoutBtn.layer.cornerRadius = 25;
+    logoutBtn.layer.masksToBounds = YES;
     [logoutBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(30);
         make.right.equalTo(self.view).offset(-30);
