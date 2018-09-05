@@ -8,6 +8,7 @@
 
 #import "YSExamManager.h"
 #import "YSExamModel.h"
+#import "YSCourseItemModel.h"
 
 static YSExamManager *manager = nil;
 
@@ -114,20 +115,83 @@ static NSString *examplist = @"exam.plist";
     BOOL success = [[YSFileManager sharedFileManager] documentPathIsExecutableFile:@"upgrade"];
     if (success) {
         // exam.json no exist
-        NSDictionary *dic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"exam.json" atDocumentName:@"exam"];
-        if (![dic objectForKey:@"exams"]) {
+        NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"exam.json" atDocumentName:@"exam"];
+        if (![jsonDic objectForKey:@"exams"]) {
             return NO;
         }
-        NSArray *exams = [YSExamModel arrayOfModelsFromDictionaries:dic[@"exams"] error:nil];
+        //清空历史数据
+        NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:examplist andDocumentName:nil];
+        [@[] writeToFile:filePath atomically:YES];
+
+        NSArray *exams = [YSExamModel arrayOfModelsFromDictionaries:jsonDic[@"exams"] error:nil];
+
+        NSMutableArray *examedArray = [NSMutableArray array];
+        NSMutableDictionary *examedDic = [NSMutableDictionary  dictionary];
+        //获取已做考试试题
         for (int i = 0; i < datas.count; i++) {
             NSDictionary *tmpDic = datas[i];
             for (int j = 0; j < exams.count; j++) {
                 YSExamModel *model = exams[j];
                 if ([tmpDic[@"examId"] integerValue] == model.examId) {
-                    
+                    [examedArray addObject:model];
+                    [examedDic setObject:model forKey:[NSString stringWithFormat:@"%ld",model.examId]];
+                    break;
                 }
             }
         }
+        //分析已考考试试题
+        for (NSDictionary *dic in datas) {
+            //创建考试结果model
+            YSExaminationItemModel *examinationItemModel = [[YSExaminationItemModel alloc] init];
+            NSString *examID = [NSString stringWithFormat:@"%ld",[dic[@"examId"] integerValue]];
+            //获取相关试题
+            if (examedDic[examID]) {
+                YSExamModel *model = examedDic[examID];
+                examinationItemModel.examID = model.examId;
+                examinationItemModel.examName = model.examName;
+                examinationItemModel.examScore = [dic[@"examScore"] integerValue];
+                examinationItemModel.dateString = dic[@"createTime"];
+                if (examinationItemModel.examScore < model.standard) {
+                    examinationItemModel.examJudgement = @"成绩不合格";
+                }else{
+                    examinationItemModel.examJudgement = @"成绩合格";
+                }
+                NSMutableArray *items = [NSMutableArray array];
+                NSArray *examDetailList = dic[@"examDetailList"];
+                for (NSDictionary *item in examDetailList) {
+                    NSArray *arr;
+                    if ([item[@"questionType"] isEqualToString:@"sc"]) {
+                        arr = [YSCourseItemModel arrayOfModelsFromDictionaries: model.scList error:nil];;
+                    }
+                    if ([item[@"questionType"] isEqualToString:@"mc"]) {
+                        arr = [YSCourseItemModel arrayOfModelsFromDictionaries: model.mcList error:nil];;
+                    }
+                    if ([item[@"questionType"] isEqualToString:@"tf"]) {
+                        arr = [YSCourseItemModel arrayOfModelsFromDictionaries: model.tfList error:nil];;
+                    }
+                    for (YSCourseItemModel *courseItemModel in arr) {
+                        if ([item[@"questionId"] integerValue] == [courseItemModel.itemId integerValue]) {
+                            if ([item[@"result"] integerValue] == 0) {
+                                courseItemModel.doROW = @"n";
+                                [examinationItemModel saveWrongItem:courseItemModel];
+                            }
+                            if ([item[@"result"] integerValue] == 1) {
+                                courseItemModel.doROW = @"y";
+                                [examinationItemModel saveRightItem:courseItemModel];
+                            }
+                            [items addObject:courseItemModel];
+                        }
+                    }
+                    examinationItemModel.items = [items copy];
+                    examinationItemModel.wrongItemCount = [examinationItemModel allWrongItems].count;
+                }
+                [self saveCurrentExam:examinationItemModel];
+            }
+        }
+        
+        
+        
+        
     }
     return success;
 }
