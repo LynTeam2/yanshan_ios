@@ -26,10 +26,11 @@
                                         @"scList":@"scList",
                                         @"mcList":@"mcList",
                                         @"bfList":@"bfList",
-                                          @"tfList":@"tfList",@"courseList":@"courseList",
-                                          @"examScCount":@"examScCount",
-                                          @"examMcCount":@"examMcCount",
-                                          @"examTfCount":@"examTfCount"
+                                        @"tfList":@"tfList",
+                                        @"courseList":@"courseList",
+                                        @"examScCount":@"examScCount",
+                                        @"examMcCount":@"examMcCount",
+                                        @"examTfCount":@"examTfCount"
                                           }];
 }
 
