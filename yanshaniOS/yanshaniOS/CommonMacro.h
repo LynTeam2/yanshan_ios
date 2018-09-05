@@ -35,4 +35,8 @@
 
 #define kCourseFiles           @"courseid.plist"
 
+#pragma mark - notification name
+
+#define kUnzipSuccessNotification   @"unzipFileSuccess"
+
 #endif /* CommonMacro_h */
