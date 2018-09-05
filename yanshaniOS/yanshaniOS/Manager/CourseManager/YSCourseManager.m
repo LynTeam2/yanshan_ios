@@ -123,6 +123,7 @@ static  NSString *allCourseFile = @"allcourses.plist";
 }
 
 - (BOOL)syncronizeSerVerCourseProcessData:(NSArray *)datas {
+    [allIds removeAllObjects];
     [allIds addObjectsFromArray:datas];
     NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:kCourseFiles andDocumentName:nil];
     return [allIds writeToFile:filePath atomically:YES];
