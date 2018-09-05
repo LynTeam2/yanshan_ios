@@ -217,10 +217,9 @@ static YSNetWorkEngine *netWorkEngine = nil;
     [manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Accept"];
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSString *urlString = [self requestFullURL:[NSString stringWithFormat:@"course/%@",courseID]];
-    NSLog(@"%@", urlString);
     NSInteger duration = ceill(abs((int)seconds)/60.0);
     [manager POST:urlString parameters:@{@"duration":@(duration)} progress:^(NSProgress * _Nonnull uploadProgress) {
-        NSLog(@"%@",uploadProgress);
+
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"同步成功");
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -250,8 +249,6 @@ static YSNetWorkEngine *netWorkEngine = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
     NSString *urlString = [self requestFullURL:@"exam"];
-    NSLog(@"%@", urlString);
-    
     NSMutableArray *listItems = [NSMutableArray arrayWithCapacity:0];
     for (int i = 0; i < data.items.count; i++) {
         YSCourseItemModel *model = data.items[i];
@@ -269,10 +266,9 @@ static YSNetWorkEngine *netWorkEngine = nil;
                                                  @"endTime":data.endTime,
                                                  @"examScore":[NSString stringWithFormat:@"%ld",data.examScore],
                                                  @"examDetailList":listItems,
-                                                 @"userId":[YSUserModel shareInstance].userId};//@{@"examHistories":@[]}
-    //@{@"duration":@10}
+                                                 @"userId":[YSUserModel shareInstance].userId};
     [manager POST:urlString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-        NSLog(@"%@",uploadProgress);
+
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"同步成功");
         id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:0|1 error:nil];
