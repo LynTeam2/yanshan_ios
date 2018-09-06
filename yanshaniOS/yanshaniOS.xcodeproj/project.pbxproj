@@ -141,6 +141,15 @@
 		64C7A8932074795A001C0666 /* YSExamToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C7A8922074795A001C0666 /* YSExamToolView.m */; };
 		64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C7F16C202C8C6E0017272A /* YSExamManager.m */; };
 		64DEF2CA213F7CB1002925A6 /* anjiandenglu.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */; };
+		64DEF2CE2140D27D002925A6 /* anjianlogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2CB2140D27B002925A6 /* anjianlogin@3x.png */; };
+		64DEF2CF2140D27D002925A6 /* anjianlogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2CC2140D27C002925A6 /* anjianlogin@2x.png */; };
+		64DEF2D02140D27D002925A6 /* anjianlogin.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2CD2140D27D002925A6 /* anjianlogin.png */; };
+		64DEF2D72140D288002925A6 /* alert@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2D12140D286002925A6 /* alert@3x.png */; };
+		64DEF2D82140D288002925A6 /* smile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2D22140D286002925A6 /* smile@3x.png */; };
+		64DEF2D92140D288002925A6 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2D32140D287002925A6 /* smile.png */; };
+		64DEF2DA2140D288002925A6 /* alert@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2D42140D287002925A6 /* alert@2x.png */; };
+		64DEF2DB2140D288002925A6 /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2D52140D287002925A6 /* alert.png */; };
+		64DEF2DC2140D288002925A6 /* smile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2D62140D288002925A6 /* smile@2x.png */; };
 		64F41F321FD285F800FC636D /* UIView+YSCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F311FD285F800FC636D /* UIView+YSCustomView.m */; };
 		64F41F351FD28F1E00FC636D /* YSMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F341FD28F1E00FC636D /* YSMessageViewController.m */; };
 		64F41F3A1FD3BA2800FC636D /* YSMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F41F391FD3BA2800FC636D /* YSMessageModel.m */; };
@@ -378,6 +387,15 @@
 		64C7F16B202C8C6E0017272A /* YSExamManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExamManager.h; sourceTree = "<group>"; };
 		64C7F16C202C8C6E0017272A /* YSExamManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamManager.m; sourceTree = "<group>"; };
 		64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anjiandenglu.png; sourceTree = "<group>"; };
+		64DEF2CB2140D27B002925A6 /* anjianlogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anjianlogin@3x.png"; sourceTree = "<group>"; };
+		64DEF2CC2140D27C002925A6 /* anjianlogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anjianlogin@2x.png"; sourceTree = "<group>"; };
+		64DEF2CD2140D27D002925A6 /* anjianlogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anjianlogin.png; sourceTree = "<group>"; };
+		64DEF2D12140D286002925A6 /* alert@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert@3x.png"; sourceTree = "<group>"; };
+		64DEF2D22140D286002925A6 /* smile@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smile@3x.png"; sourceTree = "<group>"; };
+		64DEF2D32140D287002925A6 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
+		64DEF2D42140D287002925A6 /* alert@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert@2x.png"; sourceTree = "<group>"; };
+		64DEF2D52140D287002925A6 /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
+		64DEF2D62140D288002925A6 /* smile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smile@2x.png"; sourceTree = "<group>"; };
 		64F41F301FD285F800FC636D /* UIView+YSCustomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+YSCustomView.h"; sourceTree = "<group>"; };
 		64F41F311FD285F800FC636D /* UIView+YSCustomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+YSCustomView.m"; sourceTree = "<group>"; };
 		64F41F331FD28F1E00FC636D /* YSMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSMessageViewController.h; sourceTree = "<group>"; };
@@ -938,6 +956,15 @@
 		64BDEAA41FC10D9B0036CD8E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				64DEF2D52140D287002925A6 /* alert.png */,
+				64DEF2D42140D287002925A6 /* alert@2x.png */,
+				64DEF2D12140D286002925A6 /* alert@3x.png */,
+				64DEF2D32140D287002925A6 /* smile.png */,
+				64DEF2D62140D288002925A6 /* smile@2x.png */,
+				64DEF2D22140D286002925A6 /* smile@3x.png */,
+				64DEF2CD2140D27D002925A6 /* anjianlogin.png */,
+				64DEF2CC2140D27C002925A6 /* anjianlogin@2x.png */,
+				64DEF2CB2140D27B002925A6 /* anjianlogin@3x.png */,
 				64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */,
 				64A46BCD20C133FD007210CC /* news.html */,
 				6449876720AAD5AC008B024C /* video.html */,
@@ -1238,7 +1265,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64DEF2D02140D27D002925A6 /* anjianlogin.png in Resources */,
 				64BDEAC11FC156800036CD8E /* qiandao@2x.png in Resources */,
+				64DEF2D72140D288002925A6 /* alert@3x.png in Resources */,
 				64B5C0902083429A007F611B /* law5@2x.png in Resources */,
 				64F41F4D1FD3C31600FC636D /* shigongjihua@3x.png in Resources */,
 				64BDEB021FC1C8A70036CD8E /* whitecircle@3x.png in Resources */,
@@ -1256,6 +1285,8 @@
 				64BDEAC31FC156800036CD8E /* setting@3x.png in Resources */,
 				6449876820AAD5AC008B024C /* video.html in Resources */,
 				649DD59620D1098A00E9948C /* examplaceholder.jpg in Resources */,
+				64DEF2DB2140D288002925A6 /* alert.png in Resources */,
+				64DEF2D82140D288002925A6 /* smile@3x.png in Resources */,
 				64BDEAC01FC156800036CD8E /* message@2x.png in Resources */,
 				64F41F4F1FD3C6C600FC636D /* classplaceholder@3x.png in Resources */,
 				6406D489202772970075D089 /* wchoice.png in Resources */,
@@ -1270,6 +1301,7 @@
 				64BDEAAA1FC10DF70036CD8E /* bannerplaceholder@2x.png in Resources */,
 				64F41F4B1FD3C31600FC636D /* weixianyuan@3x.png in Resources */,
 				6406D48A202772970075D089 /* rchoice.png in Resources */,
+				64DEF2CE2140D27D002925A6 /* anjianlogin@3x.png in Resources */,
 				64BDEAD41FC19EBF0036CD8E /* rightgraybackicon@3x.png in Resources */,
 				64B5C08C2083429A007F611B /* law4@2x.png in Resources */,
 				6449876320A9793F008B024C /* newmc@2x.png in Resources */,
@@ -1280,12 +1312,14 @@
 				64B5C08E2083429A007F611B /* law2@2x.png in Resources */,
 				64BDEAC81FC156800036CD8E /* setting.png in Resources */,
 				643D25A31F77FE640034131C /* Main.storyboard in Resources */,
+				64DEF2D92140D288002925A6 /* smile.png in Resources */,
 				64BDEB041FC1C8A70036CD8E /* whitecircle.png in Resources */,
 				64BDEAC41FC156800036CD8E /* qiandao.png in Resources */,
 				64B5C0932083429A007F611B /* law3@2x.png in Resources */,
 				64BDEAC21FC156800036CD8E /* qiandao@3x.png in Resources */,
 				64BDEAF21FC1BDAB0036CD8E /* navbackicon.png in Resources */,
 				64BDEAC71FC156800036CD8E /* message@3x.png in Resources */,
+				64DEF2DC2140D288002925A6 /* smile@2x.png in Resources */,
 				64B5C0862083429A007F611B /* law5@3x.png in Resources */,
 				6403AEB21FF87D2100E06D71 /* testicon.png in Resources */,
 				64B5C08F2083429A007F611B /* law4@3x.png in Resources */,
@@ -1294,12 +1328,14 @@
 				64BDEAAC1FC10DF70036CD8E /* bannerplaceholder.png in Resources */,
 				6403AEB01FF87D2100E06D71 /* righticon.png in Resources */,
 				64F41F491FD3C31600FC636D /* xiaofangshuan@3x.png in Resources */,
+				64DEF2CF2140D27D002925A6 /* anjianlogin@2x.png in Resources */,
 				64BDEAC51FC156800036CD8E /* message.png in Resources */,
 				64F41F471FD3C31600FC636D /* renyuanmiji@3x.png in Resources */,
 				6449876120A9793F008B024C /* newtf@3x.png in Resources */,
 				6449876520A9793F008B024C /* newsc@2x.png in Resources */,
 				64BDEAF11FC1BDAB0036CD8E /* navbackicon@3x.png in Resources */,
 				64B5C08B2083429A007F611B /* law3@3x.png in Resources */,
+				64DEF2DA2140D288002925A6 /* alert@2x.png in Resources */,
 				64B5C0872083429A007F611B /* law5.png in Resources */,
 				64B5C08A2083429A007F611B /* law1@3x.png in Resources */,
 				64BDEAFE1FC1C0800036CD8E /* qiandaobgicon.png in Resources */,

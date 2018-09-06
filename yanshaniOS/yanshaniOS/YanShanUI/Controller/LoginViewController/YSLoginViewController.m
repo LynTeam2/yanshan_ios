@@ -24,10 +24,15 @@
     }
     _username.layer.borderWidth = _password.layer.borderWidth = 1.0;
     _username.layer.borderColor = _password.layer.borderColor = kRGBColor(229, 239, 235, 1).CGColor;
-    UIImageView *leftView1 = [[UIImageView alloc] init];
-    leftView1.frame = CGRectMake(0, 0, 20, 20);
-    UIImageView *leftView2 = [[UIImageView alloc] init];
-    leftView2.frame = CGRectMake(0, 0, 20, 20);
+    UIButton *leftView1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftView1.frame = CGRectMake(0, 0, 30, 30);
+    [leftView1 setImage:[UIImage imageNamed:@"alert"] forState:UIControlStateNormal];
+    
+    UIButton *leftView2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftView2.frame = CGRectMake(0, 0, 30, 30);
+    [leftView2 setImage:[UIImage imageNamed:@"smile"] forState:UIControlStateNormal];
+    
+    leftView1.contentMode = leftView2.contentMode = UIViewContentModeScaleAspectFit;
     _username.leftView = leftView1;
     _password.leftView = leftView2;
     _username.leftViewMode = _password.leftViewMode = UITextFieldViewModeAlways;
