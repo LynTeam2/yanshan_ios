@@ -291,4 +291,22 @@ static YSNetWorkEngine *netWorkEngine = nil;
     }];
 }
 
+- (void)qiandaoWithResponseHandler:(NetWorkResponse)handler {
+    NSString *path = [self requestFullURL:[NSString stringWithFormat:@"user/%@",@"bean"]];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"PUT";
+    
+    NSData *data = [NSJSONSerialization dataWithJSONObject:@{@"beanCount":@10} options:0|1 error:nil];
+    request.HTTPBody = data;
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:1|0 error:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            handler(error,dic);
+        });
+    }] resume];
+}
+
 @end
+
