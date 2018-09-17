@@ -137,7 +137,7 @@
     [cell.contentView addSubview:scoreLabel];
     
     UILabel *timeLabel = [[UILabel alloc] init];
-    timeLabel.text = [NSString stringWithFormat:@"%@  %@",model.examJudgement,model.dateString];
+    timeLabel.text = [NSString stringWithFormat:@"%@       %@",model.examJudgement,model.examName];
     timeLabel.adjustsFontSizeToFitWidth = YES;
     timeLabel.textAlignment = NSTextAlignmentRight;
     [cell.contentView addSubview:timeLabel];
