@@ -93,7 +93,7 @@ static NSInteger maxExamCount = 1;
                 self.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:examinationVC animated:YES];
             }else{
-                [self.view makeToast:@"已超出限制考试次数" duration:2.0 position:@"center"];
+                [self.view makeToast:@"参加考试次数已超出次数限制\n  (每次考试最多参加2次)" duration:2.0 position:@"center"];
             }
 
         }];

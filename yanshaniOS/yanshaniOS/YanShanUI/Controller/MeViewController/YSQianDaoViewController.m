@@ -139,15 +139,17 @@
     [sender setTitle:@"已签到" forState:UIControlStateNormal];
     sender.enabled = NO;
     
-    [qiandaoDic setObject:@"1" forKey:qiandaoKey];
     [qiandaoDic writeToFile:[[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile] atomically:YES];
     
     [[YSNetWorkEngine sharedInstance] modifyUserInformationWithParam:@{@"beanCount":@10} responseHandler:^(NSError *error, id data) {
         if (data) {
+            [qiandaoDic setObject:@"1" forKey:qiandaoKey];
             [YSUserModel shareInstance].beanCount += 10;
             if (_QDBlock) {
                 _QDBlock(YES);
             }
+        }else{
+            [[UIApplication sharedApplication].keyWindow makeToast:@"签到失败" duration:2.0 position:@"center"];
         }
     }];
     
