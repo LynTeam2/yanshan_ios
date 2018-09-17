@@ -51,6 +51,9 @@ static NSString *examplist = @"exam.plist";
         NSArray *arr = [YSCourseItemModel arrayOfDictionariesFromModels:model.items];
         [dic setObject:arr forKey:@"items"];
     }
+    if (model.examName) {
+        [dic setObject:model.examName forKey:@"examName"];
+    }
     if (dic.count) {
         NSString *filePath = [[YSFileManager sharedFileManager] getUnzipFilePathWithFileName:examplist andDocumentName:nil];
         NSArray *olderExams = [NSArray arrayWithContentsOfFile:filePath];
@@ -91,6 +94,9 @@ static NSString *examplist = @"exam.plist";
             if (dic[@"items"]) {
                 NSArray *arr = [YSCourseItemModel arrayOfModelsFromDictionaries:dic[@"items"] error:nil];
                 model.items = [arr copy];
+            }
+            if (dic[@"examName"]) {
+                model.examName = dic[@"examName"];
             }
             [mArr addObject:model];
         }
