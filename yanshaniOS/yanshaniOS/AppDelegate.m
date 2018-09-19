@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Bugly/Bugly.h>
 
 @interface AppDelegate ()
 
@@ -18,6 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [Bugly startWithAppId:@"a73c975f65d"];
     [[YSFileManager sharedFileManager] zipDoUpdate:nil];
     [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile];
     [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kCourseFiles];
