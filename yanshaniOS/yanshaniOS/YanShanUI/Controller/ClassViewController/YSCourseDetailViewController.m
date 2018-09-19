@@ -70,6 +70,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    webView.delegate = nil;
+    webView = nil;
+}
+
 - (void)setCoursesData:(NSArray *)datas {
     courseItems = [NSArray arrayWithArray:datas];
 }
@@ -95,7 +100,7 @@
     [self.view addSubview:webView];
     [webView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.and.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).offset(-height);
+        make.height.mas_equalTo(height);
     }];
     if (_model.courseType == CourseContentTypeVideo) {
         NSString *url = [[NSBundle mainBundle] pathForResource:@"video" ofType:@"html"];
@@ -104,7 +109,7 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }else if (_model.courseType == CourseContentTypeArtical) {
         NSString *content = [NSString stringWithFormat:@"<div>%@</div>",_model.content];
-        
+
     content = [content stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
 
         [webView loadHTMLString:content baseURL:nil];
@@ -151,7 +156,7 @@
     [coverView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
-        make.height.mas_equalTo(200);
+        make.top.equalTo(webView.mas_bottom);
     }];
     
     [catogaryLabel mas_makeConstraints:^(MASConstraintMaker *make) {

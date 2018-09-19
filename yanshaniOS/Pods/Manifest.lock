@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - Bugly (2.4.8)
   - DZNEmptyDataSet (1.8.1)
   - Inlineobjc (1.0.5)
   - JSONModel (1.7.0)
@@ -28,6 +29,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
+  - Bugly
   - DZNEmptyDataSet
   - JSONModel
   - LzmaSDK-ObjC
@@ -38,6 +40,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Bugly: da3c02408c14838d498429320545a8e439392978
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Inlineobjc: 421a4302ac39cbd4a1a60983eec9b3a3ea84d444
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
@@ -47,6 +50,6 @@ SPEC CHECKSUMS:
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
 
-PODFILE CHECKSUM: d718361ffd4a05ea104d1586495716f6aae467b6
+PODFILE CHECKSUM: 7fc40fdc9b74838892297ba99727edf65c31864c
 
 COCOAPODS: 1.4.0

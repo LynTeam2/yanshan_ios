@@ -86,7 +86,9 @@ static NSInteger maxExamCount = 1;
         [[YSNetWorkEngine sharedInstance] queryUserExamCountWith:model.examId responseHandler:^(NSError *error, id data) {
             NSDictionary *results = [data objectForKey:@"results"];
             NSInteger examCount = [results[@"examCount"] integerValue];
-            if (examCount <= maxExamCount) {
+            if (!results[@"examCount"]) {
+                [self.view makeToast:@"登录信息失效,请重新登录" duration:2.0 position:@"center"];
+            }else if (examCount <= maxExamCount) {
                 YSExaminationViewController *examinationVC = [[YSExaminationViewController alloc] init];
                 examinationVC.examModel = model;
                 examinationVC.examCount = examCount;

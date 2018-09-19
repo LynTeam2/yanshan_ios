@@ -61,8 +61,8 @@
     circleLabel.numberOfLines = 0;
     circleLabel.layer.cornerRadius = 75;
     circleLabel.layer.masksToBounds = YES;
-    circleLabel.layer.borderWidth = kLineHeight;
-    circleLabel.layer.borderColor = kRandomColor.CGColor;
+    circleLabel.layer.borderWidth = kLineHeight*2;
+    circleLabel.layer.borderColor = kBlueColor.CGColor;
     circleLabel.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:circleLabel];
     
@@ -136,8 +136,14 @@
     scoreLabel.text = [NSString stringWithFormat:@"答错%ld题",model.wrongItemCount];
     [cell.contentView addSubview:scoreLabel];
     
+    UILabel *resultLabel = [[UILabel alloc] init];
+    resultLabel.text = model.examJudgement;
+    resultLabel.adjustsFontSizeToFitWidth = YES;
+    resultLabel.textAlignment = NSTextAlignmentCenter;
+    [cell.contentView addSubview:resultLabel];
+    
     UILabel *timeLabel = [[UILabel alloc] init];
-    timeLabel.text = [NSString stringWithFormat:@"%@       %@",model.examJudgement,model.examName];
+    timeLabel.text = model.examName;
     timeLabel.adjustsFontSizeToFitWidth = YES;
     timeLabel.textAlignment = NSTextAlignmentRight;
     [cell.contentView addSubview:timeLabel];
@@ -152,8 +158,14 @@
         make.height.equalTo(cell.contentView);
         make.width.mas_offset(100);
     }];
+    [resultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(scoreLabel.mas_right).offset(10);
+        make.top.equalTo(cell.contentView);
+        make.height.equalTo(cell.contentView);
+        make.width.mas_equalTo(100);
+    }];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(scoreLabel.mas_right).offset(20);
+        make.left.equalTo(resultLabel.mas_right).offset(10);
         make.top.equalTo(cell.contentView);
         make.height.equalTo(cell.contentView);
         make.right.equalTo(cell.contentView).offset(-10);

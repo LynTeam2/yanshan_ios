@@ -173,9 +173,11 @@
     formatter.timeZone = [NSTimeZone systemTimeZone];
     formatter.dateFormat = @"hh:mm:ss";
     
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSDate *date = [NSDate date];
     NSString *time = [formatter stringFromDate:date];
-    return [NSString stringWithFormat:@"%ld",date.timeIntervalSince1970*1000];
+    double unixTime = ceil(date.timeIntervalSince1970);
+    NSLog(@"%.0f",unixTime);
+    return [NSString stringWithFormat:@"%.0f",date.timeIntervalSince1970];
 }
 
 #pragma mark - class method
@@ -214,7 +216,7 @@
         [self.navigationController presentViewController:alertC animated:YES completion:nil];
         return;
     }
-    self.title = [NSString stringWithFormat:@"倒计时 %ld:00",_examModel.examDuration];
+    self.title = [NSString stringWithFormat:@"倒计时 %ld:00",(long)_examModel.examDuration];
     beginExam = YES;
     examItemModel = [[YSExaminationItemModel alloc] init];
     examItemModel.examID = _examModel.examId;
@@ -230,17 +232,17 @@
     
     NSInteger sumCount = _examModel.scList.count+_examModel.mcList.count+_examModel.tfList.count;
     
-    int tfCount = _examModel.tfList.count;
-    int scCount = _examModel.scList.count;
-    int mcCount = _examModel.mcList.count;
+    NSInteger tfCount = _examModel.tfList.count;
+    NSInteger scCount = _examModel.scList.count;
+    NSInteger mcCount = _examModel.mcList.count;
     
     NSMutableArray *mTFArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *mSCArray = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *mMCArray = [NSMutableArray arrayWithCapacity:0];
     
-    NSArray *tfItems = [self randomArray:_examModel.tfList withCount:tfCount];
-    NSArray *scItems = [self randomArray:_examModel.scList withCount:scCount];
-    NSArray *mcItems = [self randomArray:_examModel.mcList withCount:mcCount];
+    NSArray *tfItems = [self randomArray:[NSMutableArray arrayWithArray:_examModel.tfList] withCount:tfCount];
+    NSArray *scItems = [self randomArray:[NSMutableArray arrayWithArray:_examModel.scList] withCount:scCount];
+    NSArray *mcItems = [self randomArray:[NSMutableArray arrayWithArray:_examModel.mcList] withCount:mcCount];
     
     [mTFArray addObjectsFromArray:[tfItems subarrayWithRange:NSMakeRange(0, _examModel.examTfCount)]];
     [mSCArray addObjectsFromArray:[scItems subarrayWithRange:NSMakeRange(0, _examModel.examScCount)]];
