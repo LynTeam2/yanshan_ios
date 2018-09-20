@@ -34,9 +34,10 @@
 
 - (void)configView {
     
-    mainView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    mainView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     mainView.delegate = self;
     mainView.dataSource = self;
+    mainView.backgroundColor = [UIColor whiteColor];
     mainView.separatorStyle = UITableViewCellSeparatorStyleNone;
     mainView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:mainView];
@@ -52,23 +53,30 @@
     }
     
     CGRect frame = self.view.frame;
+    
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 290)];
     mainView.tableHeaderView = headerView;
     
+    
+    UIView *waveView = [[UIView alloc] init];
+    waveView.layer.cornerRadius = 75;
+    waveView.layer.masksToBounds = YES;
+    waveView.layer.borderWidth = kLineHeight*2;
+    waveView.layer.borderColor = kLightGray.CGColor;
+    [headerView addSubview:waveView];
+    
+    CAShapeLayer *slayer = [CAShapeLayer layer];
+    slayer.frame = CGRectMake(0, 0, 150, 150);
+    slayer.path = [self drawWaterwaveWithLayerFrame:slayer.bounds];
+    slayer.fillColor = kBlueColor.CGColor;
+    [waveView.layer addSublayer:slayer];
+    
     UILabel *circleLabel = [[UILabel alloc] init];
-    circleLabel.backgroundColor = [UIColor whiteColor];
+    circleLabel.backgroundColor = [UIColor clearColor];
     circleLabel.text = @"累计做题\n0次";
     circleLabel.numberOfLines = 0;
-    circleLabel.layer.cornerRadius = 75;
-    circleLabel.layer.masksToBounds = YES;
-    circleLabel.layer.borderWidth = kLineHeight*2;
-    circleLabel.layer.borderColor = kBlueColor.CGColor;
     circleLabel.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:circleLabel];
-    
-    UIView *line = [[UILabel alloc] init];
-    line.backgroundColor = [UIColor grayColor];
-    [headerView addSubview:line];
     
     [circleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headerView).offset(25);
@@ -76,14 +84,13 @@
         make.size.mas_equalTo(CGSizeMake(150, 150));
     }];
     
-    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(circleLabel.mas_bottom).offset(25);
-        make.left.equalTo(headerView);
-        make.right.equalTo(headerView);
-        make.height.mas_equalTo(kLineHeight);
-    }];
+    [waveView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.and.right.bottom.equalTo(circleLabel);
+    }];;
+    
     if ([[YSExamManager sharedExamManager] getAllExams].count) {
-        allExams = [NSArray arrayWithArray:[[YSExamManager sharedExamManager] getAllExams]];
+        NSMutableArray *m = [NSMutableArray arrayWithCapacity:0];
+        allExams = [[[YSExamManager sharedExamManager] getAllExams] copy];
         circleLabel.text = [NSString stringWithFormat:@"累计做题\n%ld次",allExams.count];
     }
     YSExamManager *manager = [YSExamManager sharedExamManager];
@@ -99,7 +106,7 @@
         [headerView addSubview:label];
         label.backgroundColor = [UIColor whiteColor];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(line.mas_bottom);
+            make.top.equalTo(circleLabel.mas_bottom);
             make.left.equalTo(headerView).offset(frame.size.width/3*i);
             make.bottom.equalTo(headerView);
             make.width.mas_equalTo(frame.size.width/3);
@@ -133,11 +140,11 @@
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     YSExaminationItemModel *model = allExams[indexPath.row];
     UILabel *scoreLabel = [[UILabel alloc] init];
-    scoreLabel.text = [NSString stringWithFormat:@"答错%ld题",model.wrongItemCount];
+    scoreLabel.text = [NSString stringWithFormat:@"%ld分",model.examScore];
     [cell.contentView addSubview:scoreLabel];
     
     UILabel *resultLabel = [[UILabel alloc] init];
-    resultLabel.text = model.examJudgement;
+    resultLabel.text = [model.dateString substringWithRange:NSMakeRange(0, model.dateString.length-3)];
     resultLabel.adjustsFontSizeToFitWidth = YES;
     resultLabel.textAlignment = NSTextAlignmentCenter;
     [cell.contentView addSubview:resultLabel];
@@ -152,23 +159,30 @@
     line.backgroundColor = kLightGray;
     [cell.contentView addSubview:line];
     
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rightgoicon"]];
+    icon.contentMode = UIViewContentModeScaleAspectFit;
+    icon.frame = CGRectMake(0, 0, 20, 20);
+    cell.accessoryView = icon;
     [scoreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(cell.contentView).offset(20);
         make.top.equalTo(cell.contentView);
         make.height.equalTo(cell.contentView);
-        make.width.mas_offset(100);
+        make.width.mas_equalTo(80);
     }];
+//    scoreLabel.backgroundColor = kRandomColor;
+//    resultLabel.backgroundColor = kRandomColor;
+//    timeLabel.backgroundColor = kRandomColor;
     [resultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(scoreLabel.mas_right).offset(10);
+        make.left.equalTo(scoreLabel.mas_right);
         make.top.equalTo(cell.contentView);
         make.height.equalTo(cell.contentView);
-        make.width.mas_equalTo(100);
+        make.width.mas_equalTo(120);
     }];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(resultLabel.mas_right).offset(10);
         make.top.equalTo(cell.contentView);
         make.height.equalTo(cell.contentView);
-        make.right.equalTo(cell.contentView).offset(-10);
+        make.right.equalTo(cell.contentView);
     }];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(cell.contentView).offset(20);
@@ -189,18 +203,49 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] init];
     UILabel *label = [[UILabel alloc] init];
     label.text = @"历史考试成绩";
     label.textAlignment = NSTextAlignmentCenter;
-    label.frame = CGRectMake(-0.5, 0, self.view.frame.size.width+0.5, 44);
+    label.frame = CGRectMake(-10, 10, self.view.frame.size.width+20, 44);
     label.layer.borderWidth = 0.5;
-    label.layer.borderColor = [UIColor grayColor].CGColor;
+    label.layer.borderColor = kLightGray.CGColor;
     label.backgroundColor = [UIColor whiteColor];
-    return label;
+    [view addSubview:label];
+    view.backgroundColor = kLightGray;
+    return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44;
+    return 54;
 }
+
+
+#pragma mark - draw water
+
+- (void)addWaterwaveView {
+    CAShapeLayer *slayer = [CAShapeLayer layer];
+    slayer.frame = CGRectMake(self.view.frame.size.width/2, 25, 150, 150);
+    slayer.path = [self drawWaterwaveWithLayerFrame:slayer.bounds];
+    slayer.fillColor = kBlueColor.CGColor;
+    [mainView.tableHeaderView.layer addSublayer:slayer];
+}
+
+
+- (CGPathRef)drawWaterwaveWithLayerFrame:(CGRect)frame {
+    
+    UIBezierPath *waterwavePath = [UIBezierPath bezierPath];
+    CGFloat baseNumber = allExams.count;
+    [waterwavePath moveToPoint:CGPointMake(0, 130-baseNumber)];
+    for (int x = 0; x < frame.size.width; x++) {
+        CGFloat y = 10 * sin(-x/frame.size.width*M_PI)+(130-baseNumber);
+        [waterwavePath addLineToPoint:CGPointMake(x, y)];
+    }
+    [waterwavePath addLineToPoint:CGPointMake(frame.size.width, frame.size.height)];
+    [waterwavePath addLineToPoint:CGPointMake(0, frame.size.height)];
+    [waterwavePath closePath];
+    return waterwavePath.CGPath;
+}
+
 
 @end
