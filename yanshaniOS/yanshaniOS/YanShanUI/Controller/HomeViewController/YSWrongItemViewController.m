@@ -9,9 +9,9 @@
 #import "YSWrongItemViewController.h"
 #import "YSClassViewController.h"
 #import "YSCourseItemModel.h"
-#import "YSExaminationItemViewController.h"
+#import "YSWrongListViewController.h"
 
-@interface YSWrongItemViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,YSExaminationItemViewControllerDelegate>
+@interface YSWrongItemViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_collectionView;
     NSMutableArray *datas;
@@ -63,18 +63,18 @@
     [_collectionView registerClass:[YSWrongItemCell class] forCellWithReuseIdentifier:@"wrongcell"];
 }
 
-- (void)selectAnwser:(YSExaminationItemViewController *)examinationItemController {
-    if (examinationItemController.isRight) {
-        NSLog(@"---");
-        for (YSCourseItemModel *model in datas) {
-            if ([model.question isEqualToString:examinationItemController.itemModel.question]) {
-                [datas removeObject:model];
-                [[YSCourseManager sharedCourseManager] deleteCourseItem:model];
-                break;
-            }
-        }
-    }
-}
+//- (void)selectAnwser:(YSExaminationItemViewController *)examinationItemController {
+//    if (examinationItemController.isRight) {
+//        NSLog(@"---");
+//        for (YSCourseItemModel *model in datas) {
+//            if ([model.question isEqualToString:examinationItemController.itemModel.question]) {
+//                [datas removeObject:model];
+//                [[YSCourseManager sharedCourseManager] deleteCourseItem:model];
+//                break;
+//            }
+//        }
+//    }
+//}
 
 #pragma mark - UICollectionView delegate
 
@@ -90,13 +90,24 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    YSExaminationItemViewController *vc = [[YSExaminationItemViewController alloc] init];
+    YSWrongListViewController *vc = [[YSWrongListViewController alloc] init];
     vc.title = @"错题回顾";
-    vc.delegate = self;
-    vc.index = indexPath.row;
-    vc.itemType = RightItemTypeNone;
-    YSCourseItemModel *model = datas[indexPath.row];
-    vc.itemModel = model;
+    [vc setCoursesData:datas];
+//    vc.delegate = self;
+//    vc.index = indexPath.row;
+//    vc.itemType = RightItemTypeNone;
+//    YSCourseItemModel *model = datas[indexPath.row];
+//    vc.itemModel = model;
+    vc.selectIndex = indexPath.row;
+    vc.doRightBlock = ^(YSCourseItemModel * _Nonnull model) {
+        for (YSCourseItemModel *model in datas) {
+            if ([model.question isEqualToString:model.question]) {
+                [datas removeObject:model];
+                [[YSCourseManager sharedCourseManager] deleteCourseItem:model];
+                break;
+            }
+        }
+    };
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
