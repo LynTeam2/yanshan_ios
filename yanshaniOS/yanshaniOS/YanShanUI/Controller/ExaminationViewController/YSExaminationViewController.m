@@ -28,6 +28,7 @@
     NSInteger timeCount;
     CGFloat safeAreaHeight;
     NSDictionary *roleDic;
+    UIPageViewController *pageVC;
 }
 @end
 
@@ -255,7 +256,7 @@
     if (testItems.count == 0) {
         return;
     }
-    UIPageViewController *pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:@{UIPageViewControllerOptionInterPageSpacingKey:@10}];
+    pageVC = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:@{UIPageViewControllerOptionInterPageSpacingKey:@10}];
     pageVC.dataSource = self;
     [self addChildViewController:pageVC];
     [self.view addSubview:pageVC.view];
@@ -446,6 +447,15 @@
         wrongCount++;
         [examItemModel saveWrongItem:examinationItemController.itemModel];
         [toolView updateWrongChoiceCount:wrongCount];
+    }
+    if (examinationItemController.itemType == RightItemTypeFinished) {
+        return;
+    }
+    if (examinationItemController.isRight) {
+        [pageVC setViewControllers:@[vcs[examinationItemController.index+1]]
+                         direction:UIPageViewControllerNavigationDirectionForward
+                          animated:YES completion:nil];
+        [toolView updateCurrentItemIndex:[NSString stringWithFormat:@"%ld/%ld",examinationItemController.index+2,testItems.count]];
     }
 }
 
