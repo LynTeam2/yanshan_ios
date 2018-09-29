@@ -171,6 +171,27 @@ static YSNetWorkEngine *netWorkEngine = nil;
     [uploadTask resume];
 }
 
+
+- (void)modifyPassword:(NSString *)newPassword responseHandler:(NetWorkResponse)handler {
+    if (!newPassword) {
+        return;
+    }
+    NSString *path = [self requestFullURL:@"user/password"];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"PUT";
+    
+    NSData *data = [NSJSONSerialization dataWithJSONObject:@{@"newPassword":newPassword} options:0|1 error:nil];
+    request.HTTPBody = data;
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:1|0 error:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            handler(error,dic);
+        });
+    }] resume];
+}
+//Dudeaddssss
 - (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:[self requestFullURL:@"law"] parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {

@@ -84,6 +84,8 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
  */
 - (void)modifyUserHeaderWithImage:(UIImage *)headerIcon responseHandler:(NetWorkResponse)handler;
 
+- (void)modifyPassword:(NSString *)newPassword responseHandler:(NetWorkResponse)handler;
+
 - (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler;
 
 - (void)searchInformationWithParam:(NSString *)keyWords responseHandler:(NetWorkResponse)handler;
