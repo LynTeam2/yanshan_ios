@@ -8,6 +8,13 @@
 
 #import "YSBaseViewController.h"
 
+typedef NS_ENUM(NSUInteger, UserInformationType) {
+    UserInformationTypeUserName = 0,
+    UserInformationTypePassword,
+};
+
 @interface YSUserInformationEditorViewController : YSBaseViewController
+
+@property(nonatomic, assign) UserInformationType type;
 
 @end

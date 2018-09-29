@@ -38,7 +38,7 @@
 #pragma mark - config view controller
 
 - (void)configViewControllerParameter {
-    _settings = @[@"头像",@"昵称",@"更新题库"];
+    _settings = @[@"头像",@"昵称",@"修改密码",@"更新题库"];
 }
 
 - (void)configView {
@@ -139,8 +139,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if(1 == indexPath.row) {
+    if(1 == indexPath.row || 2 == indexPath.row) {
         YSUserInformationEditorViewController *edVC = [[YSUserInformationEditorViewController alloc] init];
+        edVC.type = indexPath.row == 1 ? UserInformationTypeUserName : UserInformationTypePassword;
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:edVC animated:YES];
     }else if (0 == indexPath.row){
@@ -149,7 +150,7 @@
         [self presentViewController:imPC animated:YES completion:^{
             
         }];
-    }else if (2 == indexPath.row) {
+    }else if (3 == indexPath.row) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [[YSFileManager sharedFileManager] zipDoUpdateByHand:^(BOOL success) {
             if (success) {

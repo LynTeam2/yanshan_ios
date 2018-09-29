@@ -8,6 +8,10 @@
 
 #import "YSQianDaoViewController.h"
 
+static  NSString const *qiandaoSuccessString = @"签到成功";
+static  NSString const *qiandaoString = @"签到";
+static  NSString const *qiandaoInvalidString = @"已结束";
+
 @interface YSQianDaoViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *qiandaoLabel;
@@ -45,14 +49,14 @@
 
 - (void)configView {
     
-    NSString *btnTitle = @"签到";
+    NSString *btnTitle = qiandaoString;
   
     qiandaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [qiandaoBtn setBackgroundImage:[UIImage imageNamed:@"qiandaobgicon"] forState:UIControlStateNormal];
     [qiandaoBtn addTarget:self action:@selector(qiandao:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:qiandaoBtn];
     if (qiandaoDic) {
-        btnTitle = [qiandaoDic objectForKey:qiandaoKey] ? @"已签到": @"签到";
+        btnTitle = [qiandaoDic objectForKey:qiandaoKey] ? qiandaoSuccessString: qiandaoString;
         qiandaoBtn.enabled = [qiandaoDic objectForKey:qiandaoKey] ? NO : YES;
     }
     [qiandaoBtn setTitle:btnTitle forState:UIControlStateNormal];
@@ -78,12 +82,13 @@
         make.top.equalTo(qiandaoBtn.mas_bottom).offset(20);
         make.height.mas_equalTo(50);
     }];
+    
     CGRect frame = self.view.bounds;
     CGFloat width = (frame.size.width-45)/4;
     CGFloat height = width * (320.0/215.0);
     
     for (int i = 0; i < 4; i++) {
-        UIView *tmpView = [self instanceDateViewWithFrame:CGRectMake(15+(width+5)*i, 210+20, width, height) dayInterval:(i-3)];
+        UIView *tmpView = [self instanceDateViewWithFrame:CGRectMake(15+(width+5)*i, 210+20, width, height) dayInterval:(i-2)];
         [self.view addSubview:tmpView];
     }
     
@@ -130,16 +135,16 @@
 #pragma mark - UIButton action
 
 - (IBAction)userQiandao:(UIButton *)sender {
-    [sender setTitle:@"签到" forState:UIControlStateNormal];
+    [sender setTitle:qiandaoString forState:UIControlStateNormal];
     [self qiandao:qiandaoBtn];
 }
 
 - (void)qiandao:(UIButton *)sender {
-    [todayBtn setTitle:@"已签到" forState:UIControlStateNormal];
-    [sender setTitle:@"已签到" forState:UIControlStateNormal];
+    [todayBtn setTitle:qiandaoSuccessString forState:UIControlStateNormal];
+    [todayBtn setBackgroundColor:kLightGrayLevel2];
+    [sender setTitle:qiandaoSuccessString forState:UIControlStateNormal];
     sender.enabled = NO;
     NSString *beans = [NSString stringWithFormat:@"%ld",[YSUserModel shareInstance].beanCount +10];
-
     [[YSNetWorkEngine sharedInstance] modifyUserInformationWithParam:@{@"beanCount":beans} responseHandler:^(NSError *error, id data) {
         if (data) {
             [YSUserModel shareInstance].beanCount += 10;
@@ -152,7 +157,6 @@
             [[UIApplication sharedApplication].keyWindow makeToast:@"签到失败" duration:2.0 position:@"center"];
         }
     }];
-    
 }
 
 #pragma mark - custom view
@@ -182,19 +186,24 @@
     NSString *date = [YSCommonHelper timeFromNowWithTimeInterval:(60*60*24*interval) dateFormat:@"yyyyMMdd"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.titleLabel.font = [UIFont systemFontOfSize:12.f];
-    if (interval == 0 && ![qiandaoDic objectForKey:qiandaoKey]) {
-        todayBtn = button;
-        [button setTitle:@"签到" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(userQiandao:) forControlEvents:UIControlEventTouchUpInside];
+    if ((interval == 0 && ![qiandaoDic objectForKey:qiandaoKey]) || interval > 0) {
+        button.enabled = interval > 0 ? NO : YES;
+        [button setBackgroundColor:kBlueColor];
+        [button setTitle:qiandaoString forState:UIControlStateNormal];
+        if (interval == 0) {
+            todayBtn = button;
+            [button addTarget:self action:@selector(userQiandao:) forControlEvents:UIControlEventTouchUpInside];
+        }
     }else if([qiandaoDic objectForKey:date]){
-        [button setTitle:@"已签到" forState:UIControlStateNormal];
+        [button setTitle:qiandaoSuccessString forState:UIControlStateNormal];
+        [button setBackgroundColor:kLightGrayLevel2];
     }else{
-        [button setTitle:@"未签到" forState:UIControlStateNormal];
+        [button setTitle:qiandaoInvalidString forState:UIControlStateNormal];
+        [button setBackgroundColor:kLightGrayLevel2];
     }
     button.frame = CGRectMake(15, CGRectGetMaxY(dayLabel.frame)+15, frame.size.width-30, 25);
     button.layer.cornerRadius = button.frame.size.height/2;
     button.layer.masksToBounds = YES;
-    [button setBackgroundColor:kBlueColor];
     [dateBGV addSubview:button];
     
     return dateBGV;
