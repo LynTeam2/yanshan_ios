@@ -158,6 +158,10 @@
 }
 
 - (void)confirmChoice:(UIButton *)sender {
+    if (mcChoices.count < 2) {
+        [self.view makeToast:@"多选题至少选择2个答案!!!" duration:2.0 position:@"center"];
+        return;
+    }
     UITableViewCell *cell = [mainView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     cell.userInteractionEnabled = NO;
     sender.hidden = YES;
