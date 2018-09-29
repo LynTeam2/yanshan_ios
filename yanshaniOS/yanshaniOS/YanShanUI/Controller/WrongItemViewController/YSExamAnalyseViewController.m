@@ -48,6 +48,7 @@ static NSString *blueString    = @"6490ff";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     if (examModel) {
         testResultLabel.text = [NSString stringWithFormat:@"答错%ld题,未做%ld题,%@",examModel.wrongItemCount,[examModel undoItem],examModel.examJudgement];
         scoreLabel.text = [NSString stringWithFormat:@"%ld分",examModel.examScore];
