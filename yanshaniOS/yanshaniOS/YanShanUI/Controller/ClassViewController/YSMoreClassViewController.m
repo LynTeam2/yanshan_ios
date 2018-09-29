@@ -86,6 +86,11 @@ static NSInteger maxExamCount = 1;
         [[YSNetWorkEngine sharedInstance] queryUserExamCountWith:model.examId responseHandler:^(NSError *error, id data) {
             NSDictionary *results = [data objectForKey:@"results"];
             NSInteger examCount = [results[@"examCount"] integerValue];
+            BOOL isValid = [results[@"isValid"] boolValue];
+            if (!isValid) {
+                [self.view makeToast:@"当前考试暂未开放!!!" duration:2.0 position:@"center"];
+                return ;
+            }
             if (!results[@"examCount"]) {
                 [self.view makeToast:@"登录信息失效,请重新登录" duration:2.0 position:@"center"];
             }else if (examCount <= maxExamCount) {

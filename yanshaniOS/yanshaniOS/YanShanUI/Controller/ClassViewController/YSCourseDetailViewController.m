@@ -329,6 +329,19 @@
         //        [examModel saveWrongItem:examinationItemController.itemModel];
         [toolView updateWrongChoiceCount:wrongCount];
     }
+    if (rightCount + wrongCount == vcs.count) {
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您已经答完全部题目!!!" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        }];
+        [alertC addAction:action];
+        [alertC addAction:cancelAction];
+        [self.navigationController presentViewController:alertC animated:YES completion:nil];
+    }
     if (examinationItemController.itemType == RightItemTypeFinished) {
         return;
     }
