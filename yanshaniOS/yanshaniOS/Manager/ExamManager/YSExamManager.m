@@ -19,6 +19,7 @@ static NSString *examplist = @"exam.plist";
     NSInteger passCount;
     NSInteger maxValue;
 }
+
 + (instancetype)sharedExamManager {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
