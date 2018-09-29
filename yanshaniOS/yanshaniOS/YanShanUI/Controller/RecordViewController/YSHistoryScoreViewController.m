@@ -89,11 +89,11 @@
     }];;
     
     if ([[YSExamManager sharedExamManager] getAllExams].count) {
-        NSMutableArray *m = [NSMutableArray arrayWithCapacity:0];
         allExams = [[[YSExamManager sharedExamManager] getAllExams] copy];
         circleLabel.text = [NSString stringWithFormat:@"累计做题\n%ld次",allExams.count];
     }
     YSExamManager *manager = [YSExamManager sharedExamManager];
+    
     NSArray *array = @[
       [NSString stringWithFormat:@"%ld\n\n及格次数",[manager getPassCount]],
       [NSString stringWithFormat:@"%ld\n\n累计考试",[manager getAllExams].count],
