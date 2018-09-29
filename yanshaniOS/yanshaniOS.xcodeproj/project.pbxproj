@@ -51,6 +51,7 @@
 		641B409C1F8BA93500BF029E /* YSHomeReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B409B1F8BA93500BF029E /* YSHomeReusableView.m */; };
 		641B409F1F8D0EB000BF029E /* YSClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B409E1F8D0EB000BF029E /* YSClassViewController.m */; };
 		641B40A21F8D0F8700BF029E /* YSClassDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641B40A11F8D0F8700BF029E /* YSClassDetailViewController.m */; };
+		6422C653215D324F00994063 /* YSWrongListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6422C652215D324F00994063 /* YSWrongListViewController.m */; };
 		6432D82C205D0B550098167F /* YSCommonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6432D82B205D0B550098167F /* YSCommonHelper.m */; };
 		643D259A1F77FE640034131C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D25991F77FE640034131C /* main.m */; };
 		643D259D1F77FE640034131C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 643D259C1F77FE640034131C /* AppDelegate.m */; };
@@ -260,6 +261,8 @@
 		641B409E1F8D0EB000BF029E /* YSClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSClassViewController.m; sourceTree = "<group>"; };
 		641B40A01F8D0F8700BF029E /* YSClassDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSClassDetailViewController.h; sourceTree = "<group>"; };
 		641B40A11F8D0F8700BF029E /* YSClassDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSClassDetailViewController.m; sourceTree = "<group>"; };
+		6422C651215D324F00994063 /* YSWrongListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSWrongListViewController.h; sourceTree = "<group>"; };
+		6422C652215D324F00994063 /* YSWrongListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSWrongListViewController.m; sourceTree = "<group>"; };
 		6432D82A205D0B550098167F /* YSCommonHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSCommonHelper.h; sourceTree = "<group>"; };
 		6432D82B205D0B550098167F /* YSCommonHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSCommonHelper.m; sourceTree = "<group>"; };
 		643D25951F77FE630034131C /* yanshaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yanshaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -693,6 +696,8 @@
 				64F41F3C1FD3BE1D00FC636D /* YSMessageDetailViewController.m */,
 				6446C1C5209C3E4F0052B289 /* YSUserInformationEditorViewController.h */,
 				6446C1C6209C3E4F0052B289 /* YSUserInformationEditorViewController.m */,
+				6422C651215D324F00994063 /* YSWrongListViewController.h */,
+				6422C652215D324F00994063 /* YSWrongListViewController.m */,
 			);
 			name = UserInformationViewControllers;
 			path = MeViewController;
@@ -1543,6 +1548,7 @@
 				641B40971F8A3B0500BF029E /* FSPageViewLayout.swift in Sources */,
 				641B40921F8A3B0500BF029E /* FSPageControl.swift in Sources */,
 				6403AEB91FF887E100E06D71 /* YSNewsViewController.m in Sources */,
+				6422C653215D324F00994063 /* YSWrongListViewController.m in Sources */,
 				64BDEA9C1FC104290036CD8E /* YSBaseTableView.m in Sources */,
 				64F41F351FD28F1E00FC636D /* YSMessageViewController.m in Sources */,
 				641B40931F8A3B0500BF029E /* FSPagerCollectionView.swift in Sources */,
