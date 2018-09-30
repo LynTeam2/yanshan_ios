@@ -27,7 +27,7 @@
         }];
         
         UILabel *nameLabel = [[UILabel alloc] init];
-        nameLabel.text = @"用户名";
+        nameLabel.text = [YSUserModel shareInstance].userName;
         nameLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:nameLabel];
         
@@ -37,7 +37,7 @@
             make.size.mas_equalTo(CGSizeMake(160, 20));
         }];
         
-        NSArray *titles = @[@{@"title1":@"答对题目",@"title2":@"90分"},
+        NSArray *titles = @[@{@"title1":@"考试得分",@"title2":@"90分"},
                             @{@"title1":@"是否合格",@"title2":@"合格"},
                             @{@"title1":@"考试时间",@"title2":@"90分钟"}];
         
@@ -80,7 +80,7 @@
 }
 
 - (void)updateScoreValue:(NSString *)score costTime:(NSString *)costTime {
-    titlesLabel[0].text = score;
+    titlesLabel[0].text = [score stringByAppendingString:@"分"];
     titlesLabel[2].text = costTime;
 }
 

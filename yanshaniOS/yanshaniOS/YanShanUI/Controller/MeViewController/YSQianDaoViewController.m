@@ -144,8 +144,7 @@ static  NSString const *qiandaoInvalidString = @"已结束";
     [todayBtn setBackgroundColor:kLightGrayLevel2];
     [sender setTitle:qiandaoSuccessString forState:UIControlStateNormal];
     sender.enabled = NO;
-    NSString *beans = [NSString stringWithFormat:@"%ld",[YSUserModel shareInstance].beanCount +10];
-    [[YSNetWorkEngine sharedInstance] modifyUserInformationWithParam:@{@"beanCount":beans} responseHandler:^(NSError *error, id data) {
+    [[YSNetWorkEngine sharedInstance] qiandaoWithResponseHandler:^(NSError *error, id data) {
         if (data) {
             [YSUserModel shareInstance].beanCount += 10;
             [qiandaoDic setObject:@"1" forKey:qiandaoKey];

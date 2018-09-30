@@ -75,7 +75,7 @@
     }];
     
     UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.text = @"用户名";
+    nameLabel.text = [YSUserModel shareInstance].userName;
     nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:nameLabel];
     
@@ -86,7 +86,7 @@
     }];
     NSString *examDuration = [NSString stringWithFormat:@"%ld分钟",_examModel.examDuration];
     
-    NSString *standard = [NSString stringWithFormat:@"%ld",_examModel.standard];
+    NSString *standard = [NSString stringWithFormat:@"答对%ld题,方可及格",_examModel.standard];
 
     NSString *itemCount = @"0";
     if (_examModel) {
@@ -96,7 +96,7 @@
   @{@"title1":@"考试类型",@"title2":_examModel.examType},
   @{@"title1":@"考试时间",@"title2":examDuration},
   @{@"title1":@"合格标准",@"title2":standard},
-  @{@"title1":@"出题标准",@"title2":itemCount}];
+  @{@"title1":@"出题标准",@"title2":[itemCount stringByAppendingString:@"题"]}];
     
     for (int i = 0; i < titles.count; i++) {
         NSDictionary *dic = titles[i];
@@ -173,11 +173,7 @@
     formatter.locale = [NSLocale currentLocale];
     formatter.timeZone = [NSTimeZone systemTimeZone];
     formatter.dateFormat = @"hh:mm:ss";
-    
     NSDate *date = [NSDate date];
-    NSString *time = [formatter stringFromDate:date];
-    double unixTime = ceil(date.timeIntervalSince1970);
-    NSLog(@"%.0f",unixTime);
     return [NSString stringWithFormat:@"%.0f",date.timeIntervalSince1970];
 }
 
@@ -375,7 +371,6 @@
     [examTimer invalidate];
     examTimer = nil;
     NSString *examDuration = [NSString stringWithFormat:@"%ld分钟",_examModel.examDuration];
-    [resultView updateScoreValue:[NSString stringWithFormat:@"%ld",rightCount] costTime:examDuration];
     if (rightCount >= _examModel.standard) {
         [resultView userPassTheExam:YES];
         examItemModel.examJudgement = @"成绩合格";
@@ -389,7 +384,8 @@
     NSString *current = [formatter stringFromDate:now];
     examItemModel.rightItemCount = rightCount;
     examItemModel.wrongItemCount = [examItemModel allWrongItems].count;
-    examItemModel.examScore = rightCount;
+    examItemModel.examScore = ceil(rightCount/(float)(_examModel.examScCount+_examModel.examMcCount+_examModel.examTfCount)*100);
+    [resultView updateScoreValue:[NSString stringWithFormat:@"%ld",examItemModel.examScore] costTime:examDuration];
     examItemModel.dateString = current;
     examItemModel.endTime = [self currentTime];
     [[YSExamManager sharedExamManager] saveCurrentExam:examItemModel];

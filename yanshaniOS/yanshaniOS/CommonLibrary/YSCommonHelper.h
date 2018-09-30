@@ -14,7 +14,7 @@
 
 + (BOOL)deleteFileByName:(NSString *)name;
 
-+ (UIImage *)weatherIcon:(NSString *)weather;
++ (UIImage *)weatherIcon:(NSString *)weather state:(UIControlState *)state;
 
 + (NSString *)getUserCurrentLocation;
 
@@ -23,5 +23,7 @@
 + (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval dateFormat:(NSString *)format;
 
 + (UIImage *)imageFromColor:(UIColor *)color withSize:(CGSize)size;
+
++ (NSString *)getWeekDayFromDateString:(NSString *)dateString;
 
 @end

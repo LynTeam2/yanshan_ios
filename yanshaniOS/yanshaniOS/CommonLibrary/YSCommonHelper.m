@@ -39,22 +39,22 @@
     return YES;
 }
 
-+ (UIImage *)weatherIcon:(NSString *)weather {
-    NSArray *icons = @[@"cloud",@"snow",@"sunandcloud",@"sunny",@"thunder"];
++ (UIImage *)weatherIcon:(NSString *)weather state:(UIControlState *)state{
+    NSArray *icons = state == UIControlStateNormal?@[@"sunwhite",@"moonwhite",@"nightwhite"]:@[@"cloud",@"snow",@"sunandcloud",@"sunny",@"thunder"];
     if ([weather isEqualToString:@"多云"]) {
-        return [UIImage imageNamed:icons[2]];
+        return (state == UIControlStateNormal ? [UIImage imageNamed:icons[1]] : [UIImage imageNamed:icons[2]]);
     }
     if ([weather isEqualToString:@"阴"]) {
-        return [UIImage imageNamed:icons[0]];
+        return (state == UIControlStateNormal ? [UIImage imageNamed:icons[2]] : [UIImage imageNamed:icons[0]]);
     }
     if ([weather isEqualToString:@"晴"]) {
-        return [UIImage imageNamed:icons[3]];
+        return (state == UIControlStateNormal ? [UIImage imageNamed:icons[0]] : [UIImage imageNamed:icons[3]]);
     }
     if ([weather containsString:@"雨"]) {
-        return [UIImage imageNamed:icons[4]];
+        return (state == UIControlStateNormal ? [UIImage imageNamed:icons[1]] : [UIImage imageNamed:icons[4]]);
     }
     if ([weather containsString:@"雪"]) {
-        return [UIImage imageNamed:icons[1]];
+        return (state == UIControlStateNormal ? [UIImage imageNamed:icons[1]] : [UIImage imageNamed:icons[1]]);
     }
     return nil;
 }
@@ -90,9 +90,45 @@
     return image;
 }
 
-//+ (NSString *)getUserCurrentLocation {
-//    
-//}
++ (NSString *)getWeekDayFromDateString:(NSString *)dateString {
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    calendar.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
+    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    formatter.locale = [NSLocale currentLocale];
+    NSDate *date = [formatter dateFromString:dateString];
+    NSDateComponents *result = [calendar components:unitFlags fromDate:date];
+    NSString *weekDay = @"星期一";
+    switch (result.weekday) {
+        case 1:
+            weekDay = @"星期日";
+            break;
+        case 2:
+            weekDay = @"星期一";
+            break;
+        case 3:
+            weekDay = @"星期二";
+            break;
+        case 4:
+            weekDay = @"星期三";
+            break;
+        case 5:
+            weekDay = @"星期四";
+            break;
+        case 6:
+            weekDay = @"星期五";
+            break;
+        case 7:
+            weekDay = @"星期六";
+            break;
+        default:
+            break;
+    }
+    return weekDay;
+}
 
 + (NSString *)timeFromNowWithTimeInterval:(NSTimeInterval)interval dateFormat:(NSString *)format {
     
