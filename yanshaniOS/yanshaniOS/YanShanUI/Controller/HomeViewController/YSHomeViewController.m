@@ -142,7 +142,13 @@
     NSInteger count = newsList.count + 5;
     NSDictionary *parameters = @{@"page":@"0",
                                  @"size":[NSString stringWithFormat:@"%ld",count]};
-    [[YSNetWorkEngine sharedInstance] getRequestNewWithparameters:parameters responseHandler:^(NSError *error, id data) {
+    __weak UIButton *weakButton = sender;
+    [[YSNetWorkEngine sharedInstance] getRequestNewsWithparameters:parameters responseHandler:^(NSError *error, id data) {
+        if (error) {
+            __strong UIButton *btn = weakButton;
+            [btn setTitle:@"暂无新闻内容..." forState:UIControlStateNormal];
+            return ;
+        }
         if ([data isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dic = (NSDictionary *)data;
             NSInteger code = [[dic objectForKey:@"code"] integerValue];

@@ -80,7 +80,11 @@
             textView.font = [UIFont systemFontOfSize:16.f];
             textView.frame = CGRectMake(10, 10, self.view.frame.size.width-20, [_itemModel getQuestionCellHeight]);
             textView.editable = NO;
-            textView.text = [NSString stringWithFormat:@"%@%@",[_itemModel getQuestionTypeString],_itemModel.question];
+            NSMutableAttributedString *mattr = [[NSMutableAttributedString alloc] initWithString:[_itemModel getQuestionTypeString] attributes:@{NSBackgroundColorAttributeName:kBlueColor,NSForegroundColorAttributeName:[UIColor whiteColor]}];
+            [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:_itemModel.question]];
+            [mattr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.f] range:NSMakeRange(0, mattr.string.length)];
+            textView.attributedText = mattr;
+//            textView.text = [NSString stringWithFormat:@"%@%@",[_itemModel getQuestionTypeString],_itemModel.question];
             [cell addSubview:textView];
             cell.userInteractionEnabled = NO;
             return cell;

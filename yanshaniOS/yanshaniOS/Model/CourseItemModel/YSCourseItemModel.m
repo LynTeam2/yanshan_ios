@@ -95,11 +95,11 @@
 
 - (NSString *)getQuestionTypeString {
     if ([_questionType isEqualToString:@"mc"]) {
-        return @"【多选】";
+        return @"  多选  ";
     }else if ([_questionType isEqualToString:@"sc"]){
-        return @"【单选】";
+        return @"  单选  ";
     }else{
-        return @"【判断】";
+        return @"  判断  ";
     }
 }
 

@@ -61,7 +61,7 @@
 }
 
 - (void)configViewControllerParameter {
-    cellTitleArray = @[@[@"危险化学品",@"工业企业",@"交通运输",@"建筑施工",@"人员密集场所",@"特种设备",@"消防"],
+    cellTitleArray = @[@[@"危险化学品",@"企业行业",@"运输",@"建筑施工",@"人员密集场所",@"特种设备",@"消防"],
                    @[@"单选",@"多选",@"判断"],
                    @[@"初级",@"中级",@"高级"]];
     sectionTitleArray = @[@"类型一",@"类型二",@"类型三"];
@@ -87,7 +87,7 @@
     YSSpecialItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     if (indexPath.section < cellTitleArray.count) {
         NSArray *sectionArray = cellTitleArray[indexPath.section];
-        [cell updateIndex:[NSString stringWithFormat:@"%ld",indexPath.row] andTitle:sectionArray[indexPath.row]];
+        [cell updateIndex:[NSString stringWithFormat:@"%ld",indexPath.row+1] andTitle:sectionArray[indexPath.row]];
     }
     return cell;
 }

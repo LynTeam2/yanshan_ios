@@ -39,7 +39,7 @@
         [self addSubview:_seperateLine];
 
         _sourceLabel = [[UILabel alloc] init];
-        _sourceLabel.text = @"独家";
+//        _sourceLabel.text = @"独家";
         _sourceLabel.font = [UIFont systemFontOfSize:15.f];
         _sourceLabel.textColor = kBlueColor;
         [self addSubview:_sourceLabel];
