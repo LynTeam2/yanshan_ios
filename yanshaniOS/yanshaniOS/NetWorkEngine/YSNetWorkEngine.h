@@ -45,7 +45,7 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
  @param parameters see news api params introduce
  @param handler call back block
  */
-- (void)getRequestNewWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler;
+- (void)getRequestNewsWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler;
 
 
 /**
@@ -89,8 +89,6 @@ typedef void(^NetWorkResponse)(NSError *error, id data);
 - (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler;
 
 - (void)searchInformationWithParam:(NSString *)keyWords responseHandler:(NetWorkResponse)handler;
-
-- (void)getUserCourseProcessWithResponceHandler:(NetWorkResponse)handler;
 
 - (void)uploadUserCourseProcessWithParam:(NSString *)courseID examDuration:(NSInteger)seconds responseHandler:(NetWorkResponse)handler;
 

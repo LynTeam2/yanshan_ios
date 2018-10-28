@@ -12,6 +12,14 @@
 
 static YSNetWorkEngine *netWorkEngine = nil;
 
+static NSString const *baseURL = @"http://39.105.27.225/";
+
+@interface YSNetWorkEngine ()
+
+@property (nonatomic, strong) AFHTTPSessionManager *httpManager;
+
+@end
+
 @implementation YSNetWorkEngine
 
 + (instancetype)sharedInstance {
@@ -25,7 +33,9 @@ static YSNetWorkEngine *netWorkEngine = nil;
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        _downloadSuccess = NO;
+        NSURLSessionConfiguration *conf = [NSURLSessionConfiguration defaultSessionConfiguration];
+        _httpManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURL]
+                                                sessionConfiguration:conf];
     }
     return self;
 }
@@ -38,10 +48,6 @@ static YSNetWorkEngine *netWorkEngine = nil;
 }
 
 - (void)downloadFileWithUrl:(NSString *)downloadUrl toFilePath:(NSString *)filePath responseHandler:(NetWorkResponse)handler{
-//    if (_downloadSuccess) {
-//        handler(nil,nil);
-//        return;
-//    }
     NSString *unzipPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     [YSCommonHelper deleteFileByName:@"upgrade.7z"];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -52,9 +58,6 @@ static YSNetWorkEngine *netWorkEngine = nil;
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-//        if (!error) {
-//            _downloadSuccess = YES;
-//        }
         handler(error,response.URL.absoluteString);
         NSLog(@"File downloaded to: %@", filePath.absoluteString);
         [[YSFileManager sharedFileManager] unzipFileAtPath:[NSString stringWithFormat:@"%@/upgrade.7z",unzipPath] toDestination:unzipPath];
@@ -83,22 +86,23 @@ static YSNetWorkEngine *netWorkEngine = nil;
     }];
 }
 
-- (void)getRequestNewWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:[self requestFullURL:@"news"] parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        
+- (void)getRequestNewsWithparameters:(NSDictionary *)parameters responseHandler:(NetWorkResponse)handler {
+    
+    [_httpManager GET:@"api/news" parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"请求失败--%@",error);
-        handler(error,nil);
+            handler(error,nil);
+
     }];
 }
 
 - (void)getWeatherDataWithparameters:(NSString *)city responseHandler:(NetWorkResponse)handler {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     city = [YSCommonHelper urlencode:city];
-    NSString *url = [NSString stringWithFormat:@"https://www.sojson.com/open/api/weather/json.shtml?city=%@",city];
+    NSString *url = [NSString stringWithFormat:@"https://free-api.heweather.com/s6/weather?key=6e8a4b90f9504d9caed280c41a837c1c&location=%@",city];
     [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -141,34 +145,32 @@ static YSNetWorkEngine *netWorkEngine = nil;
 
 - (void)modifyUserHeaderWithImage:(UIImage *)headerIcon responseHandler:(NetWorkResponse)handler {
     
-    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:@"http://39.105.27.225/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    __weak YSUserModel *weakUser = [YSUserModel shareInstance];
+    __weak YSNetWorkEngine *weakNet = self;
+
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSURLSessionDataTask *task = [manager POST:@"http://39.105.27.225/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *data = UIImageJPEGRepresentation(headerIcon, 1.0);
         [formData appendPartWithFileData:data name:@"file" fileName:@"filename.jpg" mimeType:@"image/jpeg"];
-    } error:nil];
-    
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLSessionUploadTask *uploadTask;
-    uploadTask = [manager
-                  uploadTaskWithStreamedRequest:request
-                  progress:^(NSProgress * _Nonnull uploadProgress) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        YSUserModel *strongUser = weakUser;
+        YSNetWorkEngine *strongNet = weakNet;
+        NSDictionary *dic = (NSDictionary *)responseObject;
+        if (dic[@"results"]) {
+            NSDictionary *resultsDic = dic[@"results"];
+            strongUser.userIcon = resultsDic[@"path"];
+            [strongNet modifyUserInformationWithParam:@{@"icon":resultsDic[@"path"]} responseHandler:^(NSError *error, id data) {
+                handler(error,data);
+            }];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+    [task resume];
 
-                  }
-                  completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-                      if (error) {
-                          handler(error,nil);
-                      } else if([responseObject isKindOfClass:[NSDictionary class]]) {
-                          NSDictionary *dic = (NSDictionary *)responseObject;
-                          if (dic[@"results"]) {
-                              NSDictionary *resultsDic = dic[@"results"];
-                              [YSUserModel shareInstance].userIcon = resultsDic[@"path"];
-                              [self modifyUserInformationWithParam:@{@"icon":resultsDic[@"path"]} responseHandler:^(NSError *error, id data) {
-                                  handler(error,data);
-                              }];
-                          }
-                      }
-                  }];
-    
-    [uploadTask resume];
 }
 
 
@@ -180,11 +182,11 @@ static YSNetWorkEngine *netWorkEngine = nil;
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"PUT";
-    
+
     NSData *data = [NSJSONSerialization dataWithJSONObject:@{@"newPassword":newPassword} options:0|1 error:nil];
     request.HTTPBody = data;
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
+
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:1|0 error:nil];
         dispatch_async(dispatch_get_main_queue(), ^{
             handler(error,dic);
@@ -193,8 +195,8 @@ static YSNetWorkEngine *netWorkEngine = nil;
 }
 //Dudeaddssss
 - (void)getLawsDataWithParam:(NSDictionary *)param responseHandler:(NetWorkResponse)handler {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:[self requestFullURL:@"law"] parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+    
+    [_httpManager GET:@"api/law" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
@@ -202,25 +204,16 @@ static YSNetWorkEngine *netWorkEngine = nil;
         NSLog(@"请求失败--%@",error);
         handler(error,nil);
     }];
+    
 }
 
 - (void)searchInformationWithParam:(NSString *)keyWords responseHandler:(NetWorkResponse)handler {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    if (keyWords.isEmptyString) {
+        handler(nil,nil);
+        return;
+    }
     NSDictionary *param = @{@"query":keyWords};
-    [manager GET:[self requestFullURL:@"search"] parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        handler(nil,responseObject);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"请求失败--%@",error);
-        handler(error,nil);
-    }];
-}
-
-- (void)getUserCourseProcessWithResponceHandler:(NetWorkResponse)handler {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSDictionary *param = @{@"query":@""};
-    [manager GET:[self requestFullURL:@"search"] parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
+    [_httpManager GET:@"api/search" parameters:param progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
@@ -249,8 +242,8 @@ static YSNetWorkEngine *netWorkEngine = nil;
 }
 
 - (void)getExamHistoryRecordsWithResponseHandler:(NetWorkResponse)handler {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:[self requestFullURL:@"exam"] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    
+    [_httpManager GET:@"api/exam" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
@@ -301,8 +294,8 @@ static YSNetWorkEngine *netWorkEngine = nil;
 }
 
 - (void)queryUserExamCountWith:(NSInteger)examID responseHandler:(NetWorkResponse)handler {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:[self requestFullURL:[NSString stringWithFormat:@"exam/%ld",examID]] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+
+    [_httpManager GET:[NSString stringWithFormat:@"api/exam/%ld",examID] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         handler(nil,responseObject);
