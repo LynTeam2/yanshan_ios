@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) UICollectionView *resultsView;
 
+@property (nonatomic, strong) UISearchBar *searchBar;
+
 @property (nonatomic, strong) NSMutableArray *results;
 
 @property (nonatomic, assign) BOOL emptyDatas;
@@ -44,15 +46,15 @@
     CGFloat width = self.view.frame.size.width;
 
     [[UISearchBar appearance] setFrame:CGRectMake(0, 0, width-80, height)];
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, width-80, height)];
-    searchBar.placeholder = @"请输入想要搜索的内容";
-    searchBar.barStyle = UIBarStyleDefault;
-    searchBar.barTintColor = kLightGray;
-    searchBar.delegate = self;
+    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, width-80, height)];
+    _searchBar.placeholder = @"请输入想要搜索的内容";
+    _searchBar.barStyle = UIBarStyleDefault;
+    _searchBar.barTintColor = kLightGray;
+    _searchBar.delegate = self;
 //    searchBar.frame = CGRectMake(0, 0, width-80, height);
-    searchBar.returnKeyType = UIReturnKeySearch;
-    [searchBar becomeFirstResponder];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
+    _searchBar.returnKeyType = UIReturnKeySearch;
+    [_searchBar becomeFirstResponder];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:_searchBar];
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -122,6 +124,12 @@
 
 - (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
     return _emptyDatas;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([_searchBar isFirstResponder]) {
+        [_searchBar endEditing:YES];
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
