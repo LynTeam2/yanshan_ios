@@ -147,10 +147,6 @@
         showAWS = YES;
         [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
         [mainView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
-        if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
-            [self.delegate selectAnwser:self];
-        }
-        return;
     }
     if (self.delegate && [self.delegate respondsToSelector:@selector(selectAnwser:)]) {
         [self.delegate selectAnwser:self];
@@ -159,13 +155,27 @@
 
 - (void)selectChoice:(NSArray *)selectIndexs {
     [mcChoices addObjectsFromArray:selectIndexs];
+    if (mcChoices.count == [_itemModel getMCAnswer].count || ![[selectIndexs firstObject] boolValue]) {
+        [self confirmChoice:nil];
+    }
 }
 
 - (void)confirmChoice:(UIButton *)sender {
-    if (mcChoices.count < 2) {
+    
+    //选择选项==争取选项
+    BOOL rightBtn = YES;
+    for (int i = 0; i < mcChoices.count; i++) {
+        if (![mcChoices[i] boolValue]) {
+            rightBtn = NO;
+            break;
+        }
+    }
+    
+    if (mcChoices.count < 2 && rightBtn) {
         [self.view makeToast:@"多选题至少选择2个答案!!!" duration:2.0 position:@"center"];
         return;
     }
+    
     UITableViewCell *cell = [mainView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     cell.userInteractionEnabled = NO;
     sender.hidden = YES;
@@ -180,21 +190,7 @@
         }
         return;
     }
-    //选择选项==争取选项
-    BOOL rightBtn = YES;
-    for (int i = 0; i < mcChoices.count; i++) {
-//        UIButton *btn = mcChoices[i];
-//        for (int j = 0; j < [_itemModel getMCAnswer].count; j++) {
-//            NSString *answers = [_itemModel getMCAnswer][j];
-//            if ([[btn currentTitle] containsString:answers]) {
-//                rightBtn = YES;
-//            }
-//        }
-        if (![mcChoices[i] boolValue]) {
-            rightBtn = NO;
-            break;
-        }
-    }
+    
     if (!rightBtn) {
         self.isRight = NO;
         [[YSCourseManager sharedCourseManager] saveCourseItem:_itemModel];
@@ -272,6 +268,7 @@
 
 - (void)selectChoice:(UIButton *)sender {
     sender.selected = YES;
+    sender.enabled = NO;
     if (![_model mcChoiceType]) {
         _rightIndex = [_model getSMAnswerOrTFAnswer];
         for (int i = 0; i < choiceButtons.count; i++) {
