@@ -13,15 +13,3 @@
 
 @end
 
-@interface YSWeatherInformationItem : YSBaseView
-
-- (void)updateInformation:(NSDictionary *)dic;
-
-@end
-
-@interface YSWeatherTimeView : YSBaseView
-
-- (void)updateTimeWeatherData:(NSDictionary *)data;
-
-@end
-

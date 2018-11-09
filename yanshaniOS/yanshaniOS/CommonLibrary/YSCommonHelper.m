@@ -39,7 +39,7 @@
     return YES;
 }
 
-+ (UIImage *)weatherIcon:(NSString *)weather state:(UIControlState *)state{
++ (UIImage *)weatherIcon:(NSString *)weather state:(UIControlState)state{
     NSArray *icons = state == UIControlStateNormal?@[@"sunwhite",@"moonwhite",@"nightwhite"]:@[@"cloud",@"snow",@"sunandcloud",@"sunny",@"thunder"];
     if ([weather isEqualToString:@"多云"]) {
         return (state == UIControlStateNormal ? [UIImage imageNamed:icons[1]] : [UIImage imageNamed:icons[2]]);

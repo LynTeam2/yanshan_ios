@@ -21,6 +21,8 @@
     // Do any additional setup after loading the view.
     if ([[YSUserLoginModel shareInstance] userInformationComplete]) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _username.text = [YSUserLoginModel shareInstance].userName;
+        _password.text = @"*********";
     }
     _username.layer.borderWidth = _password.layer.borderWidth = 1.0;
     _username.layer.borderColor = _password.layer.borderColor = kRGBColor(229, 239, 235, 1).CGColor;
