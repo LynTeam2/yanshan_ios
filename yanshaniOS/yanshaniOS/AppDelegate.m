@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <Bugly/Bugly.h>
+#import "AppDelegate+YSUMAnalytics.h"
 
 @interface AppDelegate ()
 
@@ -19,13 +19,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [Bugly startWithAppId:@"a73c975f65d"];
+    [self initUMAnalytics];
     [[YSFileManager sharedFileManager] zipDoUpdate:nil];
     [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kQianDaoFile];
     [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kCourseFiles];
     [[UINavigationBar appearance] setBackgroundImage:[YSCommonHelper imageFromColor:kBlueColor withSize:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
     return YES;
 }
 
