@@ -14,7 +14,6 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Bugly (2.4.8)
   - DZNEmptyDataSet (1.8.1)
   - Inlineobjc (1.0.5)
   - JSONModel (1.7.0)
@@ -26,10 +25,13 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - SVPullToRefresh (0.4.1)
+  - UMCAnalytics (5.5.2):
+    - UMCCommon
+  - UMCCommon (1.5.3)
+  - UMCCommonLog (1.0.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
-  - Bugly
   - DZNEmptyDataSet
   - JSONModel
   - LzmaSDK-ObjC
@@ -37,10 +39,12 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.0.0)
   - SDWebImage (~> 4.0)
   - SVPullToRefresh
+  - UMCAnalytics
+  - UMCCommon
+  - UMCCommonLog
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Bugly: da3c02408c14838d498429320545a8e439392978
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Inlineobjc: 421a4302ac39cbd4a1a60983eec9b3a3ea84d444
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
@@ -49,7 +53,10 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
+  UMCAnalytics: 6654fd3c8201ff6da5c86a3ae29cd5c8436d3b7b
+  UMCCommon: 016af43c0f769feb1ae1861d65aaf2b23b89c9c7
+  UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
 
-PODFILE CHECKSUM: 7fc40fdc9b74838892297ba99727edf65c31864c
+PODFILE CHECKSUM: ef0a6c99283c4fa6b83eacd58f120b4990e490f3
 
 COCOAPODS: 1.4.0

@@ -81,6 +81,7 @@
 		64583CF72020A709002099D4 /* YSSpecialItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CF62020A709002099D4 /* YSSpecialItemViewController.m */; };
 		64583CFA2020B25A002099D4 /* YSHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CF92020B25A002099D4 /* YSHistoryScoreViewController.m */; };
 		64583CFE2025BB64002099D4 /* YSNetWorkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CFD2025BB64002099D4 /* YSNetWorkEngine.m */; };
+		646E2E322195D41A00F813E2 /* YSWeatherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 646E2E312195D41A00F813E2 /* YSWeatherView.m */; };
 		647FC4DE201C5786006C4B06 /* YSMoreClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 647FC4DD201C5786006C4B06 /* YSMoreClassViewController.m */; };
 		64801BEC214FF52F009F9370 /* videoposter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64801BEB214FF52F009F9370 /* videoposter.jpg */; };
 		649DD59620D1098A00E9948C /* examplaceholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 649DD59520D1098A00E9948C /* examplaceholder.jpg */; };
@@ -142,6 +143,11 @@
 		64BDEB041FC1C8A70036CD8E /* whitecircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 64BDEB011FC1C8A60036CD8E /* whitecircle.png */; };
 		64C7A8932074795A001C0666 /* YSExamToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C7A8922074795A001C0666 /* YSExamToolView.m */; };
 		64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C7F16C202C8C6E0017272A /* YSExamManager.m */; };
+		64CA7F172199C6F20098EEFA /* AppDelegate+YSUMAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CA7F162199C6F20098EEFA /* AppDelegate+YSUMAnalytics.m */; };
+		64CA7F192199C8920098EEFA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CA7F182199C8920098EEFA /* CoreTelephony.framework */; };
+		64CA7F1B2199C8A40098EEFA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CA7F1A2199C8A40098EEFA /* libz.tbd */; };
+		64CA7F1D2199C8B50098EEFA /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CA7F1C2199C8B50098EEFA /* libsqlite3.tbd */; };
+		64CA7F1F2199C8BD0098EEFA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CA7F1E2199C8BD0098EEFA /* SystemConfiguration.framework */; };
 		64DEF2CA213F7CB1002925A6 /* anjiandenglu.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */; };
 		64DEF2CE2140D27D002925A6 /* anjianlogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2CB2140D27B002925A6 /* anjianlogin@3x.png */; };
 		64DEF2CF2140D27D002925A6 /* anjianlogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2CC2140D27C002925A6 /* anjianlogin@2x.png */; };
@@ -311,6 +317,8 @@
 		64583CF92020B25A002099D4 /* YSHistoryScoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSHistoryScoreViewController.m; sourceTree = "<group>"; };
 		64583CFC2025BB64002099D4 /* YSNetWorkEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSNetWorkEngine.h; sourceTree = "<group>"; };
 		64583CFD2025BB64002099D4 /* YSNetWorkEngine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSNetWorkEngine.m; sourceTree = "<group>"; };
+		646E2E302195D41A00F813E2 /* YSWeatherView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSWeatherView.h; sourceTree = "<group>"; };
+		646E2E312195D41A00F813E2 /* YSWeatherView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSWeatherView.m; sourceTree = "<group>"; };
 		647FC4DC201C5786006C4B06 /* YSMoreClassViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSMoreClassViewController.h; sourceTree = "<group>"; };
 		647FC4DD201C5786006C4B06 /* YSMoreClassViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSMoreClassViewController.m; sourceTree = "<group>"; };
 		64801BEB214FF52F009F9370 /* videoposter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = videoposter.jpg; sourceTree = "<group>"; };
@@ -391,6 +399,12 @@
 		64C7A8922074795A001C0666 /* YSExamToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamToolView.m; sourceTree = "<group>"; };
 		64C7F16B202C8C6E0017272A /* YSExamManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExamManager.h; sourceTree = "<group>"; };
 		64C7F16C202C8C6E0017272A /* YSExamManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamManager.m; sourceTree = "<group>"; };
+		64CA7F152199C6F20098EEFA /* AppDelegate+YSUMAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+YSUMAnalytics.h"; sourceTree = "<group>"; };
+		64CA7F162199C6F20098EEFA /* AppDelegate+YSUMAnalytics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+YSUMAnalytics.m"; sourceTree = "<group>"; };
+		64CA7F182199C8920098EEFA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		64CA7F1A2199C8A40098EEFA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		64CA7F1C2199C8B50098EEFA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		64CA7F1E2199C8BD0098EEFA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anjiandenglu.png; sourceTree = "<group>"; };
 		64DEF2CB2140D27B002925A6 /* anjianlogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anjianlogin@3x.png"; sourceTree = "<group>"; };
 		64DEF2CC2140D27C002925A6 /* anjianlogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anjianlogin@2x.png"; sourceTree = "<group>"; };
@@ -437,6 +451,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64CA7F1F2199C8BD0098EEFA /* SystemConfiguration.framework in Frameworks */,
+				64CA7F1D2199C8B50098EEFA /* libsqlite3.tbd in Frameworks */,
+				64CA7F1B2199C8A40098EEFA /* libz.tbd in Frameworks */,
+				64CA7F192199C8920098EEFA /* CoreTelephony.framework in Frameworks */,
 				6446C1D3209DE8560052B289 /* QuickLook.framework in Frameworks */,
 				4558102F206B6BA00033987C /* CoreLocation.framework in Frameworks */,
 				451F7E29206A39550032852C /* WebKit.framework in Frameworks */,
@@ -621,7 +639,6 @@
 		641B3FE41F83381900BF029E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				64A46BC920BD1C92007210CC /* SearchViewController */,
 				641B3FE61F850ED100BF029E /* BaseViewController */,
 				6403AEBA1FF88A4500E06D71 /* ClassViewController */,
 				6403AEA61FF7F25C00E06D71 /* ExaminationItemViewController */,
@@ -631,6 +648,7 @@
 				64BDEAAD1FC110020036CD8E /* LoginViewController */,
 				6403AEB61FF887D600E06D71 /* NewsViewController */,
 				641B3FF11F8510FA00BF029E /* RecordViewControllers */,
+				64A46BC920BD1C92007210CC /* SearchViewController */,
 				641B3FF01F8510FA00BF029E /* UserInformationViewControllers */,
 				641B3FF21F8510FA00BF029E /* WeatherViewControllers */,
 				64572EEB2042EC5B003F3B05 /* WrongItemViewController */,
@@ -641,11 +659,12 @@
 		641B3FE51F83381900BF029E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				64C7A8902074793B001C0666 /* ExamToolView */,
 				64BDEA961FC103FB0036CD8E /* BaseView */,
 				641B3FFF1F89C60800BF029E /* Cells */,
+				64C7A8902074793B001C0666 /* ExamToolView */,
 				641B40991F8BA80A00BF029E /* HomeViews */,
 				6403AE9E1FF7514E00E06D71 /* RecordView */,
+				646E2E2F2195D3FE00F813E2 /* WeatherView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -892,6 +911,15 @@
 			path = NetWorkEngine;
 			sourceTree = "<group>";
 		};
+		646E2E2F2195D3FE00F813E2 /* WeatherView */ = {
+			isa = PBXGroup;
+			children = (
+				646E2E302195D41A00F813E2 /* YSWeatherView.h */,
+				646E2E312195D41A00F813E2 /* YSWeatherView.m */,
+			);
+			path = WeatherView;
+			sourceTree = "<group>";
+		};
 		64A46BC920BD1C92007210CC /* SearchViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,6 +1093,8 @@
 				64F41F311FD285F800FC636D /* UIView+YSCustomView.m */,
 				6406D478202729B00075D089 /* NSString+YSStringOperation.h */,
 				6406D479202729B00075D089 /* NSString+YSStringOperation.m */,
+				64CA7F152199C6F20098EEFA /* AppDelegate+YSUMAnalytics.h */,
+				64CA7F162199C6F20098EEFA /* AppDelegate+YSUMAnalytics.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1129,6 +1159,10 @@
 		F289F35A669F7C13F523B152 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64CA7F1E2199C8BD0098EEFA /* SystemConfiguration.framework */,
+				64CA7F1C2199C8B50098EEFA /* libsqlite3.tbd */,
+				64CA7F1A2199C8A40098EEFA /* libz.tbd */,
+				64CA7F182199C8920098EEFA /* CoreTelephony.framework */,
 				6446C1D2209DE8560052B289 /* QuickLook.framework */,
 				4558102E206B6BA00033987C /* CoreLocation.framework */,
 				451F7E28206A39540032852C /* WebKit.framework */,
@@ -1381,9 +1415,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-yanshaniOS/Pods-yanshaniOS-resources.sh",
+				"${PODS_ROOT}/UMCCommonLog/UMCommonLog/UMCommonLog.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/UMCommonLog.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1568,6 +1605,7 @@
 				6446C1CD209C63400052B289 /* YSLawInformationViewController.m in Sources */,
 				641B40941F8A3B0500BF029E /* FSPagerView.swift in Sources */,
 				64583CFA2020B25A002099D4 /* YSHistoryScoreViewController.m in Sources */,
+				646E2E322195D41A00F813E2 /* YSWeatherView.m in Sources */,
 				641B3FED1F850F8A00BF029E /* YSHomeViewController.m in Sources */,
 				643D259A1F77FE640034131C /* main.m in Sources */,
 				641B409F1F8D0EB000BF029E /* YSClassViewController.m in Sources */,
@@ -1604,6 +1642,7 @@
 				6406D4912028A5E10075D089 /* YSFileManager.m in Sources */,
 				641B40A21F8D0F8700BF029E /* YSClassDetailViewController.m in Sources */,
 				6403AEBD1FF88A4F00E06D71 /* YSCourseDetailViewController.m in Sources */,
+				64CA7F172199C6F20098EEFA /* AppDelegate+YSUMAnalytics.m in Sources */,
 				641B3FF51F85119300BF029E /* YSWeatherViewController.m in Sources */,
 				6406D4942028A61E0075D089 /* YSCourseManager.m in Sources */,
 				64BDEAEA1FC1BA510036CD8E /* UITableViewCell+YSCustomCell.m in Sources */,
@@ -1774,7 +1813,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yanshaniOS/Yanshan-Prefix.pch";
 				INFOPLIST_FILE = yanshaniOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LD_MAP_FILE_PATH = "/Users/daijian/Desktop/燕山app-LinkMap-$(CURRENT_VARIANT)-$(CURRENT_ARCH).txt";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1804,7 +1843,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yanshaniOS/Yanshan-Prefix.pch";
 				INFOPLIST_FILE = yanshaniOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				NEW_SETTING = "";

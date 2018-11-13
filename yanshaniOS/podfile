@@ -14,7 +14,10 @@ target 'yanshaniOS' do
   pod 'DZNEmptyDataSet’
   pod 'SVPullToRefresh'
   pod 'LzmaSDK-ObjC', :inhibit_warnings => true
-  pod 'Bugly'
+
+  pod 'UMCCommon'
+  pod 'UMCCommonLog'
+  pod 'UMCAnalytics'
 
   target 'yanshaniOSTests' do
     inherit! :search_paths
