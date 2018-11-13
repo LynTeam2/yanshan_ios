@@ -26,10 +26,11 @@
 
 #pragma mark - url macro
 // 
-#define kZipFileUrl            @"http://39.105.27.225/api/upgrade"
+//#define kZipFileUrl            @"http://39.105.27.225/api/upgrade"
+#define kZipFileUrl            @"http://api.anjian.hanyuhuake.com/api/upgrade"
 
-#define kHostURL               @"http://39.105.27.225/api/"
-
+//#define kHostURL               @"http://39.105.27.225/api/"
+#define kHostURL               @"http://api.anjian.hanyuhuake.com/api/"
 #pragma mark - file name
 
 #define kQianDaoFile           @"qiandao.plist"

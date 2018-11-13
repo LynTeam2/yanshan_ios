@@ -12,7 +12,13 @@
 
 static YSNetWorkEngine *netWorkEngine = nil;
 
-static NSString const *baseURL = @"http://39.105.27.225/";
+//static NSString const *baseURL = @"http://39.105.27.225/";
+static NSString const *baseURL = @"http://api.anjian.hanyuhuake.com/";
+
+static NSString const *loginURL = @"http://api.anjian.hanyuhuake.com/login";
+
+static NSString const *uploadURL = @"http://api.anjian.hanyuhuake.com/upload";
+
 
 @interface YSNetWorkEngine ()
 
@@ -75,7 +81,7 @@ static NSString const *baseURL = @"http://39.105.27.225/";
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];//响应
     [manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Accept"];
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:@"http://39.105.27.225/login" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:loginURL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:0|1 error:nil];
         dispatch_async(dispatch_get_main_queue(), ^{
             handler(nil,dic);
@@ -149,7 +155,7 @@ static NSString const *baseURL = @"http://39.105.27.225/";
     __weak YSNetWorkEngine *weakNet = self;
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSURLSessionDataTask *task = [manager POST:@"http://39.105.27.225/upload" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    NSURLSessionDataTask *task = [manager POST:uploadURL parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *data = UIImageJPEGRepresentation(headerIcon, 1.0);
         [formData appendPartWithFileData:data name:@"file" fileName:@"filename.jpg" mimeType:@"image/jpeg"];
     } progress:^(NSProgress * _Nonnull uploadProgress) {
