@@ -14,7 +14,7 @@
 
 + (BOOL)deleteFileByName:(NSString *)name;
 
-+ (UIImage *)weatherIcon:(NSString *)weather state:(UIControlState *)state;
++ (UIImage *)weatherIcon:(NSString *)weather state:(UIControlState)state;
 
 + (NSString *)getUserCurrentLocation;
 

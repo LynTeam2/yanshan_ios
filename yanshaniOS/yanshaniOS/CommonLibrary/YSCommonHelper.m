@@ -56,7 +56,8 @@
     if ([weather containsString:@"雪"]) {
         return (state == UIControlStateNormal ? [UIImage imageNamed:icons[1]] : [UIImage imageNamed:icons[1]]);
     }
-    return nil;
+    return (state == UIControlStateNormal ? [UIImage imageNamed:icons[0]] : [UIImage imageNamed:icons[3]]);
+;
 }
 
 + (NSString *)urlencode:(NSString *)encodeString {
