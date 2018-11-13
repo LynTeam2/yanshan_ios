@@ -170,7 +170,9 @@
         }];
     }else{
         [weatherView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(self.view);
+            make.top.mas_equalTo(self.mas_topLayoutGuide);
+            make.bottom.mas_equalTo(self.mas_bottomLayoutGuide);
+            make.right.and.left.equalTo(self.view);
         }];
     }
     

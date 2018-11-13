@@ -68,7 +68,6 @@
     [self addSubview:dateLabel];
     
     imageV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weatherbgnew"]];
-    imageV.backgroundColor = [UIColor redColor];
     [self addSubview:imageV];
 }
 

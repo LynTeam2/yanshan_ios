@@ -40,6 +40,7 @@
 - (void)loadView {
     flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _collectionView = [[YSBaseCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    _collectionView.showsVerticalScrollIndicator = NO;
     self.view = _collectionView;
 }
 
