@@ -123,10 +123,12 @@
 }
 
 - (void)handleZipFileData {
-    NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"latest.json" atDocumentName:@"course"];
-    if ([jsonDic objectForKey:@"courses"]) {
-        NSArray *courses = [jsonDic objectForKey:@"courses"];
-        lastestCourses = [NSArray arrayWithArray:[YSCourseModel arrayOfModelsFromDictionaries:courses error:nil]];
+    @synchronized (self) {
+        NSDictionary *jsonDic = [[YSFileManager sharedFileManager] JSONSerializationJsonFile:@"latest.json" atDocumentName:@"course"];
+        if ([jsonDic objectForKey:@"courses"]) {
+            NSArray *courses = [jsonDic objectForKey:@"courses"];
+            lastestCourses = [NSArray arrayWithArray:[YSCourseModel arrayOfModelsFromDictionaries:courses error:nil]];
+        }
     }
 }
 

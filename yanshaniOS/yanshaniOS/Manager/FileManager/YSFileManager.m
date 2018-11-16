@@ -143,24 +143,26 @@ static YSFileManager *fileManager = nil;
         return nil;
     }
     NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:0|1 error:nil];
-    if (jsonDic[@"courses"]) {
-        NSMutableArray *courses = [NSMutableArray array];
-        for (NSDictionary *dic in jsonDic[@"courses"]) {
-            NSString *role = dic[@"role"];
-            if ([role containsString:[YSUserModel shareInstance].roleName]) {
-                [courses addObject:dic];
+    if ([jsonDic isKindOfClass:[NSDictionary class]]) {
+        if (jsonDic[@"courses"]) {
+            NSMutableArray *courses = [NSMutableArray array];
+            for (NSDictionary *dic in jsonDic[@"courses"]) {
+                NSString *role = dic[@"role"];
+                if ([role containsString:[YSUserModel shareInstance].roleName]) {
+                    [courses addObject:dic];
+                }
             }
-        }
-        return @{@"courses":courses};
-    }else if (jsonDic[@"exams"]){
-        NSMutableArray *exams = [NSMutableArray array];
-        for (NSDictionary *dic in jsonDic[@"exams"]) {
-            NSString *role = dic[@"role"];
-            if ([role containsString:[YSUserModel shareInstance].roleName]) {
-                [exams addObject:dic];
+            return @{@"courses":courses};
+        }else if (jsonDic[@"exams"]){
+            NSMutableArray *exams = [NSMutableArray array];
+            for (NSDictionary *dic in jsonDic[@"exams"]) {
+                NSString *role = dic[@"role"];
+                if ([role containsString:[YSUserModel shareInstance].roleName]) {
+                    [exams addObject:dic];
+                }
             }
+            return @{@"exams":exams};
         }
-        return @{@"exams":exams};
     }
     return jsonDic;
 }
