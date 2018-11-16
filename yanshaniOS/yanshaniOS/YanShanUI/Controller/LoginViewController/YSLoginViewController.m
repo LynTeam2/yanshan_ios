@@ -7,6 +7,7 @@
 //
 
 #import "YSLoginViewController.h"
+#import "AppDelegate+YSWelcome.h"
 
 @interface YSLoginViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *username;
@@ -19,6 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    BOOL new = [[[NSUserDefaults standardUserDefaults] objectForKey:kNewApp] boolValue];
+    if (!new) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        [UIApplication sharedApplication].keyWindow.rootViewController = [sb instantiateViewControllerWithIdentifier:@"welcomeVC"];
+        return;
+    }
     if ([[YSUserLoginModel shareInstance] userInformationComplete]) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         _username.text = [YSUserLoginModel shareInstance].userName;
