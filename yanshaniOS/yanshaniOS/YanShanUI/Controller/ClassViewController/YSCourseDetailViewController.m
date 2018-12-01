@@ -58,7 +58,7 @@
                 hasDone = NO;
             }
         }
-        if (hasDone) {
+        if (hasDone && courseItems.count) {
             [[YSCourseManager sharedCourseManager] saveHasDoneCourseId:[_model toDictionary]];
             [self uploadCourseLearningProcess];
         }
@@ -83,14 +83,17 @@
 
 - (void)configViewControllerParameter {
     vcs = [NSMutableArray arrayWithCapacity:0];
-    if (_model) {
-        self.title = @"课程练习";
+    if (_model.courseType == CourseContentTypeVideo) {
+        self.title = @"视频题";
+    }else if (_model.courseType == CourseContentTypeArtical) {
+        self.title = @"阅读题";
     }else{
         self.title = @"专项练习";
     }
 }
 
 - (void)configView {
+    
     CGRect frame = self.view.bounds;
     frame.size.height = 300;
     CGFloat height = 200;
@@ -98,10 +101,7 @@
     webView.delegate = self;
     webView.backgroundColor = kWhiteColor;
     [self.view addSubview:webView];
-    [webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.and.right.equalTo(self.view);
-        make.height.mas_equalTo(height);
-    }];
+  
     if (_model.courseType == CourseContentTypeVideo) {
         NSString *url = [[NSBundle mainBundle] pathForResource:@"video" ofType:@"html"];
         url = [NSString stringWithFormat:@"%@?url=%@",url,_model.video];
@@ -109,9 +109,7 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }else if (_model.courseType == CourseContentTypeArtical) {
         NSString *content = [NSString stringWithFormat:@"<div>%@</div>",_model.content];
-
-    content = [content stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
-
+        content = [content stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
         [webView loadHTMLString:content baseURL:nil];
     }else{
         return;
@@ -152,21 +150,38 @@
     }
     
     [beginTestBtn addTarget:self action:@selector(beginTest:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [coverView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-        make.top.equalTo(webView.mas_bottom);
-    }];
+    if (_model.courseType == CourseContentTypeArtical) {
+        [webView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.and.right.equalTo(self.view);
+            make.bottom.equalTo(self.view).offset(-150.0);
+        }];
+        
+        [coverView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.and.right.equalTo(self.view);
+            make.bottom.equalTo(self.view);
+            make.top.equalTo(webView.mas_bottom);
+        }];
+    }else{
+        [webView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.and.right.equalTo(self.view);
+            make.height.mas_equalTo(height);
+        }];
+        
+        [coverView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.and.right.equalTo(self.view);
+            make.bottom.equalTo(self.view);
+            make.top.equalTo(webView.mas_bottom);
+        }];
+    }
     
     [catogaryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(coverView).offset(40);
+        make.top.equalTo(coverView).offset(20);
         make.left.equalTo(coverView).offset(20);
         make.width.mas_equalTo(40);
         make.height.mas_equalTo(20);
     }];
     [docLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(coverView).offset(40);
+        make.top.equalTo(coverView).offset(20);
         make.left.equalTo(catogaryLabel.mas_right).offset(5);
         make.right.equalTo(coverView).offset(-20);
         make.height.mas_equalTo(20);
