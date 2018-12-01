@@ -89,7 +89,7 @@
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchBtn setBackgroundColor:kLightGray];
-    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [searchBtn setTitle:@"搜索课程相关信息" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [searchBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
     [searchBtn setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
@@ -188,8 +188,7 @@
         [self.navigationController pushViewController:classVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
         return;
-    }
-    if (indexPath.section == 2) {
+    } else if (indexPath.section == 2) {
         YSNewsViewController *newsVC = [[YSNewsViewController alloc] init];
         newsVC.dic = newsList[indexPath.row];
         self.hidesBottomBarWhenPushed = YES;

@@ -218,6 +218,7 @@
         
         titleLabel = [[UILabel alloc] init];
         titleLabel.font = kDefaultFont;
+        titleLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:titleLabel];
         
     }
