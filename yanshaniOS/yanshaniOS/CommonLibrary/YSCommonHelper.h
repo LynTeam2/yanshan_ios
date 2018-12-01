@@ -26,4 +26,6 @@
 
 + (NSString *)getWeekDayFromDateString:(NSString *)dateString;
 
++ (BOOL)iPhone5Device;
+
 @end

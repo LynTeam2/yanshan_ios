@@ -157,4 +157,8 @@
     return hexInt;
 }
 
++ (BOOL)iPhone5Device {
+    return [UIApplication sharedApplication].keyWindow.bounds.size.height < 667;
+}
+
 @end
