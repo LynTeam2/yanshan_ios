@@ -123,7 +123,8 @@
     }
    
     UILabel *notiLabel = [[UILabel alloc] init];
-    notiLabel.text = [NSString stringWithFormat:@"温馨提示:%@",_examModel.introduction];
+    NSString *warmNotiTxt = _examModel.introduction.isEmptyString ? @"请在规定时间完成考试题目，答题时间结束系统自动提交当前答题结果。考试期间中途退出考试并且没有交卷，没有考试成绩。":_examModel.introduction;
+    notiLabel.text = [NSString stringWithFormat:@"温馨提示:%@",warmNotiTxt];
     notiLabel.numberOfLines = 3;
     notiLabel.textColor = [UIColor grayColor];
     notiLabel.adjustsFontSizeToFitWidth = YES;
@@ -204,7 +205,7 @@
         }
     }
     if(warnText.length){
-        warnText = [warnText stringByAppendingString:@"\n课时未完成"];
+        warnText = [warnText stringByAppendingString:@"\n未完成学习,请前往首页课程学习完成课程学习"];
         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:warnText preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
