@@ -44,14 +44,6 @@
     [self.view addSubview:mainView];
 }
 
-- (void)configContainer {
-    
-}
-
-- (void)addNavigationItems {
-    
-}
-
 #pragma mark - UITableView delegate - datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -84,7 +76,6 @@
             [mattr appendAttributedString:[[NSAttributedString alloc] initWithString:_itemModel.question]];
             [mattr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.f] range:NSMakeRange(0, mattr.string.length)];
             textView.attributedText = mattr;
-//            textView.text = [NSString stringWithFormat:@"%@%@",[_itemModel getQuestionTypeString],_itemModel.question];
             [cell addSubview:textView];
             cell.userInteractionEnabled = NO;
             return cell;
@@ -155,7 +146,7 @@
 
 - (void)selectChoice:(NSArray *)selectIndexs {
     [mcChoices addObjectsFromArray:selectIndexs];
-    if (mcChoices.count == [_itemModel getMCAnswer].count || ![[selectIndexs firstObject] boolValue]) {
+    if (![[selectIndexs firstObject] boolValue]) {
         [self confirmChoice:nil];
     }
 }
