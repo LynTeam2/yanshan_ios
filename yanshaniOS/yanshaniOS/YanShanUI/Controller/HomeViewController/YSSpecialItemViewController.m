@@ -62,9 +62,9 @@
 
 - (void)configViewControllerParameter {
     cellTitleArray = @[@[@"危险化学品",@"企业行业",@"运输",@"建筑施工",@"人员密集场所",@"特种设备",@"消防"],
-                   @[@"单选",@"多选",@"判断"],
-                   @[@"初级",@"中级",@"高级"]];
-    sectionTitleArray = @[@"类型一",@"类型二",@"类型三"];
+                       @[@"单选",@"多选",@"判断"]];//,
+                   //@[@"初级",@"中级",@"高级"]];
+    sectionTitleArray = @[@"类型一",@"类型二"];//,@"类型三"];
     catogaryDic = [NSMutableDictionary dictionaryWithCapacity:0];
     [self addPopViewControllerButtonWithTarget:self action:@selector(backViewController:)];
 }
