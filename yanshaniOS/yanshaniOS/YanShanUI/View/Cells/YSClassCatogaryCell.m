@@ -39,7 +39,7 @@
         _rightIndicator = [[UIImageView alloc] init];
         _rightIndicator.image = [UIImage imageNamed:@"rightgoicon"];
         _rightIndicator.userInteractionEnabled = YES;
-        [self addSubview:_rightIndicator];
+        [self addSubview:_rightIndicator];        
     }
     return self;
 }
@@ -74,7 +74,8 @@
         return;
     }else if ([model isKindOfClass:[YSExamModel class]]) {
         YSExamModel *obj = (YSExamModel *)model;
-        _coverImgView.image = [UIImage imageNamed:@"examplaceholder.jpg"];
+        _coverImgView.image = [UIImage imageNamed:@"exam_placeholder.jpg"];
+        _coverImgView.contentMode = UIViewContentModeScaleAspectFill;
         _titleLable.text = obj.examName;
         _subTitleLabel.text = obj.introduction;
         return;
@@ -82,12 +83,12 @@
         YSLawModel *law = (YSLawModel *)model;
         _titleLable.text = law.lawName;
         _subTitleLabel.text = law.createTime;
-        [_coverImgView sd_setImageWithURL:[NSURL URLWithString:law.iconPath] placeholderImage:[UIImage imageNamed:@"dianyuan"]];
+        [_coverImgView sd_setImageWithURL:[NSURL URLWithString:law.iconPath] placeholderImage:[UIImage imageNamed:@"search_placeholder.jpg"]];
     }else if ([model isKindOfClass:[YSCourseModel class]]) {
         YSCourseModel *courseModel = (YSCourseModel *)model;
         _titleLable.text = courseModel.courseName;
         _subTitleLabel.text = courseModel.ajType;
-        [_coverImgView sd_setImageWithURL:[NSURL URLWithString:courseModel.icon] placeholderImage:[UIImage imageNamed:@"dianyuan"]];
+        [_coverImgView sd_setImageWithURL:[NSURL URLWithString:courseModel.icon] placeholderImage:[UIImage imageNamed:@"search_placeholder.jpg"]];
     }
 }
 

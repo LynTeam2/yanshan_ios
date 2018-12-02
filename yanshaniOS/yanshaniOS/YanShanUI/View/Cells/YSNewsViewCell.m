@@ -20,7 +20,7 @@
         _coverImgView.userInteractionEnabled = YES;
         _coverImgView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:_coverImgView];
-        
+                
         _titleLable = [[UILabel alloc] init];
         _titleLable.userInteractionEnabled = YES;
         _titleLable.numberOfLines = 2;
