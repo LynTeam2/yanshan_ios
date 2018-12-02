@@ -15,7 +15,7 @@
 #import "YSLawInformationViewController.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
-@interface YSSearchViewController ()<UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource>
+@interface YSSearchViewController ()<UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetDelegate,DZNEmptyDataSetSource,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UICollectionView *resultsView;
 
@@ -47,11 +47,10 @@
 
     [[UISearchBar appearance] setFrame:CGRectMake(0, 0, width-80, height)];
     _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, width-80, height)];
-    _searchBar.placeholder = @"请输入想要搜索的内容";
+    _searchBar.placeholder = @"搜索";
     _searchBar.barStyle = UIBarStyleDefault;
     _searchBar.barTintColor = kLightGray;
     _searchBar.delegate = self;
-//    searchBar.frame = CGRectMake(0, 0, width-80, height);
     _searchBar.returnKeyType = UIReturnKeySearch;
     [_searchBar becomeFirstResponder];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:_searchBar];
@@ -72,16 +71,34 @@
     _resultsView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:collectionFL];
     _resultsView.delegate = self;
     _resultsView.dataSource = self;
+    _resultsView.alwaysBounceVertical = YES;
     _resultsView.emptyDataSetSource = self;
     _resultsView.emptyDataSetDelegate = self;
     _resultsView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_resultsView];
     [_resultsView registerClass:[YSClassCatogaryCell class] forCellWithReuseIdentifier:@"resultscell"];
     [_resultsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.left.top.and.bottom.right.equalTo(self.view);
     }];
+    
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] init];
+    [tapGes addTarget:self action:@selector(tap:)];
+    tapGes.delegate = self;
+    [_resultsView addGestureRecognizer:tapGes];
+
 }
 
+- (void)tap:(UITapGestureRecognizer *)tapGes {
+//    NSLog(@"***---***");
+    [_searchBar resignFirstResponder];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (_results.count) {
+        return NO;
+    }
+    return YES;
+}
 #pragma mark - dataSource(UICollectionView)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -97,6 +114,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
     id obj = _results[indexPath.row];
     if ([obj isKindOfClass:[YSCourseModel class]]) {
         YSCourseDetailViewController *classVC = [[YSCourseDetailViewController alloc] init];
@@ -135,7 +153,7 @@
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    return [[NSAttributedString alloc] initWithString:@"暂无数据"];
+    return _searchBar.text.isEmptyString ? nil : [[NSAttributedString alloc] initWithString:@"未搜索到相关内容"];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
