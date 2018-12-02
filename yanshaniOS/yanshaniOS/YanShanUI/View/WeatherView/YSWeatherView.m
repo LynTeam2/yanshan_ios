@@ -91,7 +91,7 @@
         make.top.equalTo(self.mas_centerY).offset(70);
         make.width.mas_equalTo(bounds.size.width-40);
         make.height.mas_lessThanOrEqualTo(220);
-//        make.bottom.equalTo(self).offset(-20);
+        make.bottom.equalTo(self).offset(-20).with.priority(751);
     }];
     [FLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
@@ -157,8 +157,8 @@
         YSWeatherInformationItem *item = [[YSWeatherInformationItem alloc] init];
         [item updateInformation:dic];
         [imageV addSubview:item];
-        CGFloat topSpace = 20;
-        CGFloat height = 35;
+        CGFloat topSpace = [YSCommonHelper iPhone5Device] ? 15 : 20;
+        CGFloat height = [YSCommonHelper iPhone5Device] ? 25 : 35;
         [item mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(imageV).offset(topSpace+height*i);
             make.left.equalTo(imageV);

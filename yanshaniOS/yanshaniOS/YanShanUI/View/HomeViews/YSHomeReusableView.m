@@ -65,7 +65,6 @@
     FSPagerViewCell *cell = [pagerView dequeueReusableCellWithReuseIdentifier:@"pageCell" atIndex:index];
     NSDictionary *dic = bannerDatas[index];
         [cell.imageView sd_setImageWithURL:[NSURL URLWithString:dic[@"path"]] placeholderImage:[UIImage imageNamed:@"bannerplaceholder"]];
-    cell.backgroundColor = kRandomColor;
     return cell;
 
 }

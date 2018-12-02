@@ -25,6 +25,7 @@
     [[YSFileManager sharedFileManager] createFileAtDocumentDirectoryPath:kCourseFiles];
     [[UINavigationBar appearance] setBackgroundImage:[YSCommonHelper imageFromColor:kBlueColor withSize:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.window.backgroundColor = kWhiteColor;
     return YES;
 }
 
