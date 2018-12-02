@@ -101,7 +101,7 @@ static NSString *blueString    = @"6490ff";
             make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
             make.left.equalTo(self.view);
             make.right.equalTo(self.view);
-            make.height.mas_equalTo(height);
+            make.height.mas_equalTo(310);
         }];
     }else if ([UIViewController instancesRespondToSelector:@selector(topLayoutGuide)]) {
         [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -188,7 +188,7 @@ static NSString *blueString    = @"6490ff";
     
     CGFloat btnSpace = 20;
     CGFloat btnWidth = (self.view.frame.size.width-btnSpace*3)/2;
-    CGFloat btnHeight = 60;
+    CGFloat btnHeight =  [YSCommonHelper iPhone5Device] ? 40 : 60;
     btn1 = [[YSRecordStatisticButton alloc] initWithStatisticButtonType:StatisticButtonTypeDefault];
     [secondSectionView addSubview:btn1];
     
