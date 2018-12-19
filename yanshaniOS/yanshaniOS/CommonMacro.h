@@ -41,4 +41,8 @@
 
 #define kUnzipSuccessNotification   @"unzipFileSuccess"
 
+#pragma mark - string
+
+#define kNewApp @"old"
+
 #endif /* CommonMacro_h */

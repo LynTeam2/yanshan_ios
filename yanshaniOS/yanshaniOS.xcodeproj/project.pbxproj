@@ -74,9 +74,10 @@
 		6449876520A9793F008B024C /* newsc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6449875D20A9793E008B024C /* newsc@2x.png */; };
 		6449876620A9793F008B024C /* newsc@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6449875E20A9793E008B024C /* newsc@3x.png */; };
 		6449876820AAD5AC008B024C /* video.html in Resources */ = {isa = PBXBuildFile; fileRef = 6449876720AAD5AC008B024C /* video.html */; };
+		6450846621B2299000956E89 /* search_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6450846521B2299000956E89 /* search_placeholder.jpg */; };
+		6450846821B2315D00956E89 /* exam_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6450846721B2315D00956E89 /* exam_placeholder.jpg */; };
 		64572EEE2042EC81003F3B05 /* YSWrongItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64572EED2042EC81003F3B05 /* YSWrongItemsViewController.m */; };
 		64572EF12042FBC4003F3B05 /* YSExamAnalyseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64572EF02042FBC4003F3B05 /* YSExamAnalyseViewController.m */; };
-		64583CE6201E0DA7002099D4 /* YSTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CE5201E0DA7002099D4 /* YSTestViewController.m */; };
 		64583CF42020A408002099D4 /* YSWrongItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CF32020A408002099D4 /* YSWrongItemViewController.m */; };
 		64583CF72020A709002099D4 /* YSSpecialItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CF62020A709002099D4 /* YSSpecialItemViewController.m */; };
 		64583CFA2020B25A002099D4 /* YSHistoryScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64583CF92020B25A002099D4 /* YSHistoryScoreViewController.m */; };
@@ -148,6 +149,22 @@
 		64CA7F1B2199C8A40098EEFA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CA7F1A2199C8A40098EEFA /* libz.tbd */; };
 		64CA7F1D2199C8B50098EEFA /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CA7F1C2199C8B50098EEFA /* libsqlite3.tbd */; };
 		64CA7F1F2199C8BD0098EEFA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CA7F1E2199C8BD0098EEFA /* SystemConfiguration.framework */; };
+		64CA7F31219ED9090098EEFA /* w4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F25219ED9090098EEFA /* w4@2x.png */; };
+		64CA7F32219ED9090098EEFA /* w4@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F26219ED9090098EEFA /* w4@3x.png */; };
+		64CA7F33219ED9090098EEFA /* w2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F27219ED9090098EEFA /* w2@2x.png */; };
+		64CA7F34219ED9090098EEFA /* w2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F28219ED9090098EEFA /* w2@3x.png */; };
+		64CA7F35219ED9090098EEFA /* w4.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F29219ED9090098EEFA /* w4.png */; };
+		64CA7F36219ED9090098EEFA /* w1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F2A219ED9090098EEFA /* w1@3x.png */; };
+		64CA7F37219ED9090098EEFA /* w3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F2B219ED9090098EEFA /* w3@2x.png */; };
+		64CA7F38219ED9090098EEFA /* w2.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F2C219ED9090098EEFA /* w2.png */; };
+		64CA7F39219ED9090098EEFA /* w3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F2D219ED9090098EEFA /* w3@3x.png */; };
+		64CA7F3A219ED9090098EEFA /* w1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F2E219ED9090098EEFA /* w1@2x.png */; };
+		64CA7F3B219ED9090098EEFA /* w3.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F2F219ED9090098EEFA /* w3.png */; };
+		64CA7F3C219ED9090098EEFA /* w1.png in Resources */ = {isa = PBXBuildFile; fileRef = 64CA7F30219ED9090098EEFA /* w1.png */; };
+		64CA7F40219EFA710098EEFA /* YSWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CA7F3F219EFA710098EEFA /* YSWelcomeViewController.m */; };
+		64CA7F46219F19020098EEFA /* AppDelegate+YSWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CA7F45219F19020098EEFA /* AppDelegate+YSWelcome.m */; };
+		64CA7F4921A3B2D20098EEFA /* YSRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CA7F4821A3B2D20098EEFA /* YSRegisterViewController.m */; };
+		64CA7F4C21A3B3300098EEFA /* YSReSetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64CA7F4B21A3B3300098EEFA /* YSReSetPasswordViewController.m */; };
 		64DEF2CA213F7CB1002925A6 /* anjiandenglu.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */; };
 		64DEF2CE2140D27D002925A6 /* anjianlogin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2CB2140D27B002925A6 /* anjianlogin@3x.png */; };
 		64DEF2CF2140D27D002925A6 /* anjianlogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64DEF2CC2140D27C002925A6 /* anjianlogin@2x.png */; };
@@ -303,12 +320,12 @@
 		6449875D20A9793E008B024C /* newsc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsc@2x.png"; sourceTree = "<group>"; };
 		6449875E20A9793E008B024C /* newsc@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsc@3x.png"; sourceTree = "<group>"; };
 		6449876720AAD5AC008B024C /* video.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = video.html; sourceTree = "<group>"; };
+		6450846521B2299000956E89 /* search_placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = search_placeholder.jpg; sourceTree = "<group>"; };
+		6450846721B2315D00956E89 /* exam_placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = exam_placeholder.jpg; sourceTree = "<group>"; };
 		64572EEC2042EC81003F3B05 /* YSWrongItemsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSWrongItemsViewController.h; sourceTree = "<group>"; };
 		64572EED2042EC81003F3B05 /* YSWrongItemsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSWrongItemsViewController.m; sourceTree = "<group>"; };
 		64572EEF2042FBC4003F3B05 /* YSExamAnalyseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSExamAnalyseViewController.h; sourceTree = "<group>"; };
 		64572EF02042FBC4003F3B05 /* YSExamAnalyseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSExamAnalyseViewController.m; sourceTree = "<group>"; };
-		64583CE4201E0DA7002099D4 /* YSTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSTestViewController.h; sourceTree = "<group>"; };
-		64583CE5201E0DA7002099D4 /* YSTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSTestViewController.m; sourceTree = "<group>"; };
 		64583CF22020A408002099D4 /* YSWrongItemViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSWrongItemViewController.h; sourceTree = "<group>"; };
 		64583CF32020A408002099D4 /* YSWrongItemViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSWrongItemViewController.m; sourceTree = "<group>"; };
 		64583CF52020A708002099D4 /* YSSpecialItemViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSSpecialItemViewController.h; sourceTree = "<group>"; };
@@ -405,6 +422,26 @@
 		64CA7F1A2199C8A40098EEFA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		64CA7F1C2199C8B50098EEFA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		64CA7F1E2199C8BD0098EEFA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		64CA7F25219ED9090098EEFA /* w4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w4@2x.png"; sourceTree = "<group>"; };
+		64CA7F26219ED9090098EEFA /* w4@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w4@3x.png"; sourceTree = "<group>"; };
+		64CA7F27219ED9090098EEFA /* w2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w2@2x.png"; sourceTree = "<group>"; };
+		64CA7F28219ED9090098EEFA /* w2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w2@3x.png"; sourceTree = "<group>"; };
+		64CA7F29219ED9090098EEFA /* w4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = w4.png; sourceTree = "<group>"; };
+		64CA7F2A219ED9090098EEFA /* w1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w1@3x.png"; sourceTree = "<group>"; };
+		64CA7F2B219ED9090098EEFA /* w3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w3@2x.png"; sourceTree = "<group>"; };
+		64CA7F2C219ED9090098EEFA /* w2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = w2.png; sourceTree = "<group>"; };
+		64CA7F2D219ED9090098EEFA /* w3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w3@3x.png"; sourceTree = "<group>"; };
+		64CA7F2E219ED9090098EEFA /* w1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "w1@2x.png"; sourceTree = "<group>"; };
+		64CA7F2F219ED9090098EEFA /* w3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = w3.png; sourceTree = "<group>"; };
+		64CA7F30219ED9090098EEFA /* w1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = w1.png; sourceTree = "<group>"; };
+		64CA7F3E219EFA710098EEFA /* YSWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSWelcomeViewController.h; sourceTree = "<group>"; };
+		64CA7F3F219EFA710098EEFA /* YSWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSWelcomeViewController.m; sourceTree = "<group>"; };
+		64CA7F44219F19020098EEFA /* AppDelegate+YSWelcome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+YSWelcome.h"; sourceTree = "<group>"; };
+		64CA7F45219F19020098EEFA /* AppDelegate+YSWelcome.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+YSWelcome.m"; sourceTree = "<group>"; };
+		64CA7F4721A3B2D20098EEFA /* YSRegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSRegisterViewController.h; sourceTree = "<group>"; };
+		64CA7F4821A3B2D20098EEFA /* YSRegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSRegisterViewController.m; sourceTree = "<group>"; };
+		64CA7F4A21A3B3300098EEFA /* YSReSetPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YSReSetPasswordViewController.h; sourceTree = "<group>"; };
+		64CA7F4B21A3B3300098EEFA /* YSReSetPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YSReSetPasswordViewController.m; sourceTree = "<group>"; };
 		64DEF2C9213F7CB1002925A6 /* anjiandenglu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anjiandenglu.png; sourceTree = "<group>"; };
 		64DEF2CB2140D27B002925A6 /* anjianlogin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anjianlogin@3x.png"; sourceTree = "<group>"; };
 		64DEF2CC2140D27C002925A6 /* anjianlogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anjianlogin@2x.png"; sourceTree = "<group>"; };
@@ -515,8 +552,6 @@
 			children = (
 				6403AEA31FF76C7B00E06D71 /* YSExaminationViewController.h */,
 				6403AEA41FF76C7B00E06D71 /* YSExaminationViewController.m */,
-				64583CE4201E0DA7002099D4 /* YSTestViewController.h */,
-				64583CE5201E0DA7002099D4 /* YSTestViewController.m */,
 			);
 			path = ExaminationViewController;
 			sourceTree = "<group>";
@@ -651,6 +686,7 @@
 				64A46BC920BD1C92007210CC /* SearchViewController */,
 				641B3FF01F8510FA00BF029E /* UserInformationViewControllers */,
 				641B3FF21F8510FA00BF029E /* WeatherViewControllers */,
+				64CA7F3D219EFA570098EEFA /* WelcomeViewController */,
 				64572EEB2042EC5B003F3B05 /* WrongItemViewController */,
 			);
 			path = Controller;
@@ -991,11 +1027,14 @@
 		64BDEAA41FC10D9B0036CD8E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				64CA7F24219ED9090098EEFA /* welcome */,
 				64801BEB214FF52F009F9370 /* videoposter.jpg */,
 				64DEF2D52140D287002925A6 /* alert.png */,
 				64DEF2D42140D287002925A6 /* alert@2x.png */,
 				64DEF2D12140D286002925A6 /* alert@3x.png */,
 				64DEF2D32140D287002925A6 /* smile.png */,
+				6450846521B2299000956E89 /* search_placeholder.jpg */,
+				6450846721B2315D00956E89 /* exam_placeholder.jpg */,
 				64DEF2D62140D288002925A6 /* smile@2x.png */,
 				64DEF2D22140D286002925A6 /* smile@3x.png */,
 				64DEF2CD2140D27D002925A6 /* anjianlogin.png */,
@@ -1055,6 +1094,10 @@
 			children = (
 				64BDEAAE1FC110190036CD8E /* YSLoginViewController.h */,
 				64BDEAAF1FC110190036CD8E /* YSLoginViewController.m */,
+				64CA7F4721A3B2D20098EEFA /* YSRegisterViewController.h */,
+				64CA7F4821A3B2D20098EEFA /* YSRegisterViewController.m */,
+				64CA7F4A21A3B3300098EEFA /* YSReSetPasswordViewController.h */,
+				64CA7F4B21A3B3300098EEFA /* YSReSetPasswordViewController.m */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -1095,6 +1138,8 @@
 				6406D479202729B00075D089 /* NSString+YSStringOperation.m */,
 				64CA7F152199C6F20098EEFA /* AppDelegate+YSUMAnalytics.h */,
 				64CA7F162199C6F20098EEFA /* AppDelegate+YSUMAnalytics.m */,
+				64CA7F44219F19020098EEFA /* AppDelegate+YSWelcome.h */,
+				64CA7F45219F19020098EEFA /* AppDelegate+YSWelcome.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1106,6 +1151,34 @@
 				64C7A8922074795A001C0666 /* YSExamToolView.m */,
 			);
 			path = ExamToolView;
+			sourceTree = "<group>";
+		};
+		64CA7F24219ED9090098EEFA /* welcome */ = {
+			isa = PBXGroup;
+			children = (
+				64CA7F25219ED9090098EEFA /* w4@2x.png */,
+				64CA7F26219ED9090098EEFA /* w4@3x.png */,
+				64CA7F27219ED9090098EEFA /* w2@2x.png */,
+				64CA7F28219ED9090098EEFA /* w2@3x.png */,
+				64CA7F29219ED9090098EEFA /* w4.png */,
+				64CA7F2A219ED9090098EEFA /* w1@3x.png */,
+				64CA7F2B219ED9090098EEFA /* w3@2x.png */,
+				64CA7F2C219ED9090098EEFA /* w2.png */,
+				64CA7F2D219ED9090098EEFA /* w3@3x.png */,
+				64CA7F2E219ED9090098EEFA /* w1@2x.png */,
+				64CA7F2F219ED9090098EEFA /* w3.png */,
+				64CA7F30219ED9090098EEFA /* w1.png */,
+			);
+			path = welcome;
+			sourceTree = "<group>";
+		};
+		64CA7F3D219EFA570098EEFA /* WelcomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				64CA7F3E219EFA710098EEFA /* YSWelcomeViewController.h */,
+				64CA7F3F219EFA710098EEFA /* YSWelcomeViewController.m */,
+			);
+			path = WelcomeViewController;
 			sourceTree = "<group>";
 		};
 		64F41F361FD3B9F100FC636D /* Model */ = {
@@ -1250,12 +1323,15 @@
 				TargetAttributes = {
 					643D25941F77FE630034131C = {
 						CreatedOnToolsVersion = 8.3.1;
-						DevelopmentTeam = W2DLPX35T5;
+						DevelopmentTeam = 83KHEYHKDP;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
+							};
+							com.apple.ClassKit = {
+								enabled = 0;
 							};
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -1307,6 +1383,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6450846621B2299000956E89 /* search_placeholder.jpg in Resources */,
 				64DEF2D02140D27D002925A6 /* anjianlogin.png in Resources */,
 				64BDEAC11FC156800036CD8E /* qiandao@2x.png in Resources */,
 				64DEF2D72140D288002925A6 /* alert@3x.png in Resources */,
@@ -1325,16 +1402,22 @@
 				6449876220A9793F008B024C /* newtf@2x.png in Resources */,
 				64BDEAFD1FC1C0800036CD8E /* qiandaobgicon@2x.png in Resources */,
 				64BDEAC31FC156800036CD8E /* setting@3x.png in Resources */,
+				64CA7F33219ED9090098EEFA /* w2@2x.png in Resources */,
+				64CA7F32219ED9090098EEFA /* w4@3x.png in Resources */,
+				64CA7F35219ED9090098EEFA /* w4.png in Resources */,
 				6449876820AAD5AC008B024C /* video.html in Resources */,
+				64CA7F37219ED9090098EEFA /* w3@2x.png in Resources */,
 				649DD59620D1098A00E9948C /* examplaceholder.jpg in Resources */,
 				64DEF2DB2140D288002925A6 /* alert.png in Resources */,
 				64DEF2D82140D288002925A6 /* smile@3x.png in Resources */,
 				64BDEAC01FC156800036CD8E /* message@2x.png in Resources */,
 				64F41F4F1FD3C6C600FC636D /* classplaceholder@3x.png in Resources */,
+				64CA7F39219ED9090098EEFA /* w3@3x.png in Resources */,
 				6406D489202772970075D089 /* wchoice.png in Resources */,
 				64BDEAD31FC19EBF0036CD8E /* rightgraybackicon@2x.png in Resources */,
 				64B5C0852083429A007F611B /* law4.png in Resources */,
 				64BDEAC61FC156800036CD8E /* setting@2x.png in Resources */,
+				64CA7F3B219ED9090098EEFA /* w3.png in Resources */,
 				64DEF2CA213F7CB1002925A6 /* anjiandenglu.png in Resources */,
 				64BDEAF31FC1BDAB0036CD8E /* navbackicon@2x.png in Resources */,
 				64801BEC214FF52F009F9370 /* videoposter.jpg in Resources */,
@@ -1343,20 +1426,25 @@
 				64F41F461FD3C31600FC636D /* gongyepin@3x.png in Resources */,
 				64BDEAAA1FC10DF70036CD8E /* bannerplaceholder@2x.png in Resources */,
 				64F41F4B1FD3C31600FC636D /* weixianyuan@3x.png in Resources */,
+				64CA7F38219ED9090098EEFA /* w2.png in Resources */,
 				6406D48A202772970075D089 /* rchoice.png in Resources */,
 				64DEF2CE2140D27D002925A6 /* anjianlogin@3x.png in Resources */,
 				64BDEAD41FC19EBF0036CD8E /* rightgraybackicon@3x.png in Resources */,
 				64B5C08C2083429A007F611B /* law4@2x.png in Resources */,
+				6450846821B2315D00956E89 /* exam_placeholder.jpg in Resources */,
 				6449876320A9793F008B024C /* newmc@2x.png in Resources */,
 				64B5C0892083429A007F611B /* law1.png in Resources */,
 				64B5C0882083429A007F611B /* law3.png in Resources */,
 				6449876620A9793F008B024C /* newsc@3x.png in Resources */,
+				64CA7F3A219ED9090098EEFA /* w1@2x.png in Resources */,
+				64CA7F36219ED9090098EEFA /* w1@3x.png in Resources */,
 				6449875F20A9793F008B024C /* newmc@3x.png in Resources */,
 				64B5C08E2083429A007F611B /* law2@2x.png in Resources */,
 				64BDEAC81FC156800036CD8E /* setting.png in Resources */,
 				643D25A31F77FE640034131C /* Main.storyboard in Resources */,
 				64DEF2D92140D288002925A6 /* smile.png in Resources */,
 				64BDEB041FC1C8A70036CD8E /* whitecircle.png in Resources */,
+				64CA7F3C219ED9090098EEFA /* w1.png in Resources */,
 				64BDEAC41FC156800036CD8E /* qiandao.png in Resources */,
 				64B5C0932083429A007F611B /* law3@2x.png in Resources */,
 				64BDEAC21FC156800036CD8E /* qiandao@3x.png in Resources */,
@@ -1366,6 +1454,7 @@
 				64B5C0862083429A007F611B /* law5@3x.png in Resources */,
 				6403AEB21FF87D2100E06D71 /* testicon.png in Resources */,
 				64B5C08F2083429A007F611B /* law4@3x.png in Resources */,
+				64CA7F31219ED9090098EEFA /* w4@2x.png in Resources */,
 				64F41F4C1FD3C31600FC636D /* dianyuan@3x.png in Resources */,
 				6449876020A9793F008B024C /* newwrong@3x.png in Resources */,
 				64BDEAAC1FC10DF70036CD8E /* bannerplaceholder.png in Resources */,
@@ -1374,6 +1463,7 @@
 				64DEF2CF2140D27D002925A6 /* anjianlogin@2x.png in Resources */,
 				64BDEAC51FC156800036CD8E /* message.png in Resources */,
 				64F41F471FD3C31600FC636D /* renyuanmiji@3x.png in Resources */,
+				64CA7F34219ED9090098EEFA /* w2@3x.png in Resources */,
 				6449876120A9793F008B024C /* newtf@3x.png in Resources */,
 				6449876520A9793F008B024C /* newsc@2x.png in Resources */,
 				64BDEAF11FC1BDAB0036CD8E /* navbackicon@3x.png in Resources */,
@@ -1583,6 +1673,7 @@
 				45A9F72E205A0EAD00476DBD /* Toast+UIView.m in Sources */,
 				64BDEAF71FC1BFF20036CD8E /* YSQianDaoViewController.m in Sources */,
 				641B40971F8A3B0500BF029E /* FSPageViewLayout.swift in Sources */,
+				64CA7F40219EFA710098EEFA /* YSWelcomeViewController.m in Sources */,
 				641B40921F8A3B0500BF029E /* FSPageControl.swift in Sources */,
 				6403AEB91FF887E100E06D71 /* YSNewsViewController.m in Sources */,
 				6422C653215D324F00994063 /* YSWrongListViewController.m in Sources */,
@@ -1591,7 +1682,7 @@
 				641B40931F8A3B0500BF029E /* FSPagerCollectionView.swift in Sources */,
 				643D259D1F77FE640034131C /* AppDelegate.m in Sources */,
 				64583CFE2025BB64002099D4 /* YSNetWorkEngine.m in Sources */,
-				64583CE6201E0DA7002099D4 /* YSTestViewController.m in Sources */,
+				64CA7F46219F19020098EEFA /* AppDelegate+YSWelcome.m in Sources */,
 				64572EF12042FBC4003F3B05 /* YSExamAnalyseViewController.m in Sources */,
 				6406D47A202729B00075D089 /* NSString+YSStringOperation.m in Sources */,
 				64C7F16D202C8C6E0017272A /* YSExamManager.m in Sources */,
@@ -1624,6 +1715,7 @@
 				64BDEAA21FC1045E0036CD8E /* YSBaseScrollView.m in Sources */,
 				641B40051F89C69000BF029E /* YSNewsViewCell.m in Sources */,
 				6403AE9D1FF73ECB00E06D71 /* YSExaminationItemModel.m in Sources */,
+				64CA7F4C21A3B3300098EEFA /* YSReSetPasswordViewController.m in Sources */,
 				64BDEAED1FC1BBE80036CD8E /* UIViewController+YSCustomNavigationBar.m in Sources */,
 				64572EEE2042EC81003F3B05 /* YSWrongItemsViewController.m in Sources */,
 				641B40021F89C68100BF029E /* YSClassViewCell.m in Sources */,
@@ -1635,6 +1727,7 @@
 				64F41F521FD421FA00FC636D /* YSGoodsDetailViewController.m in Sources */,
 				64BDEAB01FC110190036CD8E /* YSLoginViewController.m in Sources */,
 				6403AEA51FF76C7B00E06D71 /* YSExaminationViewController.m in Sources */,
+				64CA7F4921A3B2D20098EEFA /* YSRegisterViewController.m in Sources */,
 				64BDEADB1FC1A3FB0036CD8E /* YSTableViewController.m in Sources */,
 				64583CF72020A709002099D4 /* YSSpecialItemViewController.m in Sources */,
 				641B40951F8A3B0500BF029E /* FSPagerViewCell.swift in Sources */,
@@ -1806,10 +1899,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = W2DLPX35T5;
+				DEVELOPMENT_TEAM = 83KHEYHKDP;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yanshaniOS/Yanshan-Prefix.pch";
 				INFOPLIST_FILE = yanshaniOS/Info.plist;
@@ -1818,10 +1911,10 @@
 				LD_MAP_FILE_PATH = "/Users/daijian/Desktop/燕山app-LinkMap-$(CURRENT_VARIANT)-$(CURRENT_ARCH).txt";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				NEW_SETTING = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jia.dai.yanshaniOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yanshan.anquaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "cdb4d67d-6438-4c34-b76b-3ef72fbd0cc9";
-				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
+				PROVISIONING_PROFILE_SPECIFIER = anquanjiaoyupeixun;
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1836,10 +1929,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = W2DLPX35T5;
+				DEVELOPMENT_TEAM = 83KHEYHKDP;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yanshaniOS/Yanshan-Prefix.pch";
 				INFOPLIST_FILE = yanshaniOS/Info.plist;
@@ -1847,10 +1940,10 @@
 				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				NEW_SETTING = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jia.dai.yanshaniOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yanshan.anquaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c9ccef53-faae-40f2-81d2-09d04422fe97";
-				PROVISIONING_PROFILE_SPECIFIER = ceshi1;
+				PROVISIONING_PROFILE_SPECIFIER = anquanjiaoyupeixun;
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/yanshaniOS/yanshaniOS-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

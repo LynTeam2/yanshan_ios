@@ -24,6 +24,7 @@ static const NSString *umkeys = @"5be98e2bb465f5d960000667";
     [MobClick setCrashReportEnabled:YES];
     [UMConfigure initWithAppkey:umkeys channel:@"App Store"];
 #endif
+    
 }
 
 @end
